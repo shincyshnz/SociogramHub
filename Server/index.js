@@ -4,9 +4,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import multer from "multer";
 import helmet from "helmet";
+import { connectDb } from "./config/db.js";
 
 dotenv.config();
 const app = express();
+connectDb();
 
 app.use(express.json({ limit :"30mb", extended : true}));
 app.use(helmet());
