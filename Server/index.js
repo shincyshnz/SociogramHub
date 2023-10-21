@@ -1,12 +1,10 @@
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import dotenv from "dotenv";
-import multer from "multer";
-import helmet from "helmet";
-import { connectDb } from "./config/db.js";
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors").config();
+const dotenv = require("dotenv");
+const helmet = require("helmet");
+const { connectDb } = "./config/db.js";
 
-dotenv.config();
 const app = express();
 connectDb();
 
