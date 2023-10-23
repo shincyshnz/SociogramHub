@@ -1,18 +1,35 @@
-const { upload, handleUpload, runMiddleWare } = require("../middleware/cloudinaryUpload");
+const { upload, handleUpload, runMiddleWare, ImageURIFormat } = require("../middleware/cloudinaryUpload");
+const { UsersModel } = require("../model/users");
+const { generatedPasswordHash } = require("../utils/bcrypt");
+
+const SALT = 10;
 
 const register = async (req, res, next) => {
+    const { username, email, password, bio, dob, gender } = req.body;
+    console.log(req.body);
     try {
+        // Handling Userdata
+        const isExists = await UsersModel.findOne({ email });
+        if (isExists) {
+            return res.status(404).json({ message: "User already exists" });
+        }
+
+        // Uploading profile pic to cloudinary
         await runMiddleWare(req, res, upload.single("profile_pic"));
-        const b64 = Buffer.from(req.file?.buffer).toString("base64");
-        let dataURI = "data:" + req.file?.mimetype + ";base64," + b64;
+        let dataURI = ImageURIFormat(req, res);
         const cldRes = await handleUpload(dataURI);
-        const profile_pic = cldRes.url;
-        
-        console.log(cldRes);
-        res.json();
+        const profilePic = cldRes.url;
+
+        const hashedPass = await generatedPasswordHash("password", SALT);
+        const newUser = await UsersModel.create({ username, email, password: hashedPass, profilePic, bio, gender });
+        if (newUser) {
+            res.json({
+                result: newUser
+            });
+        }
     } catch (error) {
         console.log(error);
-        next();
+        next(error);
     }
 };
 
