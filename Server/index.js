@@ -7,6 +7,7 @@ const Multer = require("multer");
 const { handleUpload } = require("./config/cloudinary");
 const errorController = require("./controllers/errorController");
 const authRoutes = require("./routes/authRoutes");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 connectDb();
@@ -21,6 +22,7 @@ app.use(cors({
     origin: ["*", "http://localhost"],
     credentials: true,
 }));
+app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 
