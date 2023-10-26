@@ -1,7 +1,7 @@
 const errorController = (err, req, res, next) => {
     try {
         console.log("== Error Controller ==", err.message);
-        res.status(400).json({
+        res.status(err.status).json({
             message: err.message,
         });
     } catch (error) {

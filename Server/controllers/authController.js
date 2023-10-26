@@ -1,7 +1,13 @@
 const { upload, handleUpload, ImageURIFormat } = require("../middleware/cloudinaryUpload");
 const { UsersModel } = require("../model/users");
 const { generatedPasswordHash, comparePasswordHash } = require("../utils/bcrypt");
-const { generateAccessToken, generateRefreshToken } = require("../utils/jwt");
+const { generateAccessToken, generateRefreshToken, verifyRefreshToken } = require("../utils/jwt");
+
+const customErrorMessage = (status, errMsg) => {
+    let err = new Error(errMsg);
+    err.status = status;
+    throw err;
+};
 
 const register = async (req, res, next) => {
     const { username, email, password, bio, dob, gender } = req.body;
@@ -10,12 +16,12 @@ const register = async (req, res, next) => {
         // Handling Userdata
         const isExists = await UsersModel.findOne({ email });
         if (isExists) {
-            throw new Error("Email already exists.");
+            customErrorMessage(400, "Email already exists.");
         }
 
         const isExistsUsername = await UsersModel.findOne({ username });
         if (isExistsUsername) {
-            throw new Error("Username already exists.");
+            customErrorMessage(400, "Username already exists.");
         }
 
         let dataURI = ImageURIFormat(req, res);
@@ -24,7 +30,7 @@ const register = async (req, res, next) => {
         const hashedPass = await generatedPasswordHash("password");
         const newUser = await UsersModel.create({ username, email, password: hashedPass, profilePic, bio, gender, dob });
         if (newUser) {
-            res.json({
+            res.status(200).json({
                 result: newUser
             });
         }
@@ -33,36 +39,59 @@ const register = async (req, res, next) => {
     }
 };
 
+const generateTokens = (res, userId) => {
+    const accessToken = generateAccessToken(userId);
+    const refreshToken = generateRefreshToken(userId);
+
+    res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+    });
+    return [accessToken, refreshToken];
+}
+
 const login = async (req, res, next) => {
     const { email, password } = req.body;
     try {
         const user = await UsersModel.findOne({ email });
         if (!user) {
-            return res.status(404).json({ message: "User doesnot exists.!" });
+            customErrorMessage(404, "User doesnot exists.!");
         }
 
-        const validPassword = comparePasswordHash(password, user.password);
+        const validPassword = await comparePasswordHash(password, user.password);
         if (!validPassword) {
-            return res.status(404).json({ message: "Username/Paswword is not valid!" });
+            customErrorMessage(404, "Username/Paswword is not valid!");
         }
 
         // Generate Access Token and Refresh Token
-        const accessToken = generateAccessToken(user._id);
-        const refreshToken = generateRefreshToken(user._id);
+        const [accessToken] = generateTokens(res, user._id);
 
-        res.cookie("refresh-token", refreshToken, {
-            httpOnly: true,
-            secure: true,
-        })
-
-        res.json({ _id: user._id, email: user.email, username: user.username });
+        res.status(200).json({ _id: user._id, email: user.email, username: user.username, "accessToken": accessToken });
     } catch (error) {
         next(error);
     }
 };
 
+const handleRefreshtoken = (req, res, next) => {
+    try {
+        if (!req.cookies.refreshToken) {
+            customErrorMessage(400, "Refresh token not found in the cookie.");
+        }
+
+        const userId = verifyRefreshToken(req.cookies.refreshToken);
+        if (!userId) {
+            customErrorMessage(404, "Refresh token has expired. Login to Continue");
+        }
+        const [accessToken] = generateTokens(res, user._id);
+        res.status(200).json({ accessToken });
+
+    } catch (error) {
+        next(error);
+    }
+};
 
 module.exports = {
     register,
     login,
+    handleRefreshtoken,
 }
