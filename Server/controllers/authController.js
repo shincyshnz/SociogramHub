@@ -96,7 +96,8 @@ const handleRefreshtoken = (req, res, next) => {
         if (!userId) {
             customErrorMessage(404, "Refresh token has expired. Login to Continue");
         }
-        const [accessToken] = generateTokens(res, user._id);
+        
+        const [accessToken] = generateTokens(res, userId);
         res.status(200).json({ accessToken });
 
     } catch (error) {

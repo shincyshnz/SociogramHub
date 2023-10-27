@@ -12,7 +12,6 @@ const generateRefreshToken = (userId) => {
 const verifyRefreshToken = (refreshToken) => {
     if (!refreshToken) return false;
     const validToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY);
-
     if (!validToken) return false;
 
     return validToken._id;
