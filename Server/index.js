@@ -5,6 +5,7 @@ const connectDb = require("./config/db");
 const errorController = require("./controllers/errorController");
 const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
+const { checkAuth } = require("./middleware/checkAuth");
 
 const app = express();
 connectDb();
@@ -22,6 +23,7 @@ app.use(cors({
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
+
 
 app.use(errorController);
 

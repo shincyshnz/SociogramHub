@@ -1,24 +1,8 @@
 const { upload, handleUpload, ImageURIFormat } = require("../middleware/cloudinaryUpload");
 const { UsersModel } = require("../model/users");
 const { generatePasswordHash, comparePasswordHash } = require("../utils/bcrypt");
+const { customErrorMessage } = require("../utils/customErrorMsg");
 const { generateAccessToken, generateRefreshToken, verifyRefreshToken } = require("../utils/jwt");
-
-const customErrorMessage = (status, errMsg) => {
-    let err = new Error(errMsg);
-    err.status = status;
-    throw err;
-};
-
-const getUsers = async (req, res, next) => {
-    try {
-        const users = await UsersModel.find();
-        res.status(200).json({
-            results: users
-        });
-    } catch (error) {
-        next(error);
-    }
-};
 
 const register = async (req, res, next) => {
     const { username, email, password, bio, dob, gender } = req.body;
@@ -80,7 +64,7 @@ const login = async (req, res, next) => {
         // Generate Access Token and Refresh Token
         const [accessToken] = generateTokens(res, user._id);
 
-        res.status(200).json({ _id: user._id, email: user.email, username: user.username });
+        res.status(200).json({ _id: user._id, email: user.email, username: user.username, accessToken });
     } catch (error) {
         next(error);
     }
@@ -96,7 +80,7 @@ const handleRefreshtoken = (req, res, next) => {
         if (!userId) {
             customErrorMessage(404, "Refresh token has expired. Login to Continue");
         }
-        
+
         const [accessToken] = generateTokens(res, userId);
         res.status(200).json({ accessToken });
 
@@ -109,5 +93,4 @@ module.exports = {
     register,
     login,
     handleRefreshtoken,
-    getUsers,
 }
