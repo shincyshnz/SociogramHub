@@ -1,6 +1,11 @@
-const cloudinary = require("cloudinary").v2;
+const {cloudinary} = require("../config/cloudinary");
 const Multer = require("multer");
-const { UsersModel } = require("../model/users");
+
+const storage = new Multer.memoryStorage();
+
+const upload = Multer({
+    storage,
+});
 
 const ImageURIFormat = (req, res) => {
     const b64 = Buffer.from(req.file?.buffer).toString("base64");
@@ -15,11 +20,6 @@ const handleUpload = async (file) => {
     return res;
 }
 
-const storage = new Multer.memoryStorage();
-
-const upload = Multer({
-    storage,
-});
 
 module.exports = {
     ImageURIFormat,

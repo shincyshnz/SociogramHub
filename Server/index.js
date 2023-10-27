@@ -1,10 +1,7 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const helmet = require("helmet");
 const connectDb = require("./config/db");
-const Multer = require("multer");
-const { handleUpload } = require("./config/cloudinary");
 const errorController = require("./controllers/errorController");
 const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");

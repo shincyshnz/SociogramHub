@@ -1,12 +1,23 @@
 const { upload, handleUpload, ImageURIFormat } = require("../middleware/cloudinaryUpload");
 const { UsersModel } = require("../model/users");
-const { generatedPasswordHash, comparePasswordHash } = require("../utils/bcrypt");
+const { generatePasswordHash, comparePasswordHash } = require("../utils/bcrypt");
 const { generateAccessToken, generateRefreshToken, verifyRefreshToken } = require("../utils/jwt");
 
 const customErrorMessage = (status, errMsg) => {
     let err = new Error(errMsg);
     err.status = status;
     throw err;
+};
+
+const getUsers = async (req, res, next) => {
+    try {
+        const users = await UsersModel.find();
+        res.status(200).json({
+            results: users
+        });
+    } catch (error) {
+        next(error);
+    }
 };
 
 const register = async (req, res, next) => {
@@ -27,7 +38,7 @@ const register = async (req, res, next) => {
         let dataURI = ImageURIFormat(req, res);
         const cldRes = await handleUpload(dataURI);
         const profilePic = cldRes.url;
-        const hashedPass = await generatedPasswordHash("password");
+        const hashedPass = await generatePasswordHash(password);
         const newUser = await UsersModel.create({ username, email, password: hashedPass, profilePic, bio, gender, dob });
         if (newUser) {
             res.status(200).json({
@@ -35,6 +46,7 @@ const register = async (req, res, next) => {
             });
         }
     } catch (error) {
+        console.log(error);
         next(error);
     }
 };
@@ -52,6 +64,7 @@ const generateTokens = (res, userId) => {
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
+
     try {
         const user = await UsersModel.findOne({ email });
         if (!user) {
@@ -59,14 +72,15 @@ const login = async (req, res, next) => {
         }
 
         const validPassword = await comparePasswordHash(password, user.password);
+
         if (!validPassword) {
-            customErrorMessage(404, "Username/Paswword is not valid!");
+            customErrorMessage(404, "Username/Password is not valid!");
         }
 
         // Generate Access Token and Refresh Token
         const [accessToken] = generateTokens(res, user._id);
 
-        res.status(200).json({ _id: user._id, email: user.email, username: user.username, "accessToken": accessToken });
+        res.status(200).json({ _id: user._id, email: user.email, username: user.username });
     } catch (error) {
         next(error);
     }
@@ -94,4 +108,5 @@ module.exports = {
     register,
     login,
     handleRefreshtoken,
+    getUsers,
 }
