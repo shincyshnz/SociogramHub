@@ -4,7 +4,6 @@ const { customErrorMessage } = require("../utils/customErrorMsg");
 const checkAuth = (req, res, next) => {
     try {
         let token = req.headers.authorization;
-        console.log(token);
         if (!token) {
             customErrorMessage(401, "Access Denied");
         }

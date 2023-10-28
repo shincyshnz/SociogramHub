@@ -6,7 +6,6 @@ const generatePasswordHash = (password) => {
 };
 
 const comparePasswordHash = (password, passwordHash) => {
-    console.log(password);
     return bcrypt.compare(password, passwordHash);
 };
 

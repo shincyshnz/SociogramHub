@@ -1,4 +1,5 @@
 const { UsersModel } = require("../model/users");
+const { generatePasswordHash } = require("../utils/bcrypt");
 const { customErrorMessage } = require("../utils/customErrorMsg");
 const { sendMailOTP } = require("../utils/nodemailer");
 
@@ -56,7 +57,29 @@ const otpVerification = (req, res, next) => {
     }
 };
 
+const resetPassword = async (req, res, next) => {
+    const { userId, password } = req.body;
+    try {
+        const isUserExists = await UsersModel.findById({ _id: userId });
+        if (!isUserExists) {
+            customErrorMessage(404, "User Doesnot exists");
+        }
+        const hashedPassword = await generatePasswordHash(password);
+        const isUpdated = await UsersModel.findByIdAndUpdate({ _id: userId }, { password: hashedPassword }, { new: true });
+        if (!isUpdated) {
+            customErrorMessage(400, "Password Updation Failed. Try again Later!");
+        }
+        res.json({
+            username: isUpdated.username,
+            message: "Password Updated"
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     sendOTP,
-    otpVerification
+    otpVerification,
+    resetPassword,
 };
