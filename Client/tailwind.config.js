@@ -44,7 +44,7 @@ module.exports = {
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
-
+        dancing: ['Dancing Script'],
       },
       keyframes: {
         'accordion-down': {
