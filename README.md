@@ -17,3 +17,4 @@
 -- Tailwind css
 -- Flowbite UI library
 -- react router dom
+-- react-hook-form
