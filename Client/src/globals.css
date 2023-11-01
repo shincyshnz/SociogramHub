@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +10,7 @@
   }
 
   body {
-    @apply bg-light-1 text-black min-h-screen font-inter;
+    @apply bg-white text-dark-1 min-h-screen font-inter;
   }
 }
 
@@ -19,7 +18,7 @@
 
   /* TYPOGRAPHY */
   .h1-bold {
-    @apply text-[46px] font-bold leading-[140%] tracking-tighter;
+    @apply text-[36px] font-bold leading-[140%] tracking-tighter;
   }
 
   .h1-semibold {
@@ -249,8 +248,12 @@
 }
 
 @layer components {
-  .input-form{
-    @apply w-full border rounded-[3px] p-2 text-xs focus:outline-0 focus:border-gray-400
+  .form-container {
+    @apply max-w-[350px] max-h-[920px] flex flex-col gap-3 mb-3 mx-[10px] justify-center items-center text-gray-500
+  }
+
+  .input-form {
+    @apply border p-2 text-xs rounded-sm focus:border-dark-1 focus:outline-none
   }
 
   /* SHADCN COMPONENTS */

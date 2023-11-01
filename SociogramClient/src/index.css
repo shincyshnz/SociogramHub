@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    * {
+        @apply box-border list-none p-0 m-0 scroll-smooth;
+    }
+
+    body {
+        @apply bg-white text-black min-h-screen font-inter;
+    }
+}
+
+@layer utilities{
+    .alert {
+        @apply text-xs p-1 bg-transparent;
+    }
+}
+
+@layer components {
+    .form-container {
+        @apply max-w-[350px] max-h-[920px] py-10 px-5 flex flex-col gap-3 mb-3 justify-center items-center text-xs text-center
+    }
+
+    .input-form {
+        @apply border p-2 text-xs rounded-sm focus:border-black focus:outline-none
+    }
+}

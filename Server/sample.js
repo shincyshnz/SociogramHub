@@ -1,32 +1,12 @@
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, SubmitHandler } from "react-hook-form";
-import { signUpValidation } from "../../lib/validation";
+<div className="form-container border py-10 px-1 text-gray-500">
+            <img className="max-w-[85%] px-10 mb-4 mx-auto" src="/assets/logo.png" alt="logo" />
 
-const SignupForm = () => {
-    type signUpValidation = z.infer<typeof signUpValidation>;
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<signUpValidation>({
-        resolver: zodResolver(signUpValidation),
-    });
-
-    const onSubmit: SubmitHandler<signUpValidation> = (data) => console.log(data);
-
-    return <>
-
-        <div className="form-container border py-10 px-1 text-gray-500">
-            <img className="max-w-[85%] px-10 mx-auto" src="/assets/logo.png" alt="logo" />
-
-            <form className="px-4 mb-4 w-full" onSubmit={handleSubmit(onSubmit)}>
+            <form className="mx-10 mb-4" onSubmit={handleSubmit(onSubmit)}>
                 <h6 className="text-gray-500 mb-4 font-bold">Sign up to see photos and videos from your friends.</h6>
-                <a href="#" className="flex justify-center items-center gap-2 w-full text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700">
+                <button className="flex justify-center items-center gap-2 w-full text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700">
                     <img className="bg-white w-4 h-4" src="assets/facebook_3128304.png" alt="facebook login link" />
                     <span>Log in With Facebook</span>
-                </a>
+                </button>
                 <div className="flex justify-center items-center gap-4 mb-4">
                     <div className="w-[150px] border-b-[1px] border-gray-300"></div>
                     <h6 className="font-semibold text-gray-500 text-sm">OR</h6>
@@ -68,6 +48,3 @@ const SignupForm = () => {
             </div>
         </div>
     </>
-}
-
-export default SignupForm

@@ -1,17 +1,22 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        trime: true,
-        required: [true, "Username Cannot be empty"],
-        unique: [true, "username must be unique"],
-    },
     email: {
         type: String,
         trim: true,
         required: [true, "Email field cannot be empty"],
         unique: [true, "Email Already exists"],
+    },
+    fullname: {
+        type: String,
+        trime: true,
+        required: [true, "Full name Cannot be empty"],
+    },
+    username: {
+        type: String,
+        trime: true,
+        required: [true, "Username Cannot be empty"],
+        unique: [true, "username must be unique"],
     },
     password: {
         type: String,
@@ -20,6 +25,7 @@ const userSchema = new mongoose.Schema({
     },
     profile_pic: {
         type: String,
+        default : "",
     },
     bio: {
         type: String,

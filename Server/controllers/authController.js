@@ -5,9 +5,10 @@ const { customErrorMessage } = require("../utils/customErrorMsg");
 const { generateAccessToken, generateRefreshToken, verifyRefreshToken } = require("../utils/jwt");
 
 const register = async (req, res, next) => {
-    const { username, email, password, bio, dob, gender } = req.body;
+    const { fullname, username, email, password, bio, dob, gender } = req.body;
 
     try {
+        let profilePic = "";
         // Handling Userdata
         const isExists = await UsersModel.findOne({ email });
         if (isExists) {
@@ -18,12 +19,14 @@ const register = async (req, res, next) => {
         if (isExistsUsername) {
             customErrorMessage(400, "Username already exists.");
         }
+        if (req.file) {
+            let dataURI = ImageURIFormat(req, res);
+            const cldRes = await handleUpload(dataURI);
+            profilePic = cldRes.url;
+        }
 
-        let dataURI = ImageURIFormat(req, res);
-        const cldRes = await handleUpload(dataURI);
-        const profilePic = cldRes.url;
         const hashedPass = await generatePasswordHash(password);
-        const newUser = await UsersModel.create({ username, email, password: hashedPass, profilePic, bio, gender, dob });
+        const newUser = await UsersModel.create({ fullname, username, email, password: hashedPass, profilePic, bio, gender, dob });
         if (newUser) {
             res.status(200).json({
                 result: newUser
