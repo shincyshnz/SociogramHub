@@ -22,7 +22,7 @@
 
 @layer components {
     .form-container {
-        @apply max-w-[350px] max-h-[920px] py-10 px-5 flex flex-col gap-3 mb-3 justify-center items-center text-xs text-center
+        @apply max-w-[350px] max-h-[920px] py-10 px-3 flex flex-col gap-3 mb-3 justify-center items-center text-xs text-center
     }
 
     .input-form {

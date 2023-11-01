@@ -1,13 +1,18 @@
 import { Alert } from 'flowbite-react'
 import React from 'react'
 
-const FormFields = ({ label, name, register, errors, customRules }) => {
+const FormFields = ({ label, name, register, errors, customRules, onChange, onBlur, field}) => {
 
     return <>
         <input
-            className="input-form" placeholder={label}
+            className="input-form"
+            id={name}
+            placeholder={label}
             {...register(name, customRules)}
             aria-invalid={errors[name] ? 'true' : 'false'}
+            onChange={onChange}
+            onBlur={onBlur}
+            {...field}
         />
         {errors[name] && (
             <Alert color="failure" className='alert'>

@@ -1,45 +1,76 @@
 import { useForm } from "react-hook-form"
 import FormFields from "../../components/FormFields";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const SignUpForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { field, register, handleSubmit, formState: { errors },clearErrors, setValue, setError } = useForm();
+  const [formValues, setFormValues] = useState({});
   const customRules = {
     email: {
-      required: "Email is required", pattern: {
+      required: "Email is required", 
+      pattern: {
         value: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
         message: 'Invalid email format.',
       },
     },
     fullname: {
-      required: "Full Name is required", maxLength: {
+      required: "Full Name is required", 
+      maxLength: {
         value: 20,
         message: 'Full Name must be of maximum 20 characters.',
       }
     },
     username: {
-      required: "Username is required", maxLength: {
+      required: "Username is required", 
+      maxLength: {
         value: 20,
         message: 'Username must be of maximum 20 characters.',
       }
     },
     password: {
-      required: "password is required", minLength: {
+      required: "password is required", 
+      minLength: {
         value: 6,
         message: "Password must be of minimum 6 character."
       }
     }
   }
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log(name, value);
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+
+    validateInput(name, value);
+  };
+
+  const validateInput = (name, value) => {
+    if (customRules[name]?.required && !value) {
+      setError(name,{ type: "required" , message: customRules[name].required}
+      );
+    }else if (customRules[name]?.pattern && !customRules[name]?.pattern.value.test(value)) {
+      setError(name, { type: 'pattern', message: customRules[name].pattern.message });
+    } else {
+      clearErrors(name); 
+      setValue(name, value);
+    }
+  }
+
   const onSubmit = (data) => {
     console.log(data);
+    // Write logic for submit
   }
+
 
   return <>
     <div className="form-container border">
       <img className="max-w-[85%] px-10 mx-auto" src="/assets/logo.png" alt="logo" />
 
-      <form className="px-4 mb-4 w-full">
+      <form className="px-4 mb-4 w-full" noValidate>
         <h6 className="text-gray-500 mb-4 font-bold text-base">Sign up to see photos and videos from your friends.</h6>
         <a href="#" className="flex justify-center items-center gap-2 w-full text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700">
           <img className="bg-white w-4 h-4" src="assets/facebook_3128304.png" alt="facebook login link" />
@@ -52,10 +83,14 @@ const SignUpForm = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <FormFields label={"Email"} name={"email"} register={register} errors={errors} customRules={customRules.email} />
-          <FormFields label={"Full Name"} name={"fullname"} register={register} errors={errors} customRules={customRules.fullname} />
-          <FormFields label={"Username"} name={"username"} register={register} errors={errors} customRules={customRules.username} />
-          <FormFields label={"Password"} name={"password"} register={register} errors={errors} customRules={customRules.password} />
+          <FormFields label={"Email"} name={"email"} register={register} errors={errors} customRules={customRules.email} onChange={handleChange}
+            onBlur={handleChange} field={field} />
+          <FormFields label={"Full Name"} name={"fullname"} register={register} errors={errors} customRules={customRules.fullname} onChange={handleChange}
+            onBlur={handleChange} field={field} />
+          <FormFields label={"Username"} name={"username"} register={register} errors={errors} customRules={customRules.username} onChange={handleChange}
+            onBlur={handleChange} field={field} />
+          <FormFields label={"Password"} name={"password"} register={register} errors={errors} customRules={customRules.password} onChange={handleChange}
+            onBlur={handleChange} field={field} />
         </div>
       </form>
 
