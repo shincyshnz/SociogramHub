@@ -107,7 +107,7 @@ const SignUpForm = () => {
     </div>
 
     <div className="form-container w-full border p-6">
-      <p className="text-sm">Have an account? <Link to="/login">
+      <p className="text-sm">Have an account? <Link to="/sign-in">
         <span className="text-blue-600">Log in</span>
       </Link>
       </p>
