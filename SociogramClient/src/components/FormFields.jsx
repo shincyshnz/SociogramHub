@@ -10,20 +10,23 @@ const FormFields = ({ label, name, type, register, errors, customRules, onChange
     }
 
     return <>
-        <input
-            className="input-form"
-            id={name}
-            type={passwordShown ? "text" : type}
-            placeholder={label}
-            {...register(name, customRules)}
-            aria-invalid={errors[name] ? 'true' : 'false'}
-            onChange={onChange}
-            onBlur={onBlur}
-            {...field}
-        />
-        {type === "password" && (
-            <i className="password-toggle" onClick={togglePasswordVisibility}>{passwordShown ? <AiFillEye /> : <AiFillEyeInvisible />}</i>
-        )}
+        <div className="input-container">
+            <input
+                className="input-form"
+                id={name}
+                type={passwordShown ? "text" : type}
+                placeholder={label}
+                {...register(name, customRules)}
+                aria-invalid={errors[name] ? 'true' : 'false'}
+                onChange={onChange}
+                onBlur={onBlur}
+                {...field}
+            />
+
+            {type === "password" && (
+                <i className="password-toggle" onClick={togglePasswordVisibility}>{passwordShown ? <AiFillEye /> : <AiFillEyeInvisible />}</i>
+            )}
+        </div>
 
         {errors[name] && (
             <Alert color="failure" className='alert'>

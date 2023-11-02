@@ -14,7 +14,7 @@
     }
 }
 
-@layer utilities{
+@layer utilities {
     .alert {
         @apply text-xs p-1 bg-transparent;
     }
@@ -22,14 +22,18 @@
 
 @layer components {
     .form-container {
-        @apply relative max-w-[350px] max-h-[920px] py-10 px-3 flex flex-col gap-3 mb-3 justify-center items-center text-xs text-center
+        @apply max-w-[350px] max-h-[920px] py-10 px-3 flex flex-col gap-3 mb-3 justify-center items-center text-xs text-center
+    }
+
+    .input-container {
+        @apply relative;
     }
 
     .input-form {
-        @apply border p-2 text-xs rounded-sm focus:border-black focus:outline-none
+        @apply w-full border border-gray-300 p-2 text-xs rounded-sm focus:border-black focus:ring-0 focus:bg-transparent;
     }
 
-    .password-toggle{
-        @apply absolute top-[394px] right-[40px] translate-y-[-50%] cursor-pointer text-sm;
+    .password-toggle {
+        @apply absolute top-[50%] right-[10px] translate-y-[-50%] cursor-pointer text-sm;
     }
 }
