@@ -1,12 +1,19 @@
 import { Alert } from 'flowbite-react'
-import React from 'react'
+import React, { useState } from 'react'
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
-const FormFields = ({ label, name, register, errors, customRules, onChange, onBlur, field}) => {
+const FormFields = ({ label, name, type, register, errors, customRules, onChange, onBlur, field }) => {
+    const [passwordShown, setPasswordShown] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordShown(passwordShown => (passwordShown = !passwordShown));
+    }
 
     return <>
         <input
             className="input-form"
             id={name}
+            type={passwordShown ? "text" : type}
             placeholder={label}
             {...register(name, customRules)}
             aria-invalid={errors[name] ? 'true' : 'false'}
@@ -14,6 +21,10 @@ const FormFields = ({ label, name, register, errors, customRules, onChange, onBl
             onBlur={onBlur}
             {...field}
         />
+        {type === "password" && (
+            <i className="password-toggle" onClick={togglePasswordVisibility}>{passwordShown ? <AiFillEye /> : <AiFillEyeInvisible />}</i>
+        )}
+
         {errors[name] && (
             <Alert color="failure" className='alert'>
                 {errors[name].message}

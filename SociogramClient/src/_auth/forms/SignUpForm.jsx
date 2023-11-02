@@ -4,32 +4,39 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const SignUpForm = () => {
-  const { field, register, handleSubmit, formState: { errors },clearErrors, setValue, setError } = useForm();
+  const {
+    field,
+    register,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+    setValue,
+    setError } = useForm();
   const [formValues, setFormValues] = useState({});
   const customRules = {
     email: {
-      required: "Email is required", 
+      required: "Email is required",
       pattern: {
         value: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
         message: 'Invalid email format.',
       },
     },
     fullname: {
-      required: "Full Name is required", 
+      required: "Full Name is required",
       maxLength: {
         value: 20,
         message: 'Full Name must be of maximum 20 characters.',
       }
     },
     username: {
-      required: "Username is required", 
+      required: "Username is required",
       maxLength: {
         value: 20,
         message: 'Username must be of maximum 20 characters.',
       }
     },
     password: {
-      required: "password is required", 
+      required: "password is required",
       minLength: {
         value: 6,
         message: "Password must be of minimum 6 character."
@@ -39,7 +46,7 @@ const SignUpForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name, value);
+
     setFormValues({
       ...formValues,
       [name]: value,
@@ -49,19 +56,28 @@ const SignUpForm = () => {
   };
 
   const validateInput = (name, value) => {
-    if (customRules[name]?.required && !value) {
-      setError(name,{ type: "required" , message: customRules[name].required}
+    const rule = customRules[name];
+     
+    if(!rule) return;
+
+    if (rule?.required && !value) {
+      setError(name, { type: "required", message: rule.required }
       );
-    }else if (customRules[name]?.pattern && !customRules[name]?.pattern.value.test(value)) {
-      setError(name, { type: 'pattern', message: customRules[name].pattern.message });
+    } else if (rule?.pattern && !rule?.pattern?.value.test(value)) {
+      setError(name, { type: "pattern", message: rule?.pattern?.message });
+    } else if (value.length < rule?.minLength?.value) {
+      setError(name, { type: "minLength", message: rule?.minLength?.message });
+    }else if (value.length > rule?.maxLength?.value) {
+      setError(name, { type: "maxLength", message: rule?.maxLength?.message });
     } else {
-      clearErrors(name); 
+      clearErrors(name);
       setValue(name, value);
     }
   }
 
   const onSubmit = (data) => {
     console.log(data);
+
     // Write logic for submit
   }
 
@@ -83,13 +99,13 @@ const SignUpForm = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <FormFields label={"Email"} name={"email"} register={register} errors={errors} customRules={customRules.email} onChange={handleChange}
+          <FormFields label={"Email"} name={"email"} type={"text"} register={register} errors={errors} customRules={customRules.email} onChange={handleChange}
             onBlur={handleChange} field={field} />
-          <FormFields label={"Full Name"} name={"fullname"} register={register} errors={errors} customRules={customRules.fullname} onChange={handleChange}
+          <FormFields label={"Full Name"} name={"fullname"} type={"text"} register={register} errors={errors} customRules={customRules.fullname} onChange={handleChange}
             onBlur={handleChange} field={field} />
-          <FormFields label={"Username"} name={"username"} register={register} errors={errors} customRules={customRules.username} onChange={handleChange}
+          <FormFields label={"Username"} name={"username"} type={"text"} register={register} errors={errors} customRules={customRules.username} onChange={handleChange}
             onBlur={handleChange} field={field} />
-          <FormFields label={"Password"} name={"password"} register={register} errors={errors} customRules={customRules.password} onChange={handleChange}
+          <FormFields label={"Password"} name={"password"} type={"password"} register={register} errors={errors} customRules={customRules.password} onChange={handleChange}
             onBlur={handleChange} field={field} />
         </div>
       </form>

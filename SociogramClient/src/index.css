@@ -22,10 +22,14 @@
 
 @layer components {
     .form-container {
-        @apply max-w-[350px] max-h-[920px] py-10 px-3 flex flex-col gap-3 mb-3 justify-center items-center text-xs text-center
+        @apply relative max-w-[350px] max-h-[920px] py-10 px-3 flex flex-col gap-3 mb-3 justify-center items-center text-xs text-center
     }
 
     .input-form {
         @apply border p-2 text-xs rounded-sm focus:border-black focus:outline-none
+    }
+
+    .password-toggle{
+        @apply absolute top-[394px] right-[40px] translate-y-[-50%] cursor-pointer text-sm;
     }
 }
