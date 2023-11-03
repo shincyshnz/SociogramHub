@@ -15,6 +15,9 @@
 }
 
 @layer utilities {
+    .flex-center {
+        @apply flex justify-center items-center gap-2
+    }
     .alert {
         @apply text-xs p-1 bg-transparent;
     }

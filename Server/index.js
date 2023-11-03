@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(cors({
-    origin: ["*", "http://localhost"],
+    origin: ["*", "http://localhost","http://localhost:3050",],
     credentials: true,
 }));
 app.use(cookieParser());
