@@ -45,13 +45,13 @@ const SignUpForm = () => {
       }
     },
     dob: {
-
+      required: "password is required",
     }
   }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
+    console.log(name, ":", value);
     setFormValues({
       ...formValues,
       [name]: value,
@@ -74,48 +74,50 @@ const SignUpForm = () => {
       setError(name, { type: "minLength", message: rule?.minLength?.message });
     } else if (value.length > rule?.maxLength?.value) {
       setError(name, { type: "maxLength", message: rule?.maxLength?.message });
-    } else {
+    }else {
       clearErrors(name);
       setValue(name, value);
     }
   }
 
   return <>
+    <form className="px-4 mb-4 w-full" noValidate>
 
-    {!isNext ? <SignUp
-      customRules={customRules}
-      field={field}
-      register={register}
-      handleSubmit={handleSubmit}
-      handleChange={handleChange}
-      setFormValues={setFormValues}
-      errors={errors}
-      setIsNext={setIsNext}
-    /> :
-      <Dob
+      {!isNext ? <SignUp
         customRules={customRules}
         field={field}
         register={register}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         setFormValues={setFormValues}
+        formValues={formValues}
         errors={errors}
-      />}
+        setIsNext={setIsNext}
+      /> :
+        <Dob
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          customRules={customRules}
+          register={register}
+          setError={setError}
+          errors={errors}
+        />}
 
-    <div className="form-container w-full border p-6">
-      <p className="text-sm">Have an account? <Link to="/sign-in">
-        <span className="text-blue-600">Log in</span>
-      </Link>
-      </p>
-    </div >
+      <div className="form-container w-full border p-6">
+        <p className="text-sm">Have an account? <Link to="/sign-in">
+          <span className="text-blue-600">Log in</span>
+        </Link>
+        </p>
+      </div >
 
-    <div className="form-container my-2">
-      <p>Get the app.</p>
-      <div className="flex justify-center items-center gap-3 mt-2">
-        <img className="w-36" src="/assets/getItONgoogleplay.png" alt="google play" />
-        <img className="w-36" src="/assets/getitonPlayStore.png" alt="app store" />
+      <div className="form-container my-2">
+        <p>Get the app.</p>
+        <div className="flex justify-center items-center gap-3 mt-2">
+          <img className="w-36" src="/assets/getItONgoogleplay.png" alt="google play" />
+          <img className="w-36" src="/assets/getitonPlayStore.png" alt="app store" />
+        </div>
       </div>
-    </div>
+    </form>
   </>
 }
 
