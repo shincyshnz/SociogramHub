@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const helmet = require("helmet");
+// const helmet = require("helmet");
 const connectDb = require("./config/db");
 const errorController = require("./controllers/errorController");
 const authRoutes = require("./routes/authRoutes");
@@ -17,7 +17,7 @@ app.use(express.json());
 // app.use(helmet());
 // app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(cors({
-    origin: ["http://localhost","http://localhost:3050"],
+    origin: ["http://localhost","http://localhost:5173"],
     credentials: true,
     cookie:{
         sameSite : "none",

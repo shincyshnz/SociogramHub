@@ -43,16 +43,16 @@ const Dob = ({ handleSubmit, errors }) => {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+                withCredentials : true,
                 data: formData,
             });
-
-            if (response.status === 200) {
+            console.log(response?.data);
+            if (response) {
                 navigate("/sign-in");
             }
 
         } catch (error) {
-            console.log(error);
-            handleError('apiError', error?.message);
+            handleError('apiError', error?.response?.data?.message || error?.message);
         } finally {
             setIsloading(false);
         }

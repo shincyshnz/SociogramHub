@@ -12,7 +12,7 @@ const register = async (req, res, next) => {
         // Handling Userdata
         const isExists = await UsersModel.findOne({ email });
         if (isExists) {
-            customErrorMessage(400, "Email already exists.");
+            return customErrorMessage(400, "Email already exists.");
         }
 
         const isExistsUsername = await UsersModel.findOne({ username });
