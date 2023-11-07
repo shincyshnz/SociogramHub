@@ -14,14 +14,18 @@ export const ErrorProvider = ({ children }) => {
 
     const deleteError = (key) => {
         if (customError.hasOwnProperty(key)) {
-            delete customError.key;
+            const updatedCustomError = { ...customError };
+            delete updatedCustomError[key];
+            setCustomError(updatedCustomError);
         }
     }
 
-    return <ErrorContext.Provider value={{}}>
-        {children}
-    </ErrorContext.Provider>
-}
+    return (
+        <ErrorContext.Provider value={{ customError, handleError, deleteError }}>
+            {children}
+        </ErrorContext.Provider>
+    );
+};
 
 // custom Hook
 export const useError = () => {

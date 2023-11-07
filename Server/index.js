@@ -13,12 +13,16 @@ connectDb();
 // Middleware for parsing JSON data
 app.use(express.json());
 // Middleware for parsing URL-encoded data
-app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+// app.use(express.urlencoded({ extended: true }));
+// app.use(helmet());
+// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(cors({
-    origin: ["*", "http://localhost","http://localhost:3050",],
+    origin: ["http://localhost","http://localhost:3050"],
     credentials: true,
+    cookie:{
+        sameSite : "none",
+        secure:true,
+    }
 }));
 app.use(cookieParser());
 

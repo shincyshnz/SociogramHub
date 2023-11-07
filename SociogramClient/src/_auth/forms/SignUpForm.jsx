@@ -51,7 +51,7 @@ const SignUpForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name, ":", value);
+    
     setFormValues({
       ...formValues,
       [name]: value,
@@ -110,11 +110,10 @@ const SignUpForm = () => {
         </p>
       </div >
 
-      <div className="form-container my-2">
-        <p>Get the app.</p>
+      <div className="form-container my-2 text-sm">Get the app.
         <div className="flex justify-center items-center gap-3 mt-2">
-          <img className="w-36" src="/assets/getItONgoogleplay.png" alt="google play" />
-          <img className="w-36" src="/assets/getitonPlayStore.png" alt="app store" />
+          <img className="w-44" src="/assets/getItONgoogleplay.png" alt="google play" />
+          <img className="w-44" src="/assets/getitonPlayStore.png" alt="app store" />
         </div>
       </div>
     </form>

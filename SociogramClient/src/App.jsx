@@ -3,7 +3,7 @@ import { Home } from './_root/pages'
 import AuthLayout from './_auth/AuthLayout'
 import './index.css'
 import SignUpForm from './_auth/forms/SignUpForm'
-import SignInForm from './_auth/forms/SIgnInForm'
+import SignInForm from './_auth/forms/SignInForm'
 import RootLayout from './_root/RootLayout'
 
 const App = () => {
