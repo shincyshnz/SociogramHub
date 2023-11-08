@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HiExclamation } from 'react-icons/hi';
 import { NotificationToast } from '../components/index';
-import { useError } from '../context/ErrorContext';
-import { formatDate } from '../utils/formatDate';
+import { formatDate } from '../lib/utils';
 import { Alert, Datepicker } from 'flowbite-react';
+import { registerAPI } from '../lib/api';
+import { useError } from '../hooks/useError';
 import Loader from './Loader';
-import { registerAPI } from '../api/registerAPI';
 
 const Dob = ({ handleSubmit, errors }) => {
+    const navigate = useNavigate();
     const [isLoading, setIsloading] = useState(false);
     const { customError, handleError, deleteError } = useError();
-    const navigate = useNavigate();
     const today = formatDate(new Date());
     const [dob, setDob] = useState(today);
 

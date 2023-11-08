@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { FormFields, Loader } from '../../components/index';
+import { FormFields, Loader, GetApp } from '../../components';
 import { Link } from 'react-router-dom';
-import GetApp from '../../components/GetApp';
-import { useError } from '../../context/ErrorContext';
-import { LoginAPI } from '../../api/LoginAPI';
+import { LoginAPI } from '../../lib/api';
+import { useError } from '../../hooks/useError';
 
 const SignInForm = () => {
   const {

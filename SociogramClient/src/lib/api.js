@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { formatDate } from '../utils/formatDate';
 
-const today = formatDate(new Date());
+import { formatDate } from '../lib/utils';
 
 export const registerAPI = async (data, dob) => {
+    const today = formatDate(new Date());
     let formData = new FormData();
     data.dob = dob;
 
@@ -17,6 +17,15 @@ export const registerAPI = async (data, dob) => {
         },
         withCredentials: true,
         data: formData,
+    });
+    return response;
+};
+
+export const LoginAPI = async (data) => {
+    const response = await axios(`${import.meta.env.VITE_AUTH_URL}/login`, {
+        method: "POST",
+        withCredentials: true,
+        data,
     });
     return response;
 };

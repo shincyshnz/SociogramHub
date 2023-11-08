@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 export const ErrorContext = createContext(null);
 
@@ -26,8 +26,3 @@ export const ErrorProvider = ({ children }) => {
         </ErrorContext.Provider>
     );
 };
-
-// custom Hook
-export const useError = () => {
-    return useContext(ErrorContext);
-}

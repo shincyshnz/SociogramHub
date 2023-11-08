@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form"
-import { SignUp, Dob } from "../../components"
-import GetApp from "../../components/GetApp";
+import { SignUp, Dob, GetApp } from "../../components"
 
 const SignUpForm = () => {
   const [isNext, setIsNext] = useState(false);
