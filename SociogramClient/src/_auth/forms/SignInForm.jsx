@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { FormFields, Loader } from '../../components/index';
 import { Link } from 'react-router-dom';
 import GetApp from '../../components/GetApp';
+import { useError } from '../../context/ErrorContext';
+import { LoginAPI } from '../../api/LoginAPI';
 
 const SignInForm = () => {
   const {
@@ -11,15 +13,31 @@ const SignInForm = () => {
     formState: { errors },
     clearErrors,
     setValue,
-    setError
+    setError,
   } = useForm();
   const [isLoading, setIsloading] = useState(false);
+  const { handleError, deleteError } = useError();
 
-  const onSubmit = (data, e) => {
+
+  const onSubmit = async (data, e) => {
     e.preventDefault();
+    deleteError('apiError');
     setIsloading(true);
+    try {
+      if (Object.keys(errors).length > 0) return;
 
-    console.log(data);
+      const response = await LoginAPI(data);
+      console.log(response);
+
+      if (response) {
+        // navigate("/sign-in");
+        console.log(response.data);
+      }
+    } catch (error) {
+      handleError('apiError', error?.response?.data?.message || error?.message);
+    } finally {
+      setIsloading(false);
+    }
   }
 
   return (

@@ -6,7 +6,7 @@ import { useError } from '../context/ErrorContext';
 import { formatDate } from '../utils/formatDate';
 import { Alert, Datepicker } from 'flowbite-react';
 import Loader from './Loader';
-import axios from 'axios';
+import { registerAPI } from '../api/registerAPI';
 
 const Dob = ({ handleSubmit, errors }) => {
     const [isLoading, setIsloading] = useState(false);
@@ -24,7 +24,7 @@ const Dob = ({ handleSubmit, errors }) => {
     const onSubmit = async (data, e) => {
         e.preventDefault();
         deleteError('apiError');
-        let formData = new FormData();
+        setIsloading(true);
         try {
             if (Object.keys(errors).length > 0) return;
 
@@ -32,25 +32,10 @@ const Dob = ({ handleSubmit, errors }) => {
                 return handleError('dob', 'Please Select a valid birth date')
             }
 
-            setIsloading(true);
-            data.dob = dob;
-
-            for (const key in data) {
-                formData.append(key, data[key]);
-            }
-            const response = await axios(`${import.meta.env.VITE_AUTH_URL}/register`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-                withCredentials : true,
-                data: formData,
-            });
-            console.log(response?.data);
+            const response = await registerAPI(data, dob);
             if (response) {
                 navigate("/sign-in");
             }
-
         } catch (error) {
             handleError('apiError', error?.response?.data?.message || error?.message);
         } finally {
