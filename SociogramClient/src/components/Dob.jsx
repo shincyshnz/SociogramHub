@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Alert, Datepicker } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
-import Loader from './Loader';
-import axios from 'axios';
-import { NotificationToast } from '../components/index';
 import { HiExclamation } from 'react-icons/hi';
+import { NotificationToast } from '../components/index';
 import { useError } from '../context/ErrorContext';
 import { formatDate } from '../utils/formatDate';
+import { Alert, Datepicker } from 'flowbite-react';
+import Loader from './Loader';
+import axios from 'axios';
 
 const Dob = ({ handleSubmit, errors }) => {
     const [isLoading, setIsloading] = useState(false);
@@ -58,7 +58,7 @@ const Dob = ({ handleSubmit, errors }) => {
         }
 
     }
-    console.log(customError);
+
     return (
         <div className="form-container border w-full">
             <img className='w-40 filter drop-shadow-lg' src="/assets/cake.png" alt="date of birth" />

@@ -2,11 +2,85 @@ import { Alert } from 'flowbite-react'
 import React, { useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
-const FormFields = ({ label, name, type, register, errors, customRules, onChange, onBlur, field }) => {
+const FormFields = ({
+    label,
+    name,
+    type,
+    register,
+    errors,
+    setValue,
+    clearErrors,
+    setError
+}) => {
     const [passwordShown, setPasswordShown] = useState(false);
+
+    const customRules = {
+        email: {
+            required: "Email is required",
+            pattern: {
+                value: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
+                message: 'Invalid email format.',
+            },
+        },
+        fullname: {
+            required: "Full Name is required",
+            maxLength: {
+                value: 20,
+                message: 'Full Name must be of maximum 20 characters.',
+            }
+        },
+        username: {
+            required: "Username is required",
+            maxLength: {
+                value: 20,
+                message: 'Username must be of maximum 20 characters.',
+            }
+        },
+        password: {
+            required: "password is required",
+            minLength: {
+                value: 6,
+                message: "Password must be of minimum 6 character."
+            }
+        },
+        dob: {
+            required: "password is required",
+        }
+    }
 
     const togglePasswordVisibility = () => {
         setPasswordShown(passwordShown => (passwordShown = !passwordShown));
+    }
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        // setFormValues({
+        //   ...formValues,
+        //   [name]: value,
+        // });
+
+        validateInput(name, value);
+    };
+
+    const validateInput = (name, value) => {
+        const rule = customRules[name];
+
+        if (!rule) return;
+
+        if (rule?.required && !value) {
+            setError(name, { type: "required", message: rule.required }
+            );
+        } else if (rule?.pattern && !rule?.pattern?.value.test(value)) {
+            setError(name, { type: "pattern", message: rule?.pattern?.message });
+        } else if (value.length < rule?.minLength?.value) {
+            setError(name, { type: "minLength", message: rule?.minLength?.message });
+        } else if (value.length > rule?.maxLength?.value) {
+            setError(name, { type: "maxLength", message: rule?.maxLength?.message });
+        } else {
+            clearErrors(name);
+            setValue(name, value);
+        }
     }
 
     return <>
@@ -18,9 +92,8 @@ const FormFields = ({ label, name, type, register, errors, customRules, onChange
                 placeholder={label}
                 {...register(name, customRules)}
                 aria-invalid={errors[name] ? 'true' : 'false'}
-                onChange={onChange}
-                onBlur={onBlur}
-                {...field}
+                onChange={handleChange}
+                onBlur={handleChange}
             />
 
             {type === "password" && (

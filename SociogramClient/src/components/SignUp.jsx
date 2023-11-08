@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FormFields, Loader } from './index'
 
 const SignUp = ({
-  customRules,
-  field,
   register,
   handleSubmit,
-  handleChange,
-  setFormValues,
-  formValues,
+  setValue,
+  clearErrors,
+  setError,
   errors,
   setIsNext,
 }) => {
@@ -17,13 +15,11 @@ const SignUp = ({
   const onSubmit = (data, e) => {
     e.preventDefault();
     setIsloading(true);
-    setFormValues(prev => prev = data);
     setIsNext(true);
   }
 
   return (
     <>
-
       <div className="form-container border">
         <img className="max-w-[85%] px-10 mx-auto" src="/assets/logo.png" alt="logo" />
 
@@ -44,11 +40,9 @@ const SignUp = ({
             type={"text"}
             register={register}
             errors={errors}
-            customRules={customRules.email}
-            onChange={handleChange}
-            onBlur={handleChange}
-            field={field}
-            value={formValues.email}
+            setValue={setValue}
+            clearErrors={clearErrors}
+            setError={setError}
           />
           <FormFields
             label={"Full Name"}
@@ -56,11 +50,9 @@ const SignUp = ({
             type={"text"}
             register={register}
             errors={errors}
-            customRules={customRules.fullname}
-            onChange={handleChange}
-            onBlur={handleChange}
-            field={field}
-            value={formValues.fullname}
+            setValue={setValue}
+            clearErrors={clearErrors}
+            setError={setError}
           />
           <FormFields
             label={"Username"}
@@ -68,10 +60,9 @@ const SignUp = ({
             type={"text"}
             register={register}
             errors={errors}
-            customRules={customRules.username}
-            onChange={handleChange}
-            onBlur={handleChange}
-            field={field}
+            setValue={setValue}
+            clearErrors={clearErrors}
+            setError={setError}
           />
           <FormFields
             label={"Password"}
@@ -79,11 +70,9 @@ const SignUp = ({
             type={"password"}
             register={register}
             errors={errors}
-            customRules={customRules.password}
-            onChange={handleChange}
-            onBlur={handleChange}
-            field={field}
-            value={formValues.password}
+            setValue={setValue}
+            clearErrors={clearErrors}
+            setError={setError}
           />
         </div>
 
