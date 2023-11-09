@@ -4,14 +4,14 @@ import Footer from '../components/Footer';
 import { useEffect } from 'react';
 
 const AuthLayout = () => {
-  const { isAuthenticated, setIsAuthenticated, getToken } = useAuth();
+  const { isAuthenticated, getToken } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = getToken("accessToken");
 
     if (accessToken) {
-      navigate("/home");
+      navigate("/");
     }
 
   }, []);

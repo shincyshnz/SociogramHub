@@ -4,7 +4,7 @@ const cors = require("cors");
 const connectDb = require("./config/db");
 const errorController = require("./controllers/errorController");
 const authRoutes = require("./routes/authRoutes");
-const forgetPasswordRoutes = require("./routes/forgetPasswordRoutes");
+const forgotPasswordRoutes = require("./routes/forgotPasswordRoutes");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -27,7 +27,7 @@ app.use(cors({
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/forgetPassword', forgetPasswordRoutes);
+app.use('/api/forgotPassword', forgotPasswordRoutes);
 
 
 app.use(errorController);

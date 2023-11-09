@@ -25,3 +25,11 @@ export const LoginAPI = async (data) => {
     });
     return response;
 };
+
+export const ChangePasswordAPI = async (data) => {
+    const response = await axios(`${import.meta.env.VITE_AUTH_URL}/forgot-password`, {
+        method: "POST",
+        data,
+    });
+    return response;
+};

@@ -2,8 +2,8 @@ import React from 'react'
 import { Toast } from 'flowbite-react';
 import { HiFire } from 'react-icons/hi';
 
-const NotificationToast = ({ Icon = <HiFire />, message = "", type = "error" }) => {
-  let customStyle = "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg  ";
+const NotificationToast = ({ Icon = <HiFire className='h-5 w-5' />, message = "", type = "error" }) => {
+  let customStyle = "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg";
   switch (type) {
     case "error":
       customStyle += "bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200";

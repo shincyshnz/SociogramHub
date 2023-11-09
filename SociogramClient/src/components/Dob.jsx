@@ -4,20 +4,20 @@ import { HiExclamation } from 'react-icons/hi';
 import { NotificationToast } from '../components/index';
 import { formatDate } from '../lib/utils';
 import { Alert, Datepicker } from 'flowbite-react';
-// import { registerAPI } from '../lib/api';
 import { useError } from '../hooks/customHooks';
 import Loader from './Loader';
 import { useCreateUserAccount } from '../lib/reactQuery/queriesAndMutations';
 
 const Dob = ({ handleSubmit, errors }) => {
     const navigate = useNavigate();
-    // const [isLoading, setIsloading] = useState(false);
     const { customError, handleError, deleteError } = useError();
     const today = formatDate(new Date());
     const [dob, setDob] = useState(today);
 
-    const { mutateAsync: registerUser, isLoading } = useCreateUserAccount();
-
+    const {
+        mutateAsync: registerUser,
+        isLoading
+    } = useCreateUserAccount();
 
     const handleDob = (date) => {
         deleteError('dob');
@@ -28,12 +28,11 @@ const Dob = ({ handleSubmit, errors }) => {
     const onSubmit = async (data, e) => {
         e.preventDefault();
         deleteError('apiError');
-        // setIsloading(true);
         try {
             if (Object.keys(errors).length > 0) return;
 
             if (dob === today || dob > today) {
-                return handleError('dob', 'Please Select a valid birth date')
+                return handleError('dob', { message: 'Please Select a valid birth date' });
             }
             data.dob = dob;
             const response = await registerUser(data);
@@ -41,12 +40,8 @@ const Dob = ({ handleSubmit, errors }) => {
                 navigate("/sign-in");
             }
         } catch (error) {
-            handleError('apiError', error?.response?.data?.message || error?.message);
+            handleError('apiError', { message: error?.response?.data?.message || error?.message });
         }
-        // finally {
-        //     setIsloading(false);
-        // }
-
     }
 
     return (
@@ -79,19 +74,6 @@ const Dob = ({ handleSubmit, errors }) => {
                 </button>
                 <button onClick={() => navigate(-1)} className='text-blue-600 opacity-90 font-extrabold text-sm'>Go Back</button>
             </div>
-
-            {Object.keys(customError).length !== 0 && (
-                <div className="absolute float-right top-5 right-5 max-w-[300px]">
-                    {Object.keys(customError).map((err, index) => (
-                        <NotificationToast
-                            key={index}
-                            Icon={<HiExclamation className='h-5 w-5' />}
-                            message={customError[err]}
-                            type="error"
-                        />
-                    ))}
-                </div>
-            )}
         </div>
     )
 }

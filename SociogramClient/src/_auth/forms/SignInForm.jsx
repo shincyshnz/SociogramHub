@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form';
 import { FormFields, Loader, GetApp } from '../../components';
-import { Link } from 'react-router-dom';
-// import { LoginAPI } from '../../lib/api';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSignInAccount } from '../../lib/reactQuery/queriesAndMutations';
 import { useAuth, useError } from '../../hooks/customHooks';
 
@@ -15,10 +14,14 @@ const SignInForm = () => {
     setValue,
     setError,
   } = useForm();
-  // const [isLoading, setIsloading] = useState(false);
+
   const { handleError, deleteError } = useError();
-  const { mutateAsync: LoginUser, isLoading } = useSignInAccount();
-  const { setUserEmail, storeToken } = useAuth()
+  const { setUserEmail, storeToken } = useAuth();
+  const navigate = useNavigate();
+  const {
+    mutateAsync: LoginUser,
+    isLoading
+  } = useSignInAccount();
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
@@ -29,15 +32,15 @@ const SignInForm = () => {
       const response = await LoginUser(data);
 
       if (!response) {
-        handleError('login', "Sign in failed. Please try again.");
+        handleError('login', { message: "Sign in failed. Please try again." });
       }
 
       storeToken(response?.data?.accessToken);
       setUserEmail(prev => response?.data?.email);
-      console.log(response);
+      navigate("/");
 
     } catch (error) {
-      handleError('apiError', error?.response?.data?.message || error?.message);
+      handleError('apiError', { message: error?.response?.data?.message || error?.message });
     }
   }
 
@@ -47,24 +50,8 @@ const SignInForm = () => {
         <img className="max-w-[85%] px-10 mx-auto" src="/assets/logo.png" alt="logo" />
         <form className="w-full" onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="flex flex-col gap-2 w-full">
-            <FormFields label={"Email"}
-              name={"email"}
-              type={"text"}
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              clearErrors={clearErrors}
-              setError={setError}
-            />
-            <FormFields
-              label={"Password"}
-              name={"password"}
-              type={"password"}
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              clearErrors={clearErrors}
-              setError={setError}
+            <FormFields label={"Email"} name={"email"} type={"text"} register={register} errors={errors} setValue={setValue} clearErrors={clearErrors} setError={setError} />
+            <FormFields label={"Password"} name={"password"} type={"password"} register={register} errors={errors} setValue={setValue} clearErrors={clearErrors} setError={setError}
             />
           </div>
 
@@ -86,9 +73,13 @@ const SignInForm = () => {
           <span>Log in With Facebook</span>
         </a>
 
-        <a href="#" className="flex justify-center items-center gap-2 w-full text-blue-800 bg-transparent hover:cursor-pointer">
+        {/* <a href="" className="flex justify-center items-center gap-2 w-full text-blue-800 bg-transparent hover:cursor-pointer">
           <span>Forgot Password?</span>
-        </a>
+        </a> */}
+        <Link to="/forgot-password" className="flex justify-center items-center gap-2 w-full text-blue-800 bg-transparent hover:cursor-pointer">
+          <span>Forgot Password?</span>
+        </Link>
+
       </div >
 
       <div className="form-container w-full border p-6">
