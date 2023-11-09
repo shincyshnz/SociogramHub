@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FormFields, Loader } from './index'
+import OR from './OR';
 
 const SignUp = ({
   register,
@@ -27,11 +28,8 @@ const SignUp = ({
           <img className="bg-white w-4 h-4" src="assets/facebook_3128304.png" alt="facebook login link" />
           <span>Log in With Facebook</span>
         </a>
-        <div className="flex justify-center items-center gap-4 mb-4">
-          <div className="w-[150px] border-b-[1px] border-gray-300"></div>
-          <h6 className="font-semibold text-gray-500 text-sm">OR</h6>
-          <div className="w-[150px] border-b-[1px] border-gray-300"></div>
-        </div>
+        
+        <OR />
 
         <div className="flex flex-col gap-2 w-full">
           <FormFields label={"Email"}

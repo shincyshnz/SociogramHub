@@ -18,6 +18,7 @@ function generateOTP() {
 
 const sendOTP = async (req, res, next) => {
     const { email } = req.body;
+    console.log(email);
     try {
         const isEmailExists = await UsersModel.findOne({ email });
         if (!isEmailExists) {

@@ -7,7 +7,8 @@ import './index.css'
 import { useError } from './hooks/customHooks'
 import { HiExclamation } from 'react-icons/hi'
 import { NotificationToast } from './components'
-import ForgotPassword from './_auth/forms/forgotPassword'
+import ForgotPassword from './_auth/forms/ForgotPassword'
+import Otp from './_auth/forms/Otp'
 
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Route path='/sign-in' element={<SignInForm />} />
           <Route path='/sign-up' element={<SignUpForm />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/otp' element={<Otp />} />
         </Route>
 
         {/* Private Routes */}

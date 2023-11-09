@@ -4,6 +4,7 @@ import { FormFields, Loader, GetApp } from '../../components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignInAccount } from '../../lib/reactQuery/queriesAndMutations';
 import { useAuth, useError } from '../../hooks/customHooks';
+import OR from '../../components/OR';
 
 const SignInForm = () => {
   const {
@@ -20,7 +21,8 @@ const SignInForm = () => {
   const navigate = useNavigate();
   const {
     mutateAsync: LoginUser,
-    isLoading
+    isPending : isLoading,
+    isError,
   } = useSignInAccount();
 
   const onSubmit = async (data, e) => {
@@ -31,7 +33,7 @@ const SignInForm = () => {
 
       const response = await LoginUser(data);
 
-      if (!response) {
+      if (isError) {
         handleError('login', { message: "Sign in failed. Please try again." });
       }
 
@@ -62,20 +64,13 @@ const SignInForm = () => {
           </div>
         </form>
 
-        <div className="flex justify-center items-center gap-4 mb-4">
-          <div className="w-[150px] border-b-[1px] border-gray-300"></div>
-          <h6 className="font-semibold text-gray-500 text-sm">OR</h6>
-          <div className="w-[150px] border-b-[1px] border-gray-300"></div>
-        </div>
+        <OR />
 
         <a href="#" className="flex justify-center items-center gap-2 w-full text-blue-800 bg-transparent hover:cursor-pointer font-medium text-sm py-2 mb-3">
           <img className="w-4 h-4" src="assets/facebook_3128304.png" alt="facebook login link" />
           <span>Log in With Facebook</span>
         </a>
 
-        {/* <a href="" className="flex justify-center items-center gap-2 w-full text-blue-800 bg-transparent hover:cursor-pointer">
-          <span>Forgot Password?</span>
-        </a> */}
         <Link to="/forgot-password" className="flex justify-center items-center gap-2 w-full text-blue-800 bg-transparent hover:cursor-pointer">
           <span>Forgot Password?</span>
         </Link>

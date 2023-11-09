@@ -27,7 +27,7 @@ export const LoginAPI = async (data) => {
 };
 
 export const ChangePasswordAPI = async (data) => {
-    const response = await axios(`${import.meta.env.VITE_AUTH_URL}/forgot-password`, {
+    const response = await axios(`${import.meta.env.VITE_PASSWORD_URL}/otp`, {
         method: "POST",
         data,
     });
