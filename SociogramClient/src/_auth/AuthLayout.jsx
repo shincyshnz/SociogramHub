@@ -1,8 +1,20 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet, useNavigate, Navigate } from 'react-router-dom';
+import { useAuth } from '../hooks/customHooks';
 import Footer from '../components/Footer';
+import { useEffect } from 'react';
 
 const AuthLayout = () => {
-  const isAuthenticated = false;
+  const { isAuthenticated, setIsAuthenticated, getToken } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = getToken("accessToken");
+
+    if (accessToken) {
+      navigate("/home");
+    }
+
+  }, []);
 
   return (
     <>

@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { FormFields, Loader, GetApp } from '../../components';
 import { Link } from 'react-router-dom';
-import { LoginAPI } from '../../lib/api';
-import { useError } from '../../hooks/useError';
+// import { LoginAPI } from '../../lib/api';
+import { useSignInAccount } from '../../lib/reactQuery/queriesAndMutations';
+import { useAuth, useError } from '../../hooks/customHooks';
 
 const SignInForm = () => {
   const {
@@ -14,28 +15,29 @@ const SignInForm = () => {
     setValue,
     setError,
   } = useForm();
-  const [isLoading, setIsloading] = useState(false);
+  // const [isLoading, setIsloading] = useState(false);
   const { handleError, deleteError } = useError();
-
+  const { mutateAsync: LoginUser, isLoading } = useSignInAccount();
+  const { setUserEmail, storeToken } = useAuth()
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
     deleteError('apiError');
-    setIsloading(true);
     try {
       if (Object.keys(errors).length > 0) return;
 
-      const response = await LoginAPI(data);
+      const response = await LoginUser(data);
+
+      if (!response) {
+        handleError('login', "Sign in failed. Please try again.");
+      }
+
+      storeToken(response?.data?.accessToken);
+      setUserEmail(prev => response?.data?.email);
       console.log(response);
 
-      if (response) {
-        // navigate("/sign-in");
-        console.log(response.data);
-      }
     } catch (error) {
       handleError('apiError', error?.response?.data?.message || error?.message);
-    } finally {
-      setIsloading(false);
     }
   }
 

@@ -11,7 +11,6 @@ const SignUp = ({
   setIsNext,
 }) => {
   const [isLoading, setIsloading] = useState(false);
-
   const onSubmit = (data, e) => {
     e.preventDefault();
     setIsloading(true);

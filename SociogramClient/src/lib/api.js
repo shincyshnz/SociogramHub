@@ -1,11 +1,7 @@
 import axios from 'axios';
 
-import { formatDate } from '../lib/utils';
-
-export const registerAPI = async (data, dob) => {
-    const today = formatDate(new Date());
+export const registerAPI = async (data) => {
     let formData = new FormData();
-    data.dob = dob;
 
     for (const key in data) {
         formData.append(key, data[key]);
