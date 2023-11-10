@@ -16,14 +16,19 @@ const Otp = () => {
   });
 
   const handleChange = (e, index) => {
-    const input = e.target;
+    let input = e.target;
 
+    if (input.value && input.value > 9) {
+      input.value = input.value.slice(-1);
+    }
+    
     if (input.value && index < otpInputs.length - 1) {
       otpInputs[index + 1].ref.current.focus();
     } else if (!input.value && index > 0) {
       otpInputs[index - 1].ref.current.focus();
     }
     setValue(input.name, input.value);
+
   };
 
 
@@ -47,8 +52,6 @@ const Otp = () => {
             ref={input.ref}
             name={`otp${index + 1}`}
             maxLength="1"
-            min={0}
-            max={9}
             {...input}
             className="w-12 h-12 border rounded text-center mx-1 focus:outline-none focus:border-blue-500"
             onChange={(e) => handleChange(e, index)}
