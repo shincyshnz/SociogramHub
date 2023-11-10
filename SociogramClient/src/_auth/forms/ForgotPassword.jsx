@@ -21,7 +21,7 @@ const ForgotPassword = () => {
     const navigate = useNavigate();
     const {
         mutateAsync: ChangePassword,
-        isPending : isLoading,
+        isPending: isLoading,
         isError,
     } = useChangePassword();
 
@@ -37,8 +37,8 @@ const ForgotPassword = () => {
             if (isError) {
                 handleError('changePassword', { message: "Changing password failed. Please try again." });
             }
-            if(response){
-                navigate("/otp");
+            if (response) {
+                navigate("/otp", { state: { email: data.email } });
             }
 
         } catch (error) {

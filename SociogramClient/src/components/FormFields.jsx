@@ -1,5 +1,5 @@
 import { Alert } from 'flowbite-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
 const FormFields = ({
@@ -10,7 +10,8 @@ const FormFields = ({
     errors,
     setValue,
     clearErrors,
-    setError
+    setError,
+    className = "input-form"
 }) => {
     const [passwordShown, setPasswordShown] = useState(false);
 
@@ -45,6 +46,11 @@ const FormFields = ({
         },
         dob: {
             required: "password is required",
+        },
+        otp: {
+            pattern: {
+                value: /^[0-9]*$/,
+            }
         }
     }
 
@@ -54,12 +60,6 @@ const FormFields = ({
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-
-        // setFormValues({
-        //   ...formValues,
-        //   [name]: value,
-        // });
-
         validateInput(name, value);
     };
 
@@ -86,7 +86,7 @@ const FormFields = ({
     return <>
         <div className="input-container">
             <input
-                className="input-form"
+                className={className}
                 id={name}
                 type={passwordShown ? "text" : type}
                 placeholder={label}
