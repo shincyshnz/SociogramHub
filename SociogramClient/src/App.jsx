@@ -6,6 +6,7 @@ import { useError } from './hooks/customHooks'
 import { HiExclamation } from 'react-icons/hi'
 import { NotificationToast } from './components'
 import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
+import Home from './_root/pages/Home'
 
 
 const App = () => {
@@ -37,7 +38,7 @@ const App = () => {
 
         {/* Private Routes */}
         <Route element={<RootLayout />}>
-          <Route index element={<RootLayout />} />
+          <Route index element={<Home />} />
         </Route>
       </Routes>
     </main>

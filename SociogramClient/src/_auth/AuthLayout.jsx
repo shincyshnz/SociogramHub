@@ -5,16 +5,16 @@ import { useEffect } from 'react';
 
 const AuthLayout = () => {
   const { isAuthenticated, getToken } = useAuth();
+  const accessToken = getToken("accessToken");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const accessToken = getToken("accessToken");
 
     if (accessToken) {
       navigate("/");
     }
 
-  }, []);
+  }, [accessToken]);
 
   return (
     <>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatDate } from '../lib/utils';
 import { Alert, Datepicker } from 'flowbite-react';
 import { useError } from '../hooks/customHooks';
-import Loader from './Loader';
+import Loader from './shared/Loader';
 import { useCreateUserAccount } from '../lib/reactQuery/queriesAndMutations';
 
 const Dob = ({ handleSubmit, errors }) => {

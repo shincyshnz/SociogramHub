@@ -11,8 +11,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("accessToken", token);
   };
 
-  const getToken = () => {
-    return localStorage.getItem("accessToken");
+  const getToken = (tokenName) => {
+    return localStorage.getItem(tokenName);
   };
 
   const removeToken = () => {
