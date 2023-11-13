@@ -59,14 +59,14 @@ const otpVerification = (req, res, next) => {
 };
 
 const resetPassword = async (req, res, next) => {
-    const { userId, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const isUserExists = await UsersModel.findById({ _id: userId });
+        const isUserExists = await UsersModel.findOne({ email });
         if (!isUserExists) {
             customErrorMessage(404, "User Doesnot exists");
         }
         const hashedPassword = await generatePasswordHash(password);
-        const isUpdated = await UsersModel.findByIdAndUpdate({ _id: userId }, { password: hashedPassword }, { new: true });
+        const isUpdated = await UsersModel.findByIdAndUpdate({ _id: isUserExists._id }, { password: hashedPassword }, { new: true });
         if (!isUpdated) {
             customErrorMessage(400, "Password Updation Failed. Try again Later!");
         }

@@ -5,19 +5,26 @@ import { Loader } from '../../components';
 import { Link } from 'react-router-dom';
 import { VerifyOtpAPI } from '../../lib/api';
 import { useError } from '../../hooks/customHooks';
+import { useGenerateOtp } from '../../lib/reactQuery/queriesAndMutations';
 
 const Otp = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { handleSubmit, setValue } = useForm();
-  const { handleError } = useError();
+  const { handleSubmit, setValue, resetField } = useForm();
+  const { handleError, deleteError } = useError();
   const otpInputs = Array.from({ length: 6 }, (_, index) => {
     const inputRef = React.createRef();
     return {
       ref: inputRef,
     };
   });
+
+  const {
+    mutateAsync: GenerateOtpAPI,
+    isPending,
+    isError,
+  } = useGenerateOtp();
 
   const handleChange = (e, index) => {
     let input = e.target;
@@ -36,17 +43,42 @@ const Otp = () => {
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
+    setIsLoading(true);
     const otp = Object.values(data).join("");
 
     try {
       const response = await VerifyOtpAPI({ email: state.email, otp });
-      if (response) {
-        navigate("/reset-password");
+      if (response.status == 200) {
+        navigate("/reset-password", { state: { email: state.email } });
       }
     } catch (error) {
       handleError('verifyOtp', { message: error?.response?.data?.message || "OTP verification failed. Please try again." });
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const handleResendOTP = async (e) => {
+    e.preventDefault();
+    deleteError('apiError');
+    try {
+      if (!state.email) return;
+
+      const response = await GenerateOtpAPI({ email: state.email });
+
+      if (isError) {
+        handleError('changePassword', { message: "Please try again." });
+      }
+      if (response) {
+        otpInputs.map((_, index) => {
+          setValue(`otp${index + 1}`, '');
+        })
+      }
+
+    } catch (error) {
+      handleError('apiError', { message: error?.response?.data?.message || error?.message });
+    }
+  }
 
   useEffect(() => {
     if (!state) {
@@ -76,9 +108,10 @@ const Otp = () => {
           <button disabled={isLoading} className="w-full text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-5 dark:bg-blue-600 dark:hover:bg-blue-700 ">
             {isLoading ? (<Loader />) : "Submit"}
           </button>
-          <Link to="/resend-otp" className="text-blue-600">
-            <span>Resend OTP</span>
-          </Link>
+          <div className='flex gap-5'>
+            <button className="text-blue-600" onClick={handleResendOTP}>Resend OTP</button>
+            {isPending && <Loader text="Sending OTP"/>}
+          </div>
         </div>
       </form>
     </div>

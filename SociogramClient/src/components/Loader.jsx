@@ -1,9 +1,9 @@
 import { Spinner } from 'flowbite-react';
 
-const Loader = () => {
+const Loader = ({text = "Loading..."}) => {
   return (
     <div className="flex flex-wrap justify-center items-center gap-2">
-    <Spinner size="sm" /> Loading...
+    <Spinner size="sm" /> {text}
     </div>
 
   )

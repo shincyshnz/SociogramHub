@@ -3,9 +3,8 @@ import { useForm } from 'react-hook-form';
 import { FormFields, Loader } from '../../components';
 import { useResetPassword } from '../../lib/reactQuery/queriesAndMutations';
 import { useAuth, useError } from '../../hooks/customHooks';
-import { GoLock } from 'react-icons/go'
 import OR from '../../components/OR';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
   const {
@@ -20,30 +19,32 @@ const ResetPassword = () => {
 
   const { handleError, deleteError } = useError();
   const navigate = useNavigate();
+  const { state } = useLocation();
   const { isAuthenticated } = useAuth();
 
   const {
-    mutateAsync: ResetPasswordAPI,
+    mutateAsync: ResetPassword,
     isPending: isLoading,
     isError,
   } = useResetPassword();
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
-    // deleteError('apiError');
+    deleteError('apiError');
+    console.log(data, state.email);
     try {
-      console.log(data);
-      // if (Object.keys(errors).length > 0) return;
-      // if (!data.email) return;
+      if (!state.email) return;
+      const response = await ResetPassword({
+        email: state.email,
+        password: data.password
+      });
 
-      // const response = await ChangePassword(data);
-
-      // if (isError) {
-      //   handleError('changePassword', { message: "Changing password failed. Please try again." });
-      // }
-      // if (response) {
-      //   navigate("/otp", { state: { email: data.email } });
-      // }
+      if (isError) {
+        handleError('resetPassword', { message: "Resetting Password has failed. Please try again." });
+      }
+      if (response) {
+        navigate("/sign-in");
+      }
 
     } catch (error) {
       handleError('apiError', { message: error?.response?.data?.message || error?.message });
@@ -67,15 +68,6 @@ const ResetPassword = () => {
             </button>
           </div>
         </form>
-
-        <OR />
-        <Link to="/sign-up" className="text-sm font-bold" >Create new account</Link>
-      </div>
-
-      <div className="form-container w-full border">
-        <Link to="/sign-in">
-          <span className="text-sm font-bold">Back to login</span>
-        </Link>
       </div>
     </>
   )
