@@ -36,7 +36,8 @@ const ResetPassword = () => {
       if (!state.email) return;
       const response = await ResetPassword({
         email: state.email,
-        password: data.password
+        currentPassowrd : data?.currentPassowrd || "",
+        password: data.password,
       });
 
       if (isError) {

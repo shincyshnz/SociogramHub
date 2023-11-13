@@ -94,7 +94,7 @@ const Otp = () => {
         {otpInputs.map((input, index) => (
           <input
             key={index}
-            type="number"
+            type="text"
             ref={input.ref}
             name={`otp${index + 1}`}
             maxLength="1"
