@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { FormFields, Loader } from './index'
-import OR from './OR';
+import { FormFields, Loader, OR } from './index'
 
 const SignUp = ({
   register,

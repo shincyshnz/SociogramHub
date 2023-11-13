@@ -26,8 +26,24 @@ export const LoginAPI = async (data) => {
     return response;
 };
 
-export const ChangePasswordAPI = async (data) => {
+export const GenerateOtpAPI = async (data) => {
     const response = await axios(`${import.meta.env.VITE_PASSWORD_URL}/otp`, {
+        method: "POST",
+        data,
+    });
+    return response;
+};
+
+export const VerifyOtpAPI = async (data) => {
+    const response = await axios(`${import.meta.env.VITE_PASSWORD_URL}/verifyOtp`, {
+        method: "POST",
+        data,
+    });
+    return response;
+};
+
+export const ResetPasswordAPI = async (data) => {
+    const response = await axios(`${import.meta.env.VITE_PASSWORD_URL}/resetPassword`, {
         method: "POST",
         data,
     });

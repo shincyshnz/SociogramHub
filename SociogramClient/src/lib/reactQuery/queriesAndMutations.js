@@ -4,7 +4,7 @@ import {
     useQueryClient,
     useInfiniteQuery,
 } from '@tanstack/react-query';
-import { LoginAPI, registerAPI, ChangePasswordAPI } from '../api';
+import { LoginAPI, registerAPI, GenerateOtpAPI, ResetPasswordAPI } from '../api';
 
 export const useCreateUserAccount = ()=>{
     return useMutation({
@@ -18,8 +18,14 @@ export const useSignInAccount = (data)=>{
     })
 }
 
-export const useChangePassword = (data)=>{
+export const useGenerateOtp = (data)=>{
     return useMutation({
-        mutationFn : (data)=> ChangePasswordAPI(data)
+        mutationFn : (data)=> GenerateOtpAPI(data)
+    })
+}
+
+export const useResetPassword = (data)=>{
+    return useMutation({
+        mutationFn : (data)=> ResetPasswordAPI(data)
     })
 }

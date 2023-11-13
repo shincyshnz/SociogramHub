@@ -5,3 +5,4 @@ export { default as Dob } from './Dob';
 export { default as Footer } from './Footer';
 export { default as NotificationToast } from './NotificationToast';
 export { default as GetApp } from './GetApp';
+export { default as OR } from './OR';

@@ -3,8 +3,7 @@ const { generatePasswordHash } = require("../utils/bcrypt");
 const { customErrorMessage } = require("../utils/customErrorMsg");
 const { sendMailOTP } = require("../utils/nodemailer");
 
-let otp, otpTimer;
-const otpExpiryTime = 2 * 60 * 1000; //2 minutes in milliseconds
+let generatedOTP, otpTimer;
 
 function generateOTP() {
     // Declare a digits variable which stores all digits
@@ -18,7 +17,8 @@ function generateOTP() {
 
 const sendOTP = async (req, res, next) => {
     const { email } = req.body;
-    
+    const otpExpiryTime = 2 * 60 * 1000; //2 minutes in milliseconds
+   
     try {
         const isEmailExists = await UsersModel.findOne({ email });
         if (!isEmailExists) {
@@ -26,12 +26,12 @@ const sendOTP = async (req, res, next) => {
         }
 
         // Send otp to existing email 
-        otp = generateOTP();
-        const isMailSent = await sendMailOTP(isEmailExists.email, isEmailExists.username, otp);
+        generatedOTP = generateOTP();
+        const isMailSent = await sendMailOTP(isEmailExists.email, isEmailExists.username, generatedOTP);
 
         if (isMailSent) {
             otpTimer = setTimeout(() => {
-                otp = 0;
+                generatedOTP = 0;
                 console.log('OTP has expired and is now deleted.');
             }, otpExpiryTime);
 
@@ -47,11 +47,11 @@ const sendOTP = async (req, res, next) => {
 };
 
 const otpVerification = (req, res, next) => {
-    const { otp: otpRecieved } = req.body;
-    if (otpRecieved === otp) {
+    const { otp, email } = req.body;
+    if (generatedOTP === +otp) {
         clearTimeout(otpTimer);
         res.status(200).json({
-            message: "verified"
+            message: "OTP verification completed Succesfully"
         });
     } else {
         customErrorMessage(400, "OTP has expired!")

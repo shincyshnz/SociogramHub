@@ -1,5 +1,6 @@
 import { Alert } from 'flowbite-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useWatch } from 'react-hook-form';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
 const FormFields = ({
@@ -11,6 +12,7 @@ const FormFields = ({
     setValue,
     clearErrors,
     setError,
+    watch = null,
     className = "input-form"
 }) => {
     const [passwordShown, setPasswordShown] = useState(false);
@@ -44,8 +46,11 @@ const FormFields = ({
                 message: "Password must be of minimum 6 character."
             }
         },
+        confirmPassword: {
+            required: "Confirm password required",
+        },
         dob: {
-            required: "password is required",
+            required: "Date of birth is required",
         },
         otp: {
             pattern: {
@@ -57,7 +62,6 @@ const FormFields = ({
     const togglePasswordVisibility = () => {
         setPasswordShown(passwordShown => (passwordShown = !passwordShown));
     }
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         validateInput(name, value);
@@ -67,6 +71,7 @@ const FormFields = ({
         const rule = customRules[name];
 
         if (!rule) return;
+        console.log(name, value);
 
         if (rule?.required && !value) {
             setError(name, { type: "required", message: rule.required }
@@ -77,6 +82,8 @@ const FormFields = ({
             setError(name, { type: "minLength", message: rule?.minLength?.message });
         } else if (value.length > rule?.maxLength?.value) {
             setError(name, { type: "maxLength", message: rule?.maxLength?.message });
+        } else if (name === 'confirmPassword' && watch('password') !== value) {
+            setError(name, { type: "validate", message: "password do not match" });
         } else {
             clearErrors(name);
             setValue(name, value);
@@ -84,7 +91,7 @@ const FormFields = ({
     }
 
     return <>
-        <div className="input-container">
+        < div className="input-container" >
             <input
                 className={className}
                 id={name}
@@ -96,16 +103,20 @@ const FormFields = ({
                 onBlur={handleChange}
             />
 
-            {type === "password" && (
-                <i className="password-toggle" onClick={togglePasswordVisibility}>{passwordShown ? <AiFillEye /> : <AiFillEyeInvisible />}</i>
-            )}
-        </div>
+            {
+                type === "password" && (
+                    <i className="password-toggle" onClick={togglePasswordVisibility}>{passwordShown ? <AiFillEye /> : <AiFillEyeInvisible />}</i>
+                )
+            }
+        </div >
 
-        {errors[name] && (
-            <Alert color="failure" className='alert'>
-                {errors[name].message}
-            </Alert>
-        )}
+        {
+            errors[name] && (
+                <Alert color="failure" className='alert'>
+                    {errors[name].message}
+                </Alert>
+            )
+        }
     </>
 }
 

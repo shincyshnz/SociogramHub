@@ -1,10 +1,9 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { FormFields, Loader } from '../../components';
-import { useChangePassword } from '../../lib/reactQuery/queriesAndMutations';
+import { FormFields, Loader, OR } from '../../components';
+import { useGenerateOtp } from '../../lib/reactQuery/queriesAndMutations';
 import { useError } from '../../hooks/customHooks';
-import { GoLock } from 'react-icons/go'
-import OR from '../../components/OR';
+import { GoLock } from 'react-icons/go';
 import { Link, useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
@@ -20,10 +19,10 @@ const ForgotPassword = () => {
     const { handleError, deleteError } = useError();
     const navigate = useNavigate();
     const {
-        mutateAsync: ChangePassword,
+        mutateAsync: GenerateOtpAPI,
         isPending: isLoading,
         isError,
-    } = useChangePassword();
+    } = useGenerateOtp();
 
     const onSubmit = async (data, e) => {
         e.preventDefault();
@@ -32,7 +31,7 @@ const ForgotPassword = () => {
             if (Object.keys(errors).length > 0) return;
             if (!data.email) return;
 
-            const response = await ChangePassword(data);
+            const response = await GenerateOtpAPI(data);
 
             if (isError) {
                 handleError('changePassword', { message: "Changing password failed. Please try again." });

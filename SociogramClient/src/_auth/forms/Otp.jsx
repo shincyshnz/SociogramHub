@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { Loader } from '../../components';
 import { Link } from 'react-router-dom';
+import { VerifyOtpAPI } from '../../lib/api';
+import { useError } from '../../hooks/customHooks';
 
 const Otp = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { handleSubmit, setValue } = useForm();
+  const { handleError } = useError();
   const otpInputs = Array.from({ length: 6 }, (_, index) => {
     const inputRef = React.createRef();
     return {
@@ -21,28 +25,38 @@ const Otp = () => {
     if (input.value && input.value > 9) {
       input.value = input.value.slice(-1);
     }
-    
+
     if (input.value && index < otpInputs.length - 1) {
       otpInputs[index + 1].ref.current.focus();
     } else if (!input.value && index > 0) {
       otpInputs[index - 1].ref.current.focus();
     }
     setValue(input.name, input.value);
-
   };
 
-
-  const onSubmit = (data) => {
-    // Handle form submission
-    console.log(data);
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
     const otp = Object.values(data).join("");
-    console.log(otp);
 
+    try {
+      const response = await VerifyOtpAPI({ email: state.email, otp });
+      if (response) {
+        navigate("/reset-password");
+      }
+    } catch (error) {
+      handleError('verifyOtp', { message: error?.response?.data?.message || "OTP verification failed. Please try again." });
+    }
   };
+
+  useEffect(() => {
+    if (!state) {
+      navigate("/forgot-password");
+    }
+  }, []);
 
   return (
     <div className='form-container border'>
-      <h6 className="mb-4 font-bold text-base">OTP has been sent to your registered email {state.email}.</h6>
+      <h6 className="mb-4 font-bold text-base">OTP has been sent to your registered email {state?.email}.</h6>
 
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
         {otpInputs.map((input, index) => (

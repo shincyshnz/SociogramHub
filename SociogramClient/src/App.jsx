@@ -1,14 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
 import AuthLayout from './_auth/AuthLayout'
-import SignUpForm from './_auth/forms/SignUpForm'
-import SignInForm from './_auth/forms/SignInForm'
 import RootLayout from './_root/RootLayout'
 import './index.css'
 import { useError } from './hooks/customHooks'
 import { HiExclamation } from 'react-icons/hi'
 import { NotificationToast } from './components'
-import ForgotPassword from './_auth/forms/ForgotPassword'
-import Otp from './_auth/forms/Otp'
+import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
 
 
 const App = () => {
@@ -35,11 +32,12 @@ const App = () => {
           <Route path='/sign-up' element={<SignUpForm />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/otp' element={<Otp />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
         </Route>
 
         {/* Private Routes */}
         <Route element={<RootLayout />}>
-          <Route index element={<RootLayout/>} />
+          <Route index element={<RootLayout />} />
         </Route>
       </Routes>
     </main>
