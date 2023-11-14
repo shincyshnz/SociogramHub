@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { useAuth } from '../hooks/customHooks';
 import { Outlet, useNavigate } from 'react-router-dom';
-import LeftSidebar from '../components/shared/LeftSidebar';
-import RightSidebar from '../components/shared/RightSidebar';
 import TopBar from '../components/shared/TopBar';
+import LeftSideBar from '../components/shared/LeftSideBar';
+import RightSideBar from '../components/shared/RightSideBar';
+import BottomBar from '../components/shared/BottomBar';
 
 const RootLayout = () => {
   const { getToken } = useAuth();
@@ -17,14 +18,14 @@ const RootLayout = () => {
   }, [accessToken]);
 
   return (
-    <div className='w-full md:flex px-3'>
+    <div className='w-full md:flex'>
       <TopBar />
-      <LeftSidebar />
-      <RightSidebar />
-
+      <LeftSideBar />
       <section className='flex flex-1 h-full'>
         <Outlet />
       </section>
+      <RightSideBar />
+      <BottomBar />
 
     </div>
   )
