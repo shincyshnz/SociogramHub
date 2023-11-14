@@ -1,11 +1,13 @@
 import { Avatar, Dropdown, Navbar } from 'flowbite-react';
-import { HiHome, HiUserCircle, HiGlobeAlt, HiFilm, HiPlus, HiChatAlt2 } from 'react-icons/hi'
+import { HiHome, HiFilm, HiPlus, HiChatAlt2 } from 'react-icons/hi';
+import { MdOutlineExplore } from 'react-icons/md';
+
 const BottomBar = () => {
   return (
     <Navbar fluid rounded className='visible md:hidden'>
       <Navbar className='text-xl w-full'>
         <Navbar.Link href="/"><HiHome /></Navbar.Link>
-        <Navbar.Link href="#"><HiGlobeAlt /></Navbar.Link>
+        <Navbar.Link href="#"><MdOutlineExplore /></Navbar.Link>
         <Navbar.Link href="#"><HiFilm /></Navbar.Link>
         <Navbar.Link href="#"><HiPlus className='border-2 border-gray-600 rounded-md' /></Navbar.Link>
         <Navbar.Link href="#"><HiChatAlt2 /></Navbar.Link>
@@ -27,9 +29,6 @@ const BottomBar = () => {
           <Dropdown.Item>Sign out</Dropdown.Item>
         </Dropdown>
       </Navbar>
-      {/* <div className="flex md:order-2"> */}
-
-      {/* </div> */}
     </Navbar>
   );
 }

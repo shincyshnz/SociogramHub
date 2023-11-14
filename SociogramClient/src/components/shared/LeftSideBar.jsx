@@ -1,6 +1,7 @@
 import { Sidebar } from 'flowbite-react';
 import { BiBuoy } from 'react-icons/bi';
-import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from 'react-icons/hi';
+import { HiHome, HiOutlineSearch, HiUserCircle, HiFilm, HiOutlineHeart, HiInbox, HiMenu, HiPlus } from 'react-icons/hi';
+import { MdOutlineExplore } from 'react-icons/md';
 
 const LeftSideBar = () => {
   return (
@@ -10,37 +11,34 @@ const LeftSideBar = () => {
 
         <Sidebar.Items>
           <Sidebar.ItemGroup>
-            <Sidebar.Item href="#" icon={HiChartPie}>
-              Dashboard
+            <Sidebar.Item href="#" icon={HiHome}>
+              Home
             </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiViewBoards}>
-              Kanban
+            <Sidebar.Item href="#" icon={HiOutlineSearch}>
+              Search
+            </Sidebar.Item>
+            <Sidebar.Item href="#" icon={MdOutlineExplore}>
+              Explore
+            </Sidebar.Item>
+            <Sidebar.Item href="#" icon={HiFilm}>
+              Reels
             </Sidebar.Item>
             <Sidebar.Item href="#" icon={HiInbox}>
-              Inbox
+              Messages
             </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiUser}>
-              Users
+            <Sidebar.Item href="#" icon={HiOutlineHeart}>
+              Notifications
             </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiShoppingBag}>
-              Products
+            <Sidebar.Item href="#" icon={HiPlus}>
+              Create
             </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiArrowSmRight}>
-              Sign In
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiTable}>
-              Sign Up
+            <Sidebar.Item href="#" icon={HiUserCircle}>
+              Profile
             </Sidebar.Item>
           </Sidebar.ItemGroup>
           <Sidebar.ItemGroup>
-            <Sidebar.Item href="#" icon={HiChartPie}>
-              Upgrade to Pro
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={HiViewBoards}>
-              Documentation
-            </Sidebar.Item>
-            <Sidebar.Item href="#" icon={BiBuoy}>
-              Help
+            <Sidebar.Item href="#" icon={HiMenu}>
+              More
             </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
