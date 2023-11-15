@@ -48,7 +48,7 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
-        const user = await UsersModel.findOne({ email });
+        const user = await UsersModel.findOne({ email }).select(-password);
         if (!user) {
             customErrorMessage(404, "User doesnot exists.!");
         }
@@ -65,7 +65,7 @@ const login = async (req, res, next) => {
         res.status(200).cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: true,
-        }).json({ _id: user._id, email: user.email, username: user.username, accessToken });
+        }).json({ user, accessToken });
     } catch (error) {
         next(error);
     }

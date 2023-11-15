@@ -1,23 +1,12 @@
 import { Dropdown, Sidebar } from 'flowbite-react';
-import { HiHome, HiOutlineSearch, HiUserCircle, HiFilm, HiOutlineHeart, HiInbox, HiMenu, HiPlus, HiLogout, HiOutlineCog, HiOutlineSun, HiOutlineBookmark, HiSun } from 'react-icons/hi';
+import { HiHome, HiOutlineSearch, HiFilm, HiOutlineHeart, HiMenu, HiPlus, HiLogout, HiOutlineCog, HiOutlineSun, HiOutlineBookmark, HiChatAlt2 } from 'react-icons/hi';
 import { MdOutlineExplore } from 'react-icons/md';
-import { useNavigate } from 'react-router';
-import { useAuth, useError } from '../../hooks/customHooks';
+import MoreDropdown from '../MoreDropdown';
+import { useAuth } from '../../hooks/customHooks';
+import UserAvatar from './UserAvatar';
 
 const LeftSideBar = () => {
-  const { handleError, deleteError } = useError();
-  const { removeToken } = useAuth();
-
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    try {
-      removeToken();
-      navigate("/sign-in");
-    } catch (error) {
-      handleError('logout', error.message);
-    }
-  }
+  const { user } = useAuth();
 
   return (
     <section className='hidden md:block'>
@@ -40,7 +29,7 @@ const LeftSideBar = () => {
                 <Sidebar.Item href="#" icon={HiFilm}>
                   Reels
                 </Sidebar.Item>
-                <Sidebar.Item href="#" icon={HiInbox}>
+                <Sidebar.Item href="#" icon={HiChatAlt2}>
                   Messages
                 </Sidebar.Item>
                 <Sidebar.Item href="#" icon={HiOutlineHeart}>
@@ -49,7 +38,7 @@ const LeftSideBar = () => {
                 <Sidebar.Item href="#" icon={HiPlus}>
                   Create
                 </Sidebar.Item>
-                <Sidebar.Item href="#" icon={HiUserCircle}>
+                <Sidebar.Item href="#" icon={UserAvatar}>
                   Profile
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
@@ -59,12 +48,7 @@ const LeftSideBar = () => {
             <Sidebar.ItemGroup>
               <Sidebar.Item>
                 <Dropdown className="w-[200px] cursor-pointer" label="" dismissOnClick={false} placement="top" renderTrigger={() => <div className='flex items-center justify-start'><HiMenu className='mr-2 text-gray-600 text-2xl' /><span>More</span> </div>}>
-                  <Dropdown.Item icon={HiOutlineCog}>Settings</Dropdown.Item>
-                  <Dropdown.Item icon={HiOutlineBookmark}>Saved</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item icon={HiOutlineSun}>Dark Mode</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item icon={HiLogout} onClick={() => handleLogout()}>Log out</Dropdown.Item>
+                  <MoreDropdown position="leftsidebar" />
                 </Dropdown>
               </Sidebar.Item>
             </Sidebar.ItemGroup>

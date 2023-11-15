@@ -17,7 +17,7 @@ const SignInForm = () => {
   } = useForm();
 
   const { handleError, deleteError } = useError();
-  const { setUserEmail, storeToken } = useAuth();
+  const { setUser, storeToken } = useAuth();
   const navigate = useNavigate();
   const {
     mutateAsync: LoginUser,
@@ -38,7 +38,7 @@ const SignInForm = () => {
       }
 
       storeToken(response?.data?.accessToken);
-      setUserEmail(prev => response?.data?.email);
+      setUser(prev => response?.data?.user);
       navigate("/");
 
     } catch (error) {

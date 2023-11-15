@@ -6,3 +6,4 @@ export { default as Footer } from './Footer';
 export { default as NotificationToast } from './shared/NotificationToast';
 export { default as GetApp } from './shared/GetApp';
 export { default as OR } from './OR';
+export { default as MoreDropdown } from './MoreDropdown';

@@ -8,7 +8,6 @@ import { NotificationToast } from './components'
 import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
 import Home from './_root/pages/Home'
 
-
 const App = () => {
   const { customError } = useError();
 
