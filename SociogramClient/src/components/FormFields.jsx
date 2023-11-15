@@ -71,7 +71,6 @@ const FormFields = ({
         const rule = customRules[name];
 
         if (!rule) return;
-        console.log(name, value);
 
         if (rule?.required && !value) {
             setError(name, { type: "required", message: rule.required }

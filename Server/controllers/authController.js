@@ -41,10 +41,6 @@ const generateTokens = (res, userId) => {
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
 
-    res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: true,
-    });
     return [accessToken, refreshToken];
 }
 
@@ -64,9 +60,12 @@ const login = async (req, res, next) => {
         }
 
         // Generate Access Token and Refresh Token
-        const [accessToken] = generateTokens(res, user._id);
+        const [accessToken, refreshToken] = generateTokens(res, user._id);
 
-        res.status(200).json({ _id: user._id, email: user.email, username: user.username, accessToken });
+        res.status(200).cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: true,
+        }).json({ _id: user._id, email: user.email, username: user.username, accessToken });
     } catch (error) {
         next(error);
     }

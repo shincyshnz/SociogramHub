@@ -13,19 +13,19 @@ const RootLayout = () => {
 
   useEffect(() => {
     if (!accessToken) {
-      navigate("/sign-up");
+      navigate("/sign-in");
     }
   }, [accessToken]);
 
   return (
-    <div className='w-full md:flex'>
+    <div className='w-full flex flex-col justify-between md:flex-row'>
       <TopBar />
       <LeftSideBar />
-      <section className='flex flex-1 h-full'>
+      <section className='flex h-[75vh]'>
         <Outlet />
       </section>
       <RightSideBar />
-      <BottomBar />
+      <BottomBar className="sticky self-end" />
 
     </div>
   )

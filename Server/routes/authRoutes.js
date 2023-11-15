@@ -1,5 +1,5 @@
 const express = require("express");
-const { register, login, handleRefreshtoken, getUsers } = require("../controllers/authController");
+const { register, login, handleRefreshtoken, getUsers, logout } = require("../controllers/authController");
 const { upload } = require("../middleware/cloudinaryUpload");
 const router = express.Router();
 
