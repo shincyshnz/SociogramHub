@@ -6,6 +6,7 @@ import { SignUp, Dob, GetApp } from "../../components"
 const SignUpForm = () => {
   const [isNext, setIsNext] = useState(false);
 
+  // React-hook-form
   const {
     register,
     handleSubmit,

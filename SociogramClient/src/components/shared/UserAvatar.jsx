@@ -7,12 +7,12 @@ const UserAvatar = () => {
     const { user } = useAuth();
     if (user.profile) {
         return (
-            < Avatar size="xs" alt="User Avatar" img={user.profilePic} rounded />
+            <Avatar size="xs" alt="User Avatar" img={user.profilePic} rounded />
         )
     }
 
     return (
-        <HiUserCircle className='text-2xl text-gray-500'/>
+        <HiUserCircle className='text-gray-900 opacity-80' />
     );
 }
 

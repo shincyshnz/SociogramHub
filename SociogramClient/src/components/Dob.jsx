@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { formatDate } from '../lib/utils';
 import { Alert, Datepicker } from 'flowbite-react';
 import { useError } from '../hooks/customHooks';
-import Loader from './shared/Loader';
+import { Loader } from '../components';
 import { useCreateUserAccount } from '../lib/reactQuery/queriesAndMutations';
 
 const Dob = ({ handleSubmit, errors }) => {
     const navigate = useNavigate();
-    const { customError, handleError, deleteError } = useError();
+    const { handleError, deleteError } = useError();
     const today = formatDate(new Date());
     const [dob, setDob] = useState(today);
 
+    // React-query : register new user
     const {
         mutateAsync: registerUser,
         isLoading

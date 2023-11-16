@@ -1,5 +1,5 @@
 import React from 'react'
-import { Label, Navbar, TextInput } from 'flowbite-react';
+import { Navbar, TextInput } from 'flowbite-react';
 import { HiSearch, HiOutlineHeart } from 'react-icons/hi';
 
 const TopBar = () => {

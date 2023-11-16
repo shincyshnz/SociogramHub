@@ -1,12 +1,16 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { FormFields, Loader, GetApp } from '../../components';
+import { FormFields, Loader, GetApp, OR } from '../../components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignInAccount } from '../../lib/reactQuery/queriesAndMutations';
 import { useAuth, useError } from '../../hooks/customHooks';
-import OR from '../../components/OR';
 
 const SignInForm = () => {
+  const navigate = useNavigate();
+  const { handleError, deleteError } = useError();
+  const { setUser, storeToken } = useAuth();
+
+  // React-hook-form
   const {
     register,
     handleSubmit,
@@ -16,9 +20,7 @@ const SignInForm = () => {
     setError,
   } = useForm();
 
-  const { handleError, deleteError } = useError();
-  const { setUser, storeToken } = useAuth();
-  const navigate = useNavigate();
+  // React-Query : Login
   const {
     mutateAsync: LoginUser,
     isPending : isLoading,

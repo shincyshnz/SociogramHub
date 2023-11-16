@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react'
-import { useAuth } from '../hooks/customHooks';
+import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import TopBar from '../components/shared/TopBar';
-import LeftSideBar from '../components/shared/LeftSideBar';
-import RightSideBar from '../components/shared/RightSideBar';
-import BottomBar from '../components/shared/BottomBar';
+import { TopBar, LeftSideBar, RightSideBar, BottomBar } from '../components';
+import { useAuth } from '../hooks/customHooks';
 
 const RootLayout = () => {
-  const { getToken } = useAuth();
   const navigate = useNavigate();
+  const { getToken } = useAuth();
   const accessToken = getToken("accessToken");
 
   useEffect(() => {

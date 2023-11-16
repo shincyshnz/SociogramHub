@@ -7,6 +7,7 @@ import { GoLock } from 'react-icons/go';
 import { Link, useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
+    // React-hook-form
     const {
         register,
         handleSubmit,
@@ -18,6 +19,8 @@ const ForgotPassword = () => {
 
     const { handleError, deleteError } = useError();
     const navigate = useNavigate();
+
+    // React-Query : Otp generation for change password
     const {
         mutateAsync: GenerateOtpAPI,
         isPending: isLoading,
@@ -56,10 +59,6 @@ const ForgotPassword = () => {
                 <form className="w-full" onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className="flex flex-col gap-2 w-full">
                         <FormFields label={"Email"} name={"email"} type={"text"} register={register} errors={errors} setValue={setValue} clearErrors={clearErrors} setError={setError} />
-
-                        {/* <FormFields label={"Current Password"} name={"currentPassword"} type={"text"} register={register} errors={errors} setValue={setValue} clearErrors={clearErrors} setError={setError} />
-                        <FormFields label={"Password"} name={"password"} type={"password"} register={register} errors={errors} setValue={setValue} clearErrors={clearErrors} setError={setError} />
-                        <FormFields label={"Confirm Password"} name={"confirmPassword"} type={"password"} register={register} errors={errors} setValue={setValue} clearErrors={clearErrors} setError={setError} /> */}
                     </div>
                     <div className="w-full mt-4">
                         <button disabled={isLoading} onClick={handleSubmit(onSubmit)} className="w-full text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2 mr-2 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700 ">

@@ -1,12 +1,13 @@
 import { Route, Routes } from 'react-router-dom'
 import AuthLayout from './_auth/AuthLayout'
 import RootLayout from './_root/RootLayout'
-import './index.css'
 import { useError } from './hooks/customHooks'
 import { HiExclamation } from 'react-icons/hi'
 import { NotificationToast } from './components'
 import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
-import Home from './_root/pages/Home'
+import { Home } from './_root/pages'
+import './index.css'
+
 
 const App = () => {
   const { customError } = useError();
@@ -38,6 +39,17 @@ const App = () => {
         {/* Private Routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
+          <Route path='/search' element={<Home />} />
+          <Route path='/explore' element={<Home />} />
+          <Route path='/reels' element={<Home />} />
+          <Route path='/messages' element={<Home />} />
+          <Route path='/notifications' element={<Home />} />
+          <Route path='/create-posts' element={<Home />} />
+          <Route path='/update-posts/:id' element={<Home />} />
+          <Route path='/posts/:id' element={<Home />} />
+          <Route path='/profile/:id/*' element={<Home />} />
+          <Route path='/settings' element={<Home />} />
+          <Route path='/saved' element={<Home />} />
         </Route>
       </Routes>
     </main>

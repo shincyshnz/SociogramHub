@@ -1,25 +1,26 @@
-import { Avatar, Dropdown, Navbar } from 'flowbite-react';
-import { HiHome, HiFilm, HiPlus, HiChatAlt2 } from 'react-icons/hi';
-import { MdOutlineExplore } from 'react-icons/md';
-import MoreDropdown from '../MoreDropdown';
+import { Dropdown, Navbar } from 'flowbite-react';
 import UserAvatar from './UserAvatar';
+import { sidebarLinks } from '../../constatnts';
+import MoreDropdown from '../MoreDropdown';
 
 const BottomBar = () => {
   return (
-    <Navbar fluid rounded className='visible md:hidden'>
+    <Navbar fluid rounded className='visible md:hidden border-t-2 p-0'>
       <Navbar className='text-xl w-full'>
-        <Navbar.Link href="/"><HiHome className='text-gray-500'/></Navbar.Link>
-        <Navbar.Link href="#"><MdOutlineExplore className='text-gray-500'/></Navbar.Link>
-        <Navbar.Link href="#"><HiFilm className='text-gray-500'/></Navbar.Link>
-        <Navbar.Link href="#"><HiPlus className= 'text-gray-500 border-2 border-gray-500 rounded-md' /></Navbar.Link>
-        <Navbar.Link href="#"><HiChatAlt2 className='text-gray-500'/></Navbar.Link>
+
+        {sidebarLinks.map((link, index) => {
+          if (["Search", "Notifications", "Profile"].includes(link.label)) return;
+
+          return <Navbar.Link key={index} href={link.route}>{link.icon}</Navbar.Link>
+        })}
+
         <Dropdown
           arrowIcon={false}
           inline
           label={
             <UserAvatar />
           }>
-          <MoreDropdown />
+          <MoreDropdown position="bottom" />
         </Dropdown>
       </Navbar>
     </Navbar>

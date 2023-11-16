@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Loader } from '../../components';
-import { Link } from 'react-router-dom';
 import { VerifyOtpAPI } from '../../lib/api';
 import { useError } from '../../hooks/customHooks';
 import { useGenerateOtp } from '../../lib/reactQuery/queriesAndMutations';
 
 const Otp = () => {
-  const { state } = useLocation();
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const { handleSubmit, setValue, resetField } = useForm();
+  const { handleSubmit, setValue } = useForm();
   const { handleError, deleteError } = useError();
   const otpInputs = Array.from({ length: 6 }, (_, index) => {
     const inputRef = React.createRef();

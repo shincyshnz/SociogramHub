@@ -1,13 +1,12 @@
 import { Dropdown, Sidebar } from 'flowbite-react';
-import { HiHome, HiOutlineSearch, HiFilm, HiOutlineHeart, HiMenu, HiPlus, HiLogout, HiOutlineCog, HiOutlineSun, HiOutlineBookmark, HiChatAlt2 } from 'react-icons/hi';
-import { MdOutlineExplore } from 'react-icons/md';
+import { HiMenu } from 'react-icons/hi';
 import MoreDropdown from '../MoreDropdown';
-import { useAuth } from '../../hooks/customHooks';
-import UserAvatar from './UserAvatar';
+import { sidebarLinks } from '../../constatnts';
+import { useLocation } from 'react-router';
+
 
 const LeftSideBar = () => {
-  const { user } = useAuth();
-
+  const { pathname } = useLocation();
   return (
     <section className='hidden md:block'>
       <Sidebar aria-label="Sidebar with content separator example">
@@ -17,30 +16,17 @@ const LeftSideBar = () => {
 
             <Sidebar.Items>
               <Sidebar.ItemGroup>
-                <Sidebar.Item href="#" icon={HiHome}>
-                  Home
-                </Sidebar.Item>
-                <Sidebar.Item href="#" icon={HiOutlineSearch}>
-                  Search
-                </Sidebar.Item>
-                <Sidebar.Item href="#" icon={MdOutlineExplore}>
-                  Explore
-                </Sidebar.Item>
-                <Sidebar.Item href="#" icon={HiFilm}>
-                  Reels
-                </Sidebar.Item>
-                <Sidebar.Item href="#" icon={HiChatAlt2}>
-                  Messages
-                </Sidebar.Item>
-                <Sidebar.Item href="#" icon={HiOutlineHeart}>
-                  Notifications
-                </Sidebar.Item>
-                <Sidebar.Item href="#" icon={HiPlus}>
-                  Create
-                </Sidebar.Item>
-                <Sidebar.Item href="#" icon={UserAvatar}>
-                  Profile
-                </Sidebar.Item>
+                {sidebarLinks.map((link, index) => {
+                  const isActive = pathname === link.route;
+
+                  return (
+                    <Sidebar.Item key={index} href={link.route} className={`${isActive && 'bg-gray-100'}`}>
+                      <div className='flex flex-1 gap-3 items-center'>
+                        <div className='text-2xl'>{link.icon}</div>
+                        {link.label}
+                      </div>
+                    </Sidebar.Item>)
+                })}
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </div>

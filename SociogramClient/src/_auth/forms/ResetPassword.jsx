@@ -3,10 +3,15 @@ import { useForm } from 'react-hook-form';
 import { FormFields, Loader } from '../../components';
 import { useResetPassword } from '../../lib/reactQuery/queriesAndMutations';
 import { useAuth, useError } from '../../hooks/customHooks';
-import OR from '../../components/OR';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const { isAuthenticated } = useAuth();
+  const { handleError, deleteError } = useError();
+
+  // React-Hook-form
   const {
     register,
     handleSubmit,
@@ -17,11 +22,7 @@ const ResetPassword = () => {
     watch,
   } = useForm();
 
-  const { handleError, deleteError } = useError();
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const { isAuthenticated } = useAuth();
-
+  // React-Query 
   const {
     mutateAsync: ResetPassword,
     isPending: isLoading,
@@ -36,7 +37,7 @@ const ResetPassword = () => {
       if (!state.email) return;
       const response = await ResetPassword({
         email: state.email,
-        currentPassowrd : data?.currentPassowrd || "",
+        currentPassowrd: data?.currentPassowrd || "",
         password: data.password,
       });
 
