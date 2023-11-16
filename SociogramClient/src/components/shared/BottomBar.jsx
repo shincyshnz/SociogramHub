@@ -1,17 +1,25 @@
 import { Dropdown, Navbar } from 'flowbite-react';
-import UserAvatar from './UserAvatar';
+import { useLocation, Link } from 'react-router-dom';
 import { sidebarLinks } from '../../constatnts';
+import UserAvatar from './UserAvatar';
 import MoreDropdown from '../MoreDropdown';
 
 const BottomBar = () => {
+  const { pathname } = useLocation();
+
   return (
     <Navbar fluid rounded className='visible md:hidden border-t-2 p-0'>
       <Navbar className='text-xl w-full'>
 
         {sidebarLinks.map((link, index) => {
-          if (["Search", "Notifications", "Profile"].includes(link.label)) return;
+          const isActive = pathname === link.route;
 
-          return <Navbar.Link key={index} href={link.route}>{link.icon}</Navbar.Link>
+          if (["Search", "Notifications", "Profile"].includes(link.label)) return;
+          return (
+            <Link to={link.route} key={index} className={`${isActive && 'bg-gray-200'} p-3 rounded-sm`}>
+              {link.icon}
+            </Link>
+          )
         })}
 
         <Dropdown

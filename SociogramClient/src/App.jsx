@@ -5,7 +5,7 @@ import { useError } from './hooks/customHooks'
 import { HiExclamation } from 'react-icons/hi'
 import { NotificationToast } from './components'
 import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
-import { Home } from './_root/pages'
+import { CreatePost, EditPost, Explore, Home, Notifications, PostDetails, Profile, Reels, Saved, Search, Settings } from './_root/pages'
 import './index.css'
 
 
@@ -39,17 +39,17 @@ const App = () => {
         {/* Private Routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
-          <Route path='/search' element={<Home />} />
-          <Route path='/explore' element={<Home />} />
-          <Route path='/reels' element={<Home />} />
+          <Route path='/search' element={<Search />} />
+          <Route path='/explore' element={<Explore />} />
+          <Route path='/reels' element={<Reels />} />
           <Route path='/messages' element={<Home />} />
-          <Route path='/notifications' element={<Home />} />
-          <Route path='/create-posts' element={<Home />} />
-          <Route path='/update-posts/:id' element={<Home />} />
-          <Route path='/posts/:id' element={<Home />} />
-          <Route path='/profile/:id/*' element={<Home />} />
-          <Route path='/settings' element={<Home />} />
-          <Route path='/saved' element={<Home />} />
+          <Route path='/notifications' element={<Notifications />} />
+          <Route path='/create-posts' element={<CreatePost />} />
+          <Route path='/update-posts/:id' element={<EditPost />} />
+          <Route path='/posts/:id' element={<PostDetails />} />
+          <Route path='/profile/:id/*' element={<Profile />} />
+          <Route path='/settings' element={<Settings />} />
+          <Route path='/profile/:id/saved' element={<Saved />} />
         </Route>
       </Routes>
     </main>

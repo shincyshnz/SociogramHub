@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/customHooks';
 
 const RootLayout = () => {
   const navigate = useNavigate();
-  const { getToken } = useAuth();
+  const { getToken,userDetails } = useAuth();
   const accessToken = getToken("accessToken");
 
   useEffect(() => {
@@ -13,6 +13,8 @@ const RootLayout = () => {
       navigate("/sign-in");
     }
   }, [accessToken]);
+
+  console.log(userDetails);
 
   return (
     <div className='w-full flex flex-col justify-between md:flex-row'>

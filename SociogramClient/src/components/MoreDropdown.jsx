@@ -1,17 +1,16 @@
 import { Dropdown } from 'flowbite-react'
-import React, { useEffect } from 'react'
-import { HiLogout, HiOutlineBookmark, HiOutlineCog, HiOutlineSun } from 'react-icons/hi'
+import React from 'react'
+import { HiLogout, HiOutlineSun } from 'react-icons/hi'
 import { useAuth, useError } from '../hooks/customHooks';
 import { useNavigate, Link } from 'react-router-dom';
-import UserAvatar from './shared/UserAvatar';
 import { moreLinks, sidebarLinks } from '../constatnts';
 
 const MoreDropdown = ({ position = "leftside" }) => {
-    const { handleError } = useError();
-    const { removeToken } = useAuth();
-    let profile = sidebarLinks.filter(link => link.label === "Profile");;
-
     const navigate = useNavigate();
+    const { handleError } = useError();
+    const { removeToken, userDetails } = useAuth();
+    
+    let profile = sidebarLinks.filter(link => link.label === "Profile");;
 
     const handleLogout = () => {
         try {
@@ -21,17 +20,17 @@ const MoreDropdown = ({ position = "leftside" }) => {
             handleError('logout', error.message);
         }
     }
-
+console.log(userDetails);
 
     return (
         <>
             {position === "bottom" && (
-                    <Link to={profile[0].route}>
-                        <Dropdown.Item>
-                            <div className='flex flex-1 gap-3 items-center'>{profile[0].icon} {profile[0].label}</div>
-                        </Dropdown.Item>
-                    </Link>
-                )
+                <Link to={`${profile[0].route}/${userDetails._id}`}>
+                    <Dropdown.Item>
+                        <div className='flex flex-1 gap-3 items-center'>{profile[0].icon} {profile[0].label}</div>
+                    </Dropdown.Item>
+                </Link>
+            )
             }
 
             {moreLinks.map((link, index) => {
@@ -43,7 +42,7 @@ const MoreDropdown = ({ position = "leftside" }) => {
                     </Link>
                 )
             })}
-            
+
             <Dropdown.Divider />
             <Dropdown.Item icon={HiOutlineSun}>Dark Mode </Dropdown.Item>
             <Dropdown.Divider />

@@ -8,7 +8,7 @@ import { useAuth, useError } from '../../hooks/customHooks';
 const SignInForm = () => {
   const navigate = useNavigate();
   const { handleError, deleteError } = useError();
-  const { setUser, storeToken } = useAuth();
+  const { setUserDetails, storeToken } = useAuth();
 
   // React-hook-form
   const {
@@ -23,7 +23,7 @@ const SignInForm = () => {
   // React-Query : Login
   const {
     mutateAsync: LoginUser,
-    isPending : isLoading,
+    isPending: isLoading,
     isError,
   } = useSignInAccount();
 
@@ -40,7 +40,7 @@ const SignInForm = () => {
       }
 
       storeToken(response?.data?.accessToken);
-      setUser(prev => response?.data?.user);
+      setUserDetails(prev => prev = response?.data?.user);
       navigate("/");
 
     } catch (error) {

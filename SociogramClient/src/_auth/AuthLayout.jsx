@@ -9,7 +9,6 @@ const AuthLayout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     if (accessToken) {
       navigate("/");
     }

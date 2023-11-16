@@ -1,12 +1,16 @@
 import { Dropdown, Sidebar } from 'flowbite-react';
+import { useAuth } from '../../hooks/customHooks';
 import { HiMenu } from 'react-icons/hi';
 import MoreDropdown from '../MoreDropdown';
 import { sidebarLinks } from '../../constatnts';
 import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 
 
 const LeftSideBar = () => {
   const { pathname } = useLocation();
+  const { userDetails } = useAuth();
+
   return (
     <section className='hidden md:block'>
       <Sidebar aria-label="Sidebar with content separator example">
@@ -16,17 +20,19 @@ const LeftSideBar = () => {
 
             <Sidebar.Items>
               <Sidebar.ItemGroup>
-                {sidebarLinks.map((link, index) => {
-                  const isActive = pathname === link.route;
+                  {sidebarLinks.map((link, index) => {
+                    const isActive = pathname === link.route;
+                    const profileLink = link.label === "Profile" && `${link.route}/${userDetails._id}`;
 
-                  return (
-                    <Sidebar.Item key={index} href={link.route} className={`${isActive && 'bg-gray-100'}`}>
-                      <div className='flex flex-1 gap-3 items-center'>
-                        <div className='text-2xl'>{link.icon}</div>
-                        {link.label}
-                      </div>
-                    </Sidebar.Item>)
-                })}
+                    return (
+                        <Link to={`${profileLink ? profileLink : link.route}`} key={index} className={`cursor-pointer block py-2 px-4 ${isActive && 'bg-gray-100'}`}>
+                          <div className='flex flex-1 gap-3 items-center'>
+                            <div className='text-2xl'>{link.icon}</div>
+                            {link.label}
+                          </div>
+                        </Link>
+                      );
+                  })}
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </div>

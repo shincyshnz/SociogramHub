@@ -4,10 +4,10 @@ import { Avatar } from 'flowbite-react';
 import { HiUserCircle } from 'react-icons/hi';
 
 const UserAvatar = () => {
-    const { user } = useAuth();
-    if (user.profile) {
+    const { userDetails } = useAuth();
+    if (userDetails.profile_pic) {
         return (
-            <Avatar size="xs" alt="User Avatar" img={user.profilePic} rounded />
+            <Avatar size="xs" alt="User Avatar" img={userDetails.profile_pic} rounded />
         )
     }
 
