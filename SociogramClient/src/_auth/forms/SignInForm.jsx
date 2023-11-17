@@ -7,7 +7,7 @@ import { useAuth, useError } from '../../hooks/customHooks';
 
 const SignInForm = () => {
   const navigate = useNavigate();
-  const { handleError, deleteError } = useError();
+  const { handleError, deleteError, clearCustomErrors } = useError();
   const { setUserDetails, storeToken } = useAuth();
 
   // React-hook-form
@@ -24,24 +24,19 @@ const SignInForm = () => {
   const {
     mutateAsync: LoginUser,
     isPending: isLoading,
-    isError,
   } = useSignInAccount();
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
     deleteError('apiError');
+
     try {
-      if (Object.keys(errors).length > 0) return;
-
       const response = await LoginUser(data);
-
-      if (isError) {
-        handleError('login', { message: "Sign in failed. Please try again." });
+      if (response.status === 200) {
+        storeToken(response?.data?.accessToken);
+        setUserDetails(prev => prev = response?.data?.user);
+        navigate("/");
       }
-
-      storeToken(response?.data?.accessToken);
-      setUserDetails(prev => prev = response?.data?.user);
-      navigate("/");
 
     } catch (error) {
       handleError('apiError', { message: error?.response?.data?.message || error?.message });

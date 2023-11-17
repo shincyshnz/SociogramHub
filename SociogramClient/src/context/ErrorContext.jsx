@@ -20,8 +20,12 @@ export const ErrorProvider = ({ children }) => {
         }
     }
 
+    const clearCustomErrors = () => {
+        setCustomError({});
+    }
+
     return (
-        <ErrorContext.Provider value={{ customError, handleError, deleteError }}>
+        <ErrorContext.Provider value={{ customError, handleError, deleteError, clearCustomErrors }}>
             {children}
         </ErrorContext.Provider>
     );
