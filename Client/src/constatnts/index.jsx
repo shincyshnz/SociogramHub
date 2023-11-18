@@ -35,7 +35,7 @@ export const sidebarLinks = [
     },
     {
         icon: <HiPlus className=' border-2 border-gray-800 rounded-md' />,
-        route: "/create-posts",
+        route: "",
         label: "Create"
     },
     {

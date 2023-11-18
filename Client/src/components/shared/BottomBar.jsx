@@ -1,38 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dropdown, Navbar } from 'flowbite-react';
 import { useLocation, Link } from 'react-router-dom';
 import { sidebarLinks } from '../../constatnts';
 import UserAvatar from './UserAvatar';
 import MoreDropdown from '../MoreDropdown';
+import { CreatePost } from '../../_root/pages';
 
 const BottomBar = () => {
   const { pathname } = useLocation();
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
   return (
-    <Navbar fluid rounded className='visible md:hidden border-t-2 p-0'>
-      <Navbar className='text-xl w-full'>
+    <>
+      <Navbar fluid rounded className='visible md:hidden border-t-2 p-0'>
+        <Navbar className='text-xl w-full'>
 
-        {sidebarLinks.map((link, index) => {
-          const isActive = pathname === link.route;
+          {sidebarLinks.map((link, index) => {
+            // Links excluded in Bottombar and Notification and Search included in Topbar
+            if (["Search", "Notifications", "Profile"].includes(link.label)) return;
 
-          if (["Search", "Notifications", "Profile"].includes(link.label)) return;
-          return (
-            <Link to={link.route} key={index} className={`${isActive && 'bg-gray-200'} p-3 rounded-sm`}>
-              {link.icon}
-            </Link>
-          )
-        })}
+            // Create-post modal 
+            if (link.label === "Create") {
+              return (
+                <button onClick={() => setIsCreatePostOpen(true)} key={index} className={"cursor-pointer key={index} p-3 rounded-sm"}>
+                    {link.icon}
+                </button>
+              );
+            }
 
-        <Dropdown
-          arrowIcon={false}
-          inline
-          label={
-            <UserAvatar />
-          }>
-          <MoreDropdown position="bottom" />
-        </Dropdown>
+            // All other links
+            const isActive = pathname === link.route;
+            return (
+              <Link to={link.route} key={index} className={`${isActive && 'bg-gray-200'} p-3 rounded-sm`}>
+                {link.icon}
+              </Link>
+            )
+          })}
+
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <UserAvatar />
+            }>
+            <MoreDropdown position="bottom" />
+          </Dropdown>
+        </Navbar>
       </Navbar>
-    </Navbar>
+
+      {isCreatePostOpen && <CreatePost isCreatePostOpen={isCreatePostOpen} setIsCreatePostOpen={setIsCreatePostOpen} />}
+    </>
   );
 
 }

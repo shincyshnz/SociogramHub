@@ -46,7 +46,7 @@ const App = () => {
           <Route path='/reels' element={<Reels />} />
           <Route path='/messages' element={<Home />} />
           <Route path='/notifications' element={<Notifications />} />
-          <Route path='/create-posts' element={<CreatePost />} />
+          {/* <Route path='/create-posts' element={<CreatePost />} /> */}
           <Route path='/update-posts/:id' element={<EditPost />} />
           <Route path='/posts/:id' element={<PostDetails />} />
           <Route path='/profile/:id/*' element={<Profile />} />
