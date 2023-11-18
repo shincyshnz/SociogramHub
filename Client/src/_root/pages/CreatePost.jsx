@@ -1,30 +1,27 @@
 import { Button, Modal } from 'flowbite-react';
+import { IoIosImages } from "react-icons/io";
 
-const CreatePost = ({isCreatePostOpen, setIsCreatePostOpen}) => {
+const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
 
   return (
     <>
-      <Modal show={isCreatePostOpen} onClose={() => setIsCreatePostOpen(false)}>
-        <Modal.Header>Terms of Service</Modal.Header>
+      <Modal dismissible show={isCreatePostOpen} onClose={() => setIsCreatePostOpen(false)}>
+        <div className="modal-header p-2 mx-auto text-lg">Create new post</div>
         <Modal.Body>
-          <div className="space-y-6">
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              With less than a month to go before the European Union enacts new consumer privacy laws for its citizens,
-              companies around the world are updating their terms of service agreements to comply.
-            </p>
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant
-              to ensure a common set of data rights in the European Union. It requires organizations to notify users as
-              soon as possible of high-risk data breaches that could personally affect them.
-            </p>
+          <div className="max-w-xl">
+            <label
+              className="flex flex-1 flex-col gap-3 items-center w-full h-32 px-4 my-20 transition bg-transparent focus:outline-none">
+              <IoIosImages className='w-20 h-20 dark:text-white' />
+              <div className="font-medium text-gray-600">
+                Drag photos and videos here
+              </div>
+              <div className='p-2 bg-blue-500 rounded-md text-white'>
+                Select from computer
+              </div>
+              <input type="file" name="file_upload" className="hidden" />
+            </label>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => setIsCreatePostOpen(false)}>I accept</Button>
-          <Button color="gray" onClick={() => setIsCreatePostOpen(false)}>
-            Decline
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
