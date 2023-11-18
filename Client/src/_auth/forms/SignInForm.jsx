@@ -7,7 +7,7 @@ import { useAuth, useError } from '../../hooks/customHooks';
 
 const SignInForm = () => {
   const navigate = useNavigate();
-  const { handleError, deleteError, clearCustomErrors } = useError();
+  const { handleError, deleteError } = useError();
   const { setUserDetails, storeToken } = useAuth();
 
   // React-hook-form

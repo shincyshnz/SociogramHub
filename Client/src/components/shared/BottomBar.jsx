@@ -1,3 +1,4 @@
+import React from 'react';
 import { Dropdown, Navbar } from 'flowbite-react';
 import { useLocation, Link } from 'react-router-dom';
 import { sidebarLinks } from '../../constatnts';
@@ -33,5 +34,6 @@ const BottomBar = () => {
       </Navbar>
     </Navbar>
   );
+
 }
 export default BottomBar

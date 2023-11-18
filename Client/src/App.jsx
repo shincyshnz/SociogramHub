@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+
 import AuthLayout from './_auth/AuthLayout'
 import RootLayout from './_root/RootLayout'
 import { useError } from './hooks/customHooks'
@@ -7,14 +7,15 @@ import { NotificationToast } from './components'
 import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
 import { CreatePost, EditPost, Explore, Home, Notifications, PostDetails, Profile, Reels, Saved, Search, Settings } from './_root/pages'
 import './index.css'
+import { Route, Routes } from 'react-router-dom'
 
 
 const App = () => {
-  const { customError } = useError();
+  const { customError } = useError() || {};
 
   return (
     <main className='flex h-screen font-inter'>
-      {Object.keys(customError).length !== 0 && (
+      {customError && Object.keys(customError).length !== 0 && (
         <div className="absolute float-right top-5 right-5 max-w-[300px]">
           {Object.keys(customError).map((err, index) => (
             <NotificationToast
@@ -26,6 +27,7 @@ const App = () => {
           ))}
         </div>
       )}
+      
       <Routes>
         {/* Public Routes */}
         <Route element={<AuthLayout />}>
