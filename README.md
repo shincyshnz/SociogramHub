@@ -6,7 +6,6 @@
 -- Mongoose
 -- Cors
 -- Dotenv
--- Helmet
 -- Cloudinary
 -- Multer
 -- Json Web Token
