@@ -17,17 +17,18 @@ const LeftSideBar = () => {
   return (
     <>
       <section className='hidden md:block'>
-        <Sidebar aria-label="Sidebar with content separator example">
+        <Sidebar className="max-w-[80px] mx-auto lg:max-w-full" aria-label="Sidebar with content separator example">
           <div className="flex flex-col justify-between h-full">
             <div>
-              <Sidebar.Logo href="#" img="/assets/logo.png" imgAlt="SociogramHub logo" />
+              <Sidebar.Logo className="block lg:hidden" href="#" img="/assets/logoIcon.png" imgAlt="SociogramHub logo" />
+              <Sidebar.Logo className="hidden lg:block" href="#" img="/assets/logo.png" imgAlt="SociogramHub logo" />
 
               <Sidebar.Items>
                 <Sidebar.ItemGroup>
                   {sidebarLinks.map((link, index) => {
                     const LabelElement = <div className='flex flex-1 gap-3 items-center'>
                       <div className='text-2xl'>{link.icon}</div>
-                      {link.label}
+                      <span className="hidden lg:block">{link.label}</span>
                     </div>;
 
                     // Create-post modal 
@@ -54,7 +55,7 @@ const LeftSideBar = () => {
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 <Sidebar.Item>
-                  <Dropdown className="w-[200px] cursor-pointer" label="" dismissOnClick={false} placement="top" renderTrigger={() => <div className='flex items-center justify-start'><HiMenu className='mr-2 text-gray-600 text-2xl' /><span>More</span> </div>}>
+                  <Dropdown className="w-[200px] cursor-pointer" label="" dismissOnClick={false} placement="top" renderTrigger={() => <div className='flex items-center justify-start'><HiMenu className='mr-2 text-gray-600 text-2xl' /><span className="hidden lg:block">More</span> </div>}>
                     <MoreDropdown position="leftsidebar" />
                   </Dropdown>
                 </Sidebar.Item>

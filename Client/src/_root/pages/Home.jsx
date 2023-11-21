@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { UserAvatar } from '../../components';
+import { FormFields, UserAvatar } from '../../components';
 import { useAuth } from '../../hooks/customHooks';
 import { useForm } from 'react-hook-form';
-import { Textarea } from 'flowbite-react';
+import { Select, Textarea } from 'flowbite-react';
+import TagSearchBar from '../../components/TagSearchBar';
 
 const Home = () => {
   const { userDetails } = useAuth();
@@ -18,7 +19,6 @@ const Home = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name, value);
     setCharLength(prev => prev = value.length);
   }
 
@@ -37,7 +37,7 @@ const Home = () => {
           </div>
 
           <Textarea
-            className="border-0 focus:border-transparent focus:ring-gray-600"
+            className="border-0 focus:border-transparent focus:ring-0"
             {...register("post")}
             placeholder='Write a caption...'
             maxLength={2200}
@@ -46,9 +46,22 @@ const Home = () => {
             onChange={handleChange}
             rows={10}
           />
-          <div className='relative'>
-          <span className='absolute right-1'>{charLength}/2,200</span>
+          <div className='relative mb-3'>
+            <span className='absolute right-1'>{charLength}/2,200</span>
           </div>
+          <FormFields
+            className="border-none focus:ring-0"
+            label={"Add Location"}
+            name={"location"}
+            type={"text"}
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            clearErrors={clearErrors}
+            setError={setError}
+          />
+          <TagSearchBar/>
+          
         </div>
       </div>
     </div>
