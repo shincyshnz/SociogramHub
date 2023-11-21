@@ -7,7 +7,7 @@ import { moreLinks, sidebarLinks } from '../constatnts';
 
 const MoreDropdown = ({ position = "leftside" }) => {
     const navigate = useNavigate();
-    const { handleError } = useError();
+    const { handleError,clearCustomErrors } = useError();
     const { removeToken, userDetails } = useAuth();
     
     let profile = sidebarLinks.filter(link => link.label === "Profile");;
@@ -15,12 +15,12 @@ const MoreDropdown = ({ position = "leftside" }) => {
     const handleLogout = () => {
         try {
             removeToken();
+            clearCustomErrors();
             navigate("/sign-in");
         } catch (error) {
             handleError('logout', error.message);
         }
     }
-console.log(userDetails);
 
     return (
         <>

@@ -1,8 +1,9 @@
 const { upload, handleUpload, ImageURIFormat } = require("../middleware/cloudinaryUpload");
+const users = require("../model/users");
 const { UsersModel } = require("../model/users");
 const { generatePasswordHash, comparePasswordHash } = require("../utils/bcrypt");
 const { customErrorMessage } = require("../utils/customErrorMsg");
-const { generateAccessToken, generateRefreshToken, verifyRefreshToken } = require("../utils/jwt");
+const { generateAccessToken, generateRefreshToken, verifyRefreshToken, verifyAccessToken } = require("../utils/jwt");
 
 const register = async (req, res, next) => {
     const { fullname, username, email, password, bio, dob, gender } = req.body;
@@ -90,8 +91,21 @@ const handleRefreshtoken = (req, res, next) => {
     }
 };
 
+const getUserDetails = async (req, res, next) => {
+    try {
+        const { accessToken } = req.body;
+        console.log(req.body);
+        const { _id: userId } = verifyAccessToken(accessToken);
+        const userDetails = await UsersModel.findById(userId).select("-password");
+        res.status(200).json({ userDetails });
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     register,
     login,
     handleRefreshtoken,
+    getUserDetails
 }

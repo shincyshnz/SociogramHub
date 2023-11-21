@@ -41,7 +41,7 @@ const LeftSideBar = () => {
 
                     // All other links in sidebar
                     const isActive = pathname === link.route;
-                    const profileLink = link.label === "Profile" && `${link.route}/${userDetails._id}`;
+                    const profileLink = link.label === "Profile" && `${link.route}/${userDetails?._id}`;
                     return (
                       <Link to={`${profileLink ? profileLink : link.route}`} key={index} className={`cursor-pointer block py-2 px-4 ${isActive && 'bg-gray-100'}`}>
                         {LabelElement}

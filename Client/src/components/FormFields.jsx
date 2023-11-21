@@ -1,6 +1,5 @@
-import { Alert } from 'flowbite-react'
-import { useState } from 'react'
-import { useWatch } from 'react-hook-form';
+import { Alert } from 'flowbite-react';
+import { useState } from 'react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
 const FormFields = ({

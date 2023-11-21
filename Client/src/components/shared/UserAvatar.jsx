@@ -3,16 +3,16 @@ import { useAuth } from '../../hooks/customHooks'
 import { Avatar } from 'flowbite-react';
 import { HiUserCircle } from 'react-icons/hi';
 
-const UserAvatar = () => {
+const UserAvatar = ({size = "25px"}) => {
     const { userDetails } = useAuth();
     if (userDetails.profile_pic) {
         return (
-            <Avatar size="xs" alt="User Avatar" img={userDetails.profile_pic} rounded />
+            <Avatar size={size} alt="User Avatar" img={userDetails.profile_pic} rounded />
         )
     }
 
     return (
-        <HiUserCircle className='text-gray-900 opacity-80' />
+        <HiUserCircle size={size} className='text-gray-900 opacity-90' />
     );
 }
 
