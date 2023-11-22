@@ -38,9 +38,9 @@ const register = async (req, res, next) => {
     }
 };
 
-const generateTokens = (res, userId) => {
-    const accessToken = generateAccessToken(userId);
-    const refreshToken = generateRefreshToken(userId);
+const generateTokens = (res,) => {
+    const accessToken = generateAccessToken();
+    const refreshToken = generateRefreshToken();
 
     return [accessToken, refreshToken];
 }
@@ -83,7 +83,7 @@ const handleRefreshtoken = (req, res, next) => {
             customErrorMessage(404, "Refresh token has expired. Login to Continue");
         }
 
-        const [accessToken] = generateTokens(res, userId);
+        const [accessToken] = generateTokens(res,);
         res.status(200).json({ accessToken });
 
     } catch (error) {
@@ -93,10 +93,9 @@ const handleRefreshtoken = (req, res, next) => {
 
 const getUserDetails = async (req, res, next) => {
     try {
-        const { accessToken } = req.body;
-        console.log(req.body);
-        const { _id: userId } = verifyAccessToken(accessToken);
-        const userDetails = await UsersModel.findById(userId).select("-password");
+        const { userId } = req.body;
+        const userDetails = await UsersModel.findById({ _id: userId }).select("-password");
+        console.log(userDetails, "userDetails");
         res.status(200).json({ userDetails });
     } catch (error) {
         next(error);
@@ -105,8 +104,8 @@ const getUserDetails = async (req, res, next) => {
 
 const getUsers = async (req, res, next) => {
     try {
-        const {name} = req.query;
-        let condition = {$or: [{ username: { $regex: name, $options: "i" }},{ fullname: { $regex: name, $options: "i" }}]};
+        const { name } = req.query;
+        let condition = { $or: [{ username: { $regex: name, $options: "i" } }, { fullname: { $regex: name, $options: "i" } }] };
         const users = await UsersModel.find(condition).select("username fullname");
         res.status(200).json({ users });
     } catch (error) {

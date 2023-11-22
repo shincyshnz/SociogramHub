@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { axiosInstance } from './Interceptors';
 
 export const registerAPI = async (data) => {
     let formData = new FormData();
@@ -50,11 +51,9 @@ export const ResetPasswordAPI = async (data) => {
     return response;
 };
 
-export const getUserDetailsAPI = async (token) => {
-    const response = await axios.post(`${import.meta.env.VITE_AUTH_URL}/accessToken`, {
-        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRiMDk0YTAzZGU5ZmJmNjU1NzczYTEiLCJpYXQiOjE3MDA1NDE1MjAsImV4cCI6MTcwMDYyNzkyMH0.LmVqhnkj3bNRuktuq87z2dw2NZr_8rzM5NW-KZ28p4M"
-    });
-    return response?.data?.userDetails;
+export const GetUserDetailsAPI = async () => {
+    const response = await axiosInstance(`${import.meta.env.VITE_AUTH_URL}/getUserDetails`);
+    return response;
 }
 
 export const getUsers = async (searchTerm) => {

@@ -1,8 +1,20 @@
-import React from 'react'
+import React from 'react';
+import { useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations'
 
 const Profile = () => {
+  
+  const {
+    data: userDetails,
+    mutateAsyn: getUserDetails,
+    isPending,
+    isError,
+    error } = useGetUserDetails();
+
+  if (isError) {
+    console.log(error?.response?.status === 404) ;
+  }
   return (
-    <div>Profile</div>
+    <div>{userDetails?.data}</div>
   )
 }
 

@@ -4,8 +4,7 @@ import {
     useQueryClient,
     useInfiniteQuery,
 } from '@tanstack/react-query';
-import { LoginAPI, registerAPI, GenerateOtpAPI, ResetPasswordAPI, getUserDetailsAPI } from '../api';
-import { useDebounce } from '../../hooks/customHooks';
+import { LoginAPI, registerAPI, GenerateOtpAPI, ResetPasswordAPI, GetUserDetailsAPI } from '../api';
 
 export const useCreateUserAccount = () => {
     return useMutation({
@@ -31,10 +30,8 @@ export const useResetPassword = (data) => {
     })
 }
 
-export const useGetUserDetails = (token) => {
-    return useMutation({
-        mutationFn: (token) => getUserDetailsAPI(token)
-    })
+export const useGetUserDetails = ()=>{
+    return useQuery({ queryKey: ['userDetails'], queryFn: GetUserDetailsAPI });
 }
 
 export const useGetUsers = (searchName) => {

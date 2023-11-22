@@ -5,7 +5,7 @@ import { useError } from './hooks/customHooks'
 import { HiExclamation } from 'react-icons/hi'
 import { NotificationToast } from './components'
 import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
-import { CreatePost, EditPost, Explore, Home, Notifications, PostDetails, Profile, Reels, Saved, Search, Settings } from './_root/pages'
+import { EditPost, Explore, Home, Notifications, PostDetails, Profile, Reels, Saved, Search, Settings } from './_root/pages'
 import './index.css'
 import { Route, Routes } from 'react-router-dom'
 
@@ -49,7 +49,7 @@ const App = () => {
           {/* <Route path='/create-posts' element={<CreatePost />} /> */}
           <Route path='/update-posts/:id' element={<EditPost />} />
           <Route path='/posts/:id' element={<PostDetails />} />
-          <Route path='/profile/:id/*' element={<Profile />} />
+          <Route path='/profile' element={<Profile />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/profile/:id/saved' element={<Saved />} />
         </Route>

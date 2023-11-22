@@ -3,19 +3,19 @@ const { customErrorMessage } = require("../utils/customErrorMsg");
 
 const checkAuth = (req, res, next) => {
     try {
-        let token = req.headers.authorization;
+        let token = req.headers.accesstoken;
         if (!token) {
             customErrorMessage(401, "Access Denied");
         }
+        console.log(token, "==token");
 
-        if (token.startsWith("Bearer ")) {
-            token = token.slice(7, token.length).trimLeft()
-        }
-
-        const verifyToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
-        if (!verifyToken) {
+        const verifyToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY, function (err) {
             customErrorMessage(401, "Unauthorized Access!");
-        }
+        });
+        // console.log(verifyToken,"==verifyToken");
+        // if (!verifyToken) {
+        //     customErrorMessage(401, "Unauthorized Access!");
+        // }
         req.body.userId = verifyToken._id;
         next();
     } catch (error) {
