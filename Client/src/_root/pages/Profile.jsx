@@ -1,10 +1,8 @@
 import React from 'react';
 import { Loader } from '../../components'
 import { useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations'
-import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const navigate = useNavigate();
   const {
     data: userDetails,
     isPending,

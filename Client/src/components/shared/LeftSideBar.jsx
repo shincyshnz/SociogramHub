@@ -20,8 +20,8 @@ const LeftSideBar = () => {
         <Sidebar className="max-w-[80px] mx-auto lg:max-w-full" aria-label="Sidebar with content separator example">
           <div className="flex flex-col justify-between h-full">
             <div>
-              <Sidebar.Logo className="block lg:hidden" href="#" img="/assets/logoIcon.png" imgAlt="SociogramHub logo" />
-              <Sidebar.Logo className="hidden lg:block" href="#" img="/assets/logo.png" imgAlt="SociogramHub logo" />
+              <Sidebar.Logo className="block lg:hidden" href="/" img="/assets/logoIcon.png" imgAlt="SociogramHub logo" />
+              <Sidebar.Logo className="hidden lg:block" href="/" img="/assets/logo.png" imgAlt="SociogramHub logo" />
 
               <Sidebar.Items>
                 <Sidebar.ItemGroup>

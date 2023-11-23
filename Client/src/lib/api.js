@@ -56,7 +56,7 @@ export const GetUserDetailsAPI = async () => {
     return response?.data?.userDetails;
 }
 
-export const getUsers = async (searchTerm) => {
+export const GetUsersAPI = async (searchTerm) => {
     const response = await axios(`${import.meta.env.VITE_AUTH_URL}/searchUser?name=${searchTerm}`);
-    return response?.data;
+    return response?.data?.users;
 }
