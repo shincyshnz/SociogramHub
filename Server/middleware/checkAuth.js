@@ -1,26 +1,27 @@
 const jwt = require("jsonwebtoken");
 const { customErrorMessage } = require("../utils/customErrorMsg");
 
-const checkAuth = (req, res, next) => {
+exports.checkAuth = (req, res, next) => {
     try {
-        let token = req.headers.accesstoken;
+        let token = req.headers.authorization;
         if (!token) {
             customErrorMessage(401, "Access Denied");
         }
-        console.log(token, "==token");
 
-        const verifyToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY, function (err) {
+        let verifyToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
+        console.log(verifyToken, "==verifyAccessToken");
+        if (!verifyToken) {
             customErrorMessage(401, "Unauthorized Access!");
-        });
-        // console.log(verifyToken,"==verifyToken");
-        // if (!verifyToken) {
-        //     customErrorMessage(401, "Unauthorized Access!");
-        // }
+        }
+
         req.body.userId = verifyToken._id;
         next();
     } catch (error) {
-        next(error);
+        if (error.message === "jwt expired") {
+            customErrorMessage(401, "Unauthorized Access!");
+        } else {
+            next(error);
+
+        }
     }
 };
-
-module.exports = { checkAuth };

@@ -16,6 +16,7 @@ const RootLayout = () => {
       navigate("/sign-in");
     }
   }, [accessToken]);
+// }, []);
 
   return (
     <div className='w-full flex flex-col justify-between md:flex-row p-2'>

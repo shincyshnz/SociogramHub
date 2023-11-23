@@ -52,8 +52,8 @@ export const ResetPasswordAPI = async (data) => {
 };
 
 export const GetUserDetailsAPI = async () => {
-    const response = await axiosInstance(`${import.meta.env.VITE_AUTH_URL}/getUserDetails`);
-    return response;
+    const response = await axiosInstance.get(`${import.meta.env.VITE_AUTH_URL}/profile`);
+    return response?.data?.userDetails;
 }
 
 export const getUsers = async (searchTerm) => {

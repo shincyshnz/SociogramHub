@@ -38,9 +38,9 @@ const register = async (req, res, next) => {
     }
 };
 
-const generateTokens = (res,) => {
-    const accessToken = generateAccessToken();
-    const refreshToken = generateRefreshToken();
+const generateTokens = (res,userId) => {
+    const accessToken = generateAccessToken(userId);
+    const refreshToken = generateRefreshToken(userId);
 
     return [accessToken, refreshToken];
 }
@@ -74,16 +74,17 @@ const login = async (req, res, next) => {
 
 const handleRefreshtoken = (req, res, next) => {
     try {
+        // console.log(req.cookies.refreshToken, "==refreshToken");
         if (!req.cookies.refreshToken) {
             customErrorMessage(400, "Refresh token not found in the cookie.");
         }
 
         const userId = verifyRefreshToken(req.cookies.refreshToken);
         if (!userId) {
-            customErrorMessage(404, "Refresh token has expired. Login to Continue");
+            customErrorMessage(401, "Refresh token has expired. Login to Continue");
         }
 
-        const [accessToken] = generateTokens(res,);
+        const [accessToken] = generateTokens(res,userId);
         res.status(200).json({ accessToken });
 
     } catch (error) {
@@ -94,8 +95,8 @@ const handleRefreshtoken = (req, res, next) => {
 const getUserDetails = async (req, res, next) => {
     try {
         const { userId } = req.body;
+        console.log(userId, "userId ingetUserDetails");
         const userDetails = await UsersModel.findById({ _id: userId }).select("-password");
-        console.log(userDetails, "userDetails");
         res.status(200).json({ userDetails });
     } catch (error) {
         next(error);

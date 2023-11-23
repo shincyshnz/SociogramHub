@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/register",upload.single("profile_pic"), register);
 router.post("/login", login);
 router.get("/refreshToken", handleRefreshtoken);
-router.get("/getUserDetails", checkAuth, getUserDetails);
+router.get("/profile", checkAuth, getUserDetails);
 router.get('/searchUser', getUsers);
 
 module.exports = router;

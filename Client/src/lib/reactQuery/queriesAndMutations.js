@@ -30,8 +30,12 @@ export const useResetPassword = (data) => {
     })
 }
 
-export const useGetUserDetails = ()=>{
-    return useQuery({ queryKey: ['userDetails'], queryFn: GetUserDetailsAPI });
+export const useGetUserDetails = () => {
+    return useQuery({
+        queryKey: ['userDetails'],
+        queryFn: GetUserDetailsAPI,
+        retry: false,
+    });
 }
 
 export const useGetUsers = (searchName) => {

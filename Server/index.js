@@ -12,6 +12,7 @@ connectDb();
 
 // Middleware for parsing JSON data
 app.use(express.json());
+app.use(cookieParser());
 // Middleware for parsing URL-encoded data
 // app.use(express.urlencoded({ extended: true }));
 // app.use(helmet());
@@ -20,11 +21,10 @@ app.use(cors({
     origin: ["http://localhost","http://localhost:5173"],
     credentials: true,
     cookie:{
-        sameSite : "none",
+        sameSite : "None",
         secure:true,
     }
 }));
-app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/forgotPassword', forgotPasswordRoutes);

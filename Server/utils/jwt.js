@@ -4,19 +4,19 @@ const generateAccessToken = (userId) => {
     return jwt.sign(
         { _id: userId },
         process.env.ACCESS_TOKEN_SECRET_KEY,
-        { expiresIn: '60s' }
+        { expiresIn: '10s' }
     );
 };
 
 const generateRefreshToken = (userId) => {
-    return jwt.sign({ _id: userId }, process.env.REFRESH_TOKEN_SECRET_KEY, { expiresIn: "1y" });
+    return jwt.sign({ _id: userId }, process.env.REFRESH_TOKEN_SECRET_KEY);
 
 };
 
 const verifyRefreshToken = (refreshToken) => {
-    if (!refreshToken) return false;
     const validToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY);
-    if (!validToken) return false;
+    // console.log(validToken._id, "== ValidrefreshToken");    
+    if (!validToken) return false;  
     return validToken._id;
 };
 
