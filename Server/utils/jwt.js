@@ -4,7 +4,7 @@ const generateAccessToken = (userId) => {
     return jwt.sign(
         { _id: userId },
         process.env.ACCESS_TOKEN_SECRET_KEY,
-        { expiresIn: '10s' }
+        { expiresIn: '1d' }
     );
 };
 
@@ -15,7 +15,6 @@ const generateRefreshToken = (userId) => {
 
 const verifyRefreshToken = (refreshToken) => {
     const validToken = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY);
-    // console.log(validToken._id, "== ValidrefreshToken");    
     if (!validToken) return false;  
     return validToken._id;
 };

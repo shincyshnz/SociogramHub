@@ -9,7 +9,7 @@ exports.checkAuth = (req, res, next) => {
         }
 
         let verifyToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
-        console.log(verifyToken, "==verifyAccessToken");
+        // console.log(verifyToken, "==verifyAccessToken");
         if (!verifyToken) {
             customErrorMessage(401, "Unauthorized Access!");
         }

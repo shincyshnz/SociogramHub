@@ -34,7 +34,7 @@ export const useGetUserDetails = () => {
     return useQuery({
         queryKey: ['userDetails'],
         queryFn: GetUserDetailsAPI,
-        retry: false,
+        // retry: false,
     });
 }
 

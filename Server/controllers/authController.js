@@ -95,7 +95,6 @@ const handleRefreshtoken = (req, res, next) => {
 const getUserDetails = async (req, res, next) => {
     try {
         const { userId } = req.body;
-        console.log(userId, "userId ingetUserDetails");
         const userDetails = await UsersModel.findById({ _id: userId }).select("-password");
         res.status(200).json({ userDetails });
     } catch (error) {

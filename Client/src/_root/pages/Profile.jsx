@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Loader } from '../../components'
 import { useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations'
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +7,9 @@ const Profile = () => {
   const navigate = useNavigate();
   const {
     data: userDetails,
-    isLoading,
     isPending,
-    isError,
     isSuccess,
+    isError,
     error } = useGetUserDetails();
 
   if (isPending) {
@@ -20,10 +19,14 @@ const Profile = () => {
   if (isSuccess) {
     console.log("Success");
   }
-  console.log(userDetails);
+
+  if (isError) {
+    console.log(error);
+  }
 
   return (
-    <div className='text-black font-bold text-xl'>{userDetails?.username}</div>
+    <div className='text-black font-bold text-xl'>{userDetails?.username}
+    ({userDetails?.email})</div>
   );
 }
 
