@@ -8,6 +8,7 @@ import TagSearchBar from '../../components/TagSearchBar';
 import { useError } from '../../hooks/customHooks';
 import { Modal } from 'flowbite-react/lib/esm/components/Modal/Modal';
 import { ModalHeader } from 'flowbite-react/lib/esm/components/Modal/ModalHeader';
+import { ModalBody } from 'flowbite-react/lib/esm/components/Modal/ModalBody';
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   const {
@@ -60,7 +61,10 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   return (
     <>
       <Modal show={isCreatePostOpen} onClose={() => setIsCreatePostOpen(false)}>
-        <div className="modal-header p-2 mx-auto text-lg">Create new post</div>
+        <div className="flex justify-content items-center gap-1">
+          <h5 className="mx-auto text-lg">Create new post</h5>
+          <ModalHeader></ModalHeader>
+        </div>
         <Modal.Body>
           <div className="max-w-xl">
             <label
@@ -84,47 +88,49 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
       </Modal>
 
       {(isPending) ? <Loader /> : <Modal size="7xl" show={isFileSelected} onClose={() => setIsFileSelected(false)}>
-        <div className="w-full h-screen px-2">
+        <div className="w-full h-screen">
           <div className="flex justify-content items-center gap-1">
             <ModalHeader></ModalHeader>
             <h5 className="mx-auto text-lg">Create new post</h5>
             <button className="text-blue-700 font-bold px-1" onClick={() => handleSubmit(onSubmit)}>Share</button>
           </div>
-          <div className="w-full flex justify-center gap-3">
-            <img src={preview} alt="post" className="w-1/2 h-[350px] object-scale-up" />
-            <div className="w-full flex flex-1 flex-col">
-              <div className="flex items-center">
-                <UserAvatar size="40px" />
-                <span className='text-black font-bold mx-2'>{userDetails?.username}</span>
-              </div>
+          <ModalBody className='h-screen'>
+            <div className="w-full flex justify-center gap-3">
+              <img src={preview} alt="post" className="w-1/2 h-[350px] object-scale-up" />
+              <div className="w-full flex flex-1 flex-col">
+                <div className="flex items-center">
+                  <UserAvatar size="40px" />
+                  <span className='text-black font-bold mx-2'>{userDetails?.username}</span>
+                </div>
 
-              <Textarea
-                className="border-0 focus:border-transparent focus:ring-0"
-                {...register("post")}
-                placeholder='Write a caption...'
-                maxLength={2200}
-                name="post"
-                id="post"
-                onChange={handleChange}
-                rows={10}
-              />
-              <div className='relative mb-3'>
-                <span className='absolute right-1'>{charLength}/2,200</span>
+                <Textarea
+                  className="border-0 focus:border-transparent focus:ring-0"
+                  {...register("post")}
+                  placeholder='Write a caption...'
+                  maxLength={2200}
+                  name="post"
+                  id="post"
+                  onChange={handleChange}
+                  rows={10}
+                />
+                <div className='relative mb-3'>
+                  <span className='absolute right-1'>{charLength}/2,200</span>
+                </div>
+                <FormFields
+                  className="border-none focus:ring-0"
+                  label={"Add Location"}
+                  name={"location"}
+                  type={"text"}
+                  register={register}
+                  errors={errors}
+                  setValue={setValue}
+                  clearErrors={clearErrors}
+                  setError={setError}
+                />
+                <TagSearchBar />
               </div>
-              <FormFields
-                className="border-none focus:ring-0"
-                label={"Add Location"}
-                name={"location"}
-                type={"text"}
-                register={register}
-                errors={errors}
-                setValue={setValue}
-                clearErrors={clearErrors}
-                setError={setError}
-              />
-              <TagSearchBar />
             </div>
-          </div>
+          </ModalBody>
         </div>
       </Modal>}
     </>
