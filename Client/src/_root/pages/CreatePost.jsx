@@ -1,16 +1,20 @@
-import { Modal } from 'flowbite-react';
+import { Modal, Textarea } from 'flowbite-react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
-import { Loader, UserAvatar } from '../../components';
+import { FormFields, Loader, UserAvatar } from '../../components';
 import { useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations';
+import TagSearchBar from '../../components/TagSearchBar';
+import { useError } from '../../hooks/customHooks';
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   const {
     data: userDetails,
     isPending,
+    isSuccess,
     isError,
     error } = useGetUserDetails();
+
 
   // React-hook-form
   const {
@@ -23,12 +27,16 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   } = useForm();
 
   const fileInputRef = useRef();
+  const { handleError, deleteError } = useError();
+  const [charLength, setCharLength] = useState(0);
   const [preview, setPreview] = useState();
   const [isFileSelected, setIsFileSelected] = useState(false);
   const { ref: registerRef, ...rest } = register("fileUpload");
 
-  if(isError){
-    handleError('userDetails',  error?.message);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCharLength(prev => prev = value.length);
   }
 
   const handleUploadedFile = (event) => {
@@ -39,7 +47,12 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   }
 
   const onSubmit = (data) => {
+    deleteError('userDetails');
     console.log(data);
+  }
+
+  if (isError) {
+    handleError('userDetails', error?.message);
   }
 
   return (
@@ -80,6 +93,32 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
               <UserAvatar size="40px" />
               <span className='text-black font-bold mx-2'>{userDetails?.username}</span>
             </div>
+
+            <Textarea
+              className="border-0 focus:border-transparent focus:ring-0"
+              {...register("post")}
+              placeholder='Write a caption...'
+              maxLength={2200}
+              name="post"
+              id="post"
+              onChange={handleChange}
+              rows={10}
+            />
+            <div className='relative mb-3'>
+              <span className='absolute right-1'>{charLength}/2,200</span>
+            </div>
+            <FormFields
+              className="border-none focus:ring-0"
+              label={"Add Location"}
+              name={"location"}
+              type={"text"}
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              clearErrors={clearErrors}
+              setError={setError}
+            />
+            <TagSearchBar />
           </div>
         </div>
       </Modal>}

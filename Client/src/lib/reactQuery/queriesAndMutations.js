@@ -38,9 +38,10 @@ export const useGetUserDetails = () => {
     });
 }
 
-export const useGetUsers = (searchName) => {
+export const useGetUsers = (searchName = '') => {
     return useQuery({
         queryKey: ['allUsers', searchName],
         queryFn: ({ queryKey }) => GetUsersAPI(searchName),
+        enabled: searchName != '',
     });
 }

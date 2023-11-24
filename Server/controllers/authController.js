@@ -102,6 +102,7 @@ const getUserDetails = async (req, res, next) => {
     }
 }
 
+// Get all users matching the search name string from client
 const getUsers = async (req, res, next) => {
     try {
         const { name } = req.query;

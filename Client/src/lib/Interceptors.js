@@ -9,9 +9,15 @@ axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
         if (error?.response?.status === 401) {
-            const response = await axiosInstance.get("/refreshToken");
-            localStorage.setItem("accessToken", response?.data?.accessToken);
-            window.location.reload();
+            try {
+                const response = await axiosInstance.get("/refreshToken");
+                localStorage.setItem("accessToken", response?.data?.accessToken);
+                window.location.reload();
+            } catch (error) {
+                // if refresh Token Not present, clear local storage and redirect to login 
+                localStorage.clear();
+                window.location.reload();
+            }
         }
         return Promise.reject(error);
     }
