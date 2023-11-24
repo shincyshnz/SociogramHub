@@ -1,4 +1,4 @@
-import { Modal, Textarea } from 'flowbite-react';
+import { Textarea } from 'flowbite-react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
@@ -6,6 +6,8 @@ import { FormFields, Loader, UserAvatar } from '../../components';
 import { useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations';
 import TagSearchBar from '../../components/TagSearchBar';
 import { useError } from '../../hooks/customHooks';
+import { Modal } from 'flowbite-react/lib/esm/components/Modal/Modal';
+import { ModalHeader } from 'flowbite-react/lib/esm/components/Modal/ModalHeader';
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   const {
@@ -57,7 +59,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
 
   return (
     <>
-      <Modal dismissible show={isCreatePostOpen} onClose={() => setIsCreatePostOpen(false)}>
+      <Modal show={isCreatePostOpen} onClose={() => setIsCreatePostOpen(false)}>
         <div className="modal-header p-2 mx-auto text-lg">Create new post</div>
         <Modal.Body>
           <div className="max-w-xl">
@@ -82,43 +84,46 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
       </Modal>
 
       {(isPending) ? <Loader /> : <Modal size="7xl" show={isFileSelected} onClose={() => setIsFileSelected(false)}>
-        <div className="flex justify-content items center px-2">
-          <h5 className="p-2 mx-auto text-lg">Create new post</h5>
-          <button className="text-blue-700 font-bold" onClick={() => handleSubmit(onSubmit)}>Share</button>
-        </div>
-        <div className="w-full flex flex-1 justify-center">
-          <img src={preview} alt="post" className="w-1/2 h-[350px] object-scale-up" />
-          <div className="w-full flex flex-1 flex-col">
-            <div className="flex items-center">
-              <UserAvatar size="40px" />
-              <span className='text-black font-bold mx-2'>{userDetails?.username}</span>
-            </div>
+        <div className="w-full h-screen px-2">
+          <div className="flex justify-content items-center gap-1">
+            <ModalHeader></ModalHeader>
+            <h5 className="mx-auto text-lg">Create new post</h5>
+            <button className="text-blue-700 font-bold px-1" onClick={() => handleSubmit(onSubmit)}>Share</button>
+          </div>
+          <div className="w-full flex justify-center gap-3">
+            <img src={preview} alt="post" className="w-1/2 h-[350px] object-scale-up" />
+            <div className="w-full flex flex-1 flex-col">
+              <div className="flex items-center">
+                <UserAvatar size="40px" />
+                <span className='text-black font-bold mx-2'>{userDetails?.username}</span>
+              </div>
 
-            <Textarea
-              className="border-0 focus:border-transparent focus:ring-0"
-              {...register("post")}
-              placeholder='Write a caption...'
-              maxLength={2200}
-              name="post"
-              id="post"
-              onChange={handleChange}
-              rows={10}
-            />
-            <div className='relative mb-3'>
-              <span className='absolute right-1'>{charLength}/2,200</span>
+              <Textarea
+                className="border-0 focus:border-transparent focus:ring-0"
+                {...register("post")}
+                placeholder='Write a caption...'
+                maxLength={2200}
+                name="post"
+                id="post"
+                onChange={handleChange}
+                rows={10}
+              />
+              <div className='relative mb-3'>
+                <span className='absolute right-1'>{charLength}/2,200</span>
+              </div>
+              <FormFields
+                className="border-none focus:ring-0"
+                label={"Add Location"}
+                name={"location"}
+                type={"text"}
+                register={register}
+                errors={errors}
+                setValue={setValue}
+                clearErrors={clearErrors}
+                setError={setError}
+              />
+              <TagSearchBar />
             </div>
-            <FormFields
-              className="border-none focus:ring-0"
-              label={"Add Location"}
-              name={"location"}
-              type={"text"}
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              clearErrors={clearErrors}
-              setError={setError}
-            />
-            <TagSearchBar />
           </div>
         </div>
       </Modal>}

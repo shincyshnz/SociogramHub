@@ -76,6 +76,10 @@ const TagSearchBar = () => {
                 }))
             ));
         }
+
+        if (isError) {
+            return handleError('apiError', { message: error?.response?.data?.message || error?.message });
+        }
     }, [isSuccess, users]);
 
     if (isError) {
