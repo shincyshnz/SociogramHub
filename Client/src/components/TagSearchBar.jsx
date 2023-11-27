@@ -39,27 +39,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Select from "react-select";
 import { useGetUsers } from '../lib/reactQuery/queriesAndMutations';
-import { useError } from '../hooks/customHooks';
+import { useDebounce, useError } from '../hooks/customHooks';
 
 const TagSearchBar = () => {
     const { handleError, deleteError } = useError();
     const [searchName, setSearchName] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(null);
-    const { data: users, isError, error, isSuccess, isPending } = useGetUsers(searchName);
-
-    // useEffect(() => {
-    //     if (isSuccess) {
-    //         setSuggestions(prev => prev = (
-    //             users.map(prev => ({
-    //                 ...prev,
-    //                 label: prev.username,
-    //                 value: prev._id,
-    //             }))
-    //         ));
-    //         console.log(suggestions, "suggestions");
-    //     }
-    // }, [isSuccess, users]);
+    const { debouncedValue } = useDebounce(searchName, 300);
+    const { data: users, isError, error, isSuccess } = useGetUsers(debouncedValue);
 
     const handleOptions = (inputValue) => {
         setSearchName(prev => prev = inputValue);
@@ -80,11 +68,9 @@ const TagSearchBar = () => {
         if (isError) {
             return handleError('apiError', { message: error?.response?.data?.message || error?.message });
         }
-    }, [isSuccess, users]);
+    }, [isSuccess, users, debouncedValue]);
 
-    if (isError) {
-        return handleError('apiError', { message: error?.response?.data?.message || error?.message });
-    }
+    console.log(searchName,"==searchName", debouncedValue,"==debouncedValue");
 
     return (
         <>

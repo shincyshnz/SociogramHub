@@ -11,16 +11,17 @@ export const useError = () => {
     return useContext(ErrorContext);
 }
 
-export const useDebounce = ({ inputValue, delay }) => {
-    const [debouncedValue, setDebouncedValue] = useState();
+export const useDebounce = (inputValue, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(inputValue);
 
     useEffect(() => {
-        const timeOut = setTimeout(setDebouncedValue(inputValue), delay || 500);
+        const timeOut = setTimeout(() => setDebouncedValue(inputValue), delay || 500);
 
         return () => {
-            clearTimeout(timeOut);
-        }
+            clearTimeout(timeOut)
+        };
+        
     }, [inputValue, delay]);
 
-    return {debouncedValue};
+    return { debouncedValue };
 }
