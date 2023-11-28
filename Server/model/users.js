@@ -9,12 +9,12 @@ const userSchema = new mongoose.Schema({
     },
     fullname: {
         type: String,
-        trime: true,
+        trim: true,
         required: [true, "Full name Cannot be empty"],
     },
     username: {
         type: String,
-        trime: true,
+        trim: true,
         required: [true, "Username Cannot be empty"],
         unique: [true, "username must be unique"],
     },

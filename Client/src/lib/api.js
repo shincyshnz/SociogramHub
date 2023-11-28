@@ -2,7 +2,7 @@ import axios from 'axios';
 import { axiosInstance } from './Interceptors';
 
 const createFormData = (data) => {
-    const formData = new FormData();
+    let formData = new FormData();
 
     for (const key in data) {
         formData.append(key, data[key]);
@@ -70,8 +70,8 @@ export const GetUsersAPI = async (searchTerm) => {
     return response?.data?.users;
 }
 
-export const createPostsAPI = async(data) => {
-    const response = await axios(`${import.meta.env.VITE_POSTS_URL}`, {
+export const createPostsAPI = async (data) => {
+    const response = await axiosInstance(`${import.meta.env.VITE_POSTS_URL}/create`, {
         method: "POST",
         headers: {
             'Content-Type': 'multipart/form-data',

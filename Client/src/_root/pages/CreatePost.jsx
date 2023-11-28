@@ -71,10 +71,11 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     }
 
     const formData = {
+      "userId" : userDetails._id,
       "caption" : data.caption,
       "location" : data.location,
       "taggedUser"  : taggedUsers.map(user => user._id),
-      "file" : file,
+      "postFile" : file,
     } 
 
     try {
@@ -84,8 +85,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
       console.log(error);
     }
   }
-
-  console.log(formDetails);
+  
   return (
     <>
       <Modal show={isCreatePostOpen} onClose={() => setIsCreatePostOpen(false)}>

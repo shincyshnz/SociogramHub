@@ -5,6 +5,7 @@ const connectDb = require("./config/db");
 const errorController = require("./controllers/errorController");
 const authRoutes = require("./routes/authRoutes");
 const forgotPasswordRoutes = require("./routes/forgotPasswordRoutes");
+const postsRoutes = require("./routes/postRoutes");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(cookieParser());
 // app.use(express.urlencoded({ extended: true }));
 // app.use(helmet());
 // app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+
 app.use(cors({
     origin: ["http://localhost","http://localhost:5173"],
     credentials: true,
@@ -28,7 +30,7 @@ app.use(cors({
 
 app.use('/api/auth', authRoutes);
 app.use('/api/forgotPassword', forgotPasswordRoutes);
-
+app.use('/api/posts', postsRoutes);
 
 app.use(errorController);
 

@@ -1,5 +1,5 @@
-const { upload, handleUpload, ImageURIFormat } = require("../middleware/cloudinaryUpload");
-const users = require("../model/users");
+const { handleUpload, ImageURIFormat } = require("../middleware/cloudinaryUpload");
+// const users = require("../model/users");
 const { UsersModel } = require("../model/users");
 const { generatePasswordHash, comparePasswordHash } = require("../utils/bcrypt");
 const { customErrorMessage } = require("../utils/customErrorMsg");
