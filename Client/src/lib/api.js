@@ -1,19 +1,28 @@
 import axios from 'axios';
 import { axiosInstance } from './Interceptors';
 
-export const registerAPI = async (data) => {
-    let formData = new FormData();
+const createFormData = (data) => {
+    const formData = new FormData();
 
     for (const key in data) {
         formData.append(key, data[key]);
     }
+    return formData;
+}
+
+export const registerAPI = async (data) => {
+    // let formData = new FormData();
+
+    // for (const key in data) {
+    //     formData.append(key, data[key]);
+    // }
     const response = await axios(`${import.meta.env.VITE_AUTH_URL}/register`, {
         method: "POST",
         headers: {
             'Content-Type': 'multipart/form-data',
         },
         withCredentials: true,
-        data: formData,
+        data: createFormData(data),
     });
     return response;
 };
@@ -59,4 +68,16 @@ export const GetUserDetailsAPI = async () => {
 export const GetUsersAPI = async (searchTerm) => {
     const response = await axios(`${import.meta.env.VITE_AUTH_URL}/searchUser?name=${searchTerm}`);
     return response?.data?.users;
+}
+
+export const createPostsAPI = async(data) => {
+    const response = await axios(`${import.meta.env.VITE_POSTS_URL}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+        data: createFormData(data),
+    });
+    return response;
 }

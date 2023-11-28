@@ -41,11 +41,10 @@ import Select from "react-select";
 import { useGetUsers } from '../lib/reactQuery/queriesAndMutations';
 import { useDebounce, useError } from '../hooks/customHooks';
 
-const TagSearchBar = () => {
+const TagSearchBar = ({ name, placeholder, setTaggedUsers }) => {
     const { handleError, deleteError } = useError();
     const [searchName, setSearchName] = useState("");
     const [suggestions, setSuggestions] = useState([]);
-    const [selectedOption, setSelectedOption] = useState(null);
     const { debouncedValue } = useDebounce(searchName, 300);
     const { data: users, isError, error, isSuccess } = useGetUsers(debouncedValue);
 
@@ -70,26 +69,25 @@ const TagSearchBar = () => {
         }
     }, [isSuccess, users, debouncedValue]);
 
-    console.log(searchName,"==searchName", debouncedValue,"==debouncedValue");
-
     return (
         <>
             <Select
                 isMulti
-                name="users"
-                id="users"
+                name={name}
                 options={suggestions}
-                defaultValue={selectedOption}
+                placeholder={placeholder}
+                // defaultValue={selectedOption}
                 theme={(theme) => ({
                     ...theme,
-                    borderRadius: 0,
+                    borderRadius: 5,
+                    fontSize: '20px',
                     colors: {
                         ...theme.colors,
-                        primary: 'gray',
+                        primary: '#C3C3C3',
                     },
                 })}
                 onInputChange={(value) => handleOptions(value)}
-                onChange={setSelectedOption}
+                onChange={setTaggedUsers}
             />
         </>
     )

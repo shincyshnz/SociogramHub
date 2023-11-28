@@ -24,7 +24,7 @@
 
 @layer components {
     .form-container {
-        @apply max-w-[437px] max-h-[920px] py-10 px-10 flex flex-col gap-3 mb-3 justify-center items-center text-xs text-center
+        @apply max-w-[437px] max-h-[920px] py-10 px-10 flex flex-col gap-3 mb-3 justify-center items-center text-center
     }
 
     .input-container {
@@ -32,7 +32,7 @@
     }
 
     .input-form {
-        @apply w-full border border-gray-300 p-2 text-xs rounded-sm focus:border-black focus:ring-0 focus:bg-transparent;
+        @apply w-full border border-gray-300 p-2 rounded-sm focus:border-black focus:ring-0 focus:bg-transparent;
     }
 
     .password-toggle {

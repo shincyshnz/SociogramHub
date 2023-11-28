@@ -55,12 +55,16 @@ const FormFields = ({
             pattern: {
                 value: /^[0-9]*$/,
             }
-        }
+        },
+        location: {
+            type: String,
+        },
     }
 
     const togglePasswordVisibility = () => {
         setPasswordShown(passwordShown => (passwordShown = !passwordShown));
     }
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         validateInput(name, value);
@@ -91,7 +95,7 @@ const FormFields = ({
     return <>
         < div className="input-container" >
             <input
-                className={className}
+                className={`${className} text-xs w-full rounded-md`}
                 id={name}
                 type={passwordShown ? "text" : type}
                 placeholder={label}

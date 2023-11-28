@@ -34,7 +34,6 @@ const SignInForm = () => {
       const response = await LoginUser(data);
       if (response.status === 200) {
         storeToken(response?.data?.accessToken);
-        // localStorage.setItem("userDetails",{...response?.data?.user});
         setUserDetails(prev => prev = response?.data?.user);
         navigate("/");
       }
