@@ -14,9 +14,9 @@ const Profile = () => {
     return <Loader />;
   }
 
-  if (isSuccess) {
-    console.log("Success");
-  }
+  // if (isSuccess) {
+  //   console.log("Success");
+  // }
 
   if (isError) {
     console.log(error);

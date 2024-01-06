@@ -1,5 +1,5 @@
 import { Textarea } from 'flowbite-react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
 import { FormFields, Loader, UserAvatar } from '../../components';
@@ -71,12 +71,12 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     }
 
     const formData = {
-      "userId" : userDetails._id,
-      "caption" : data.caption,
-      "location" : data.location,
-      "taggedUser"  : taggedUsers.map(user => user._id),
-      "postFile" : file,
-    } 
+      "userId": userDetails._id,
+      "caption": data.caption,
+      "location": data.location,
+      "taggedUser": taggedUsers.map(user => user._id),
+      "postFile": file,
+    }
 
     try {
       const response = await createPosts(formData);
@@ -85,15 +85,16 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
       console.log(error);
     }
   }
-  
+
   return (
     <>
       <Modal show={isCreatePostOpen} onClose={() => setIsCreatePostOpen(false)}>
         <ModalHeader className='w-full'>Create new post</ModalHeader>
-        <Modal.Body>
-          <div className="max-w-xl">
+        {/* <Modal.Body> */}
+        <div className='overflow-auto'>
+          <div className="w-full flex items-center justify-center">
             <label
-              className="flex flex-1 flex-col gap-3 items-center w-full h-32 px-4 my-20 transition bg-transparent focus:outline-none">
+              className="flex flex-col gap-3 items-center w-full h-32 px-4 my-20 transition bg-transparent focus:outline-none">
               <IoIosImages className='w-20 h-20 dark:text-white' />
               <div className="font-medium text-gray-600">
                 Drag photos and videos here
@@ -111,24 +112,29 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
               />
             </label>
           </div>
-        </Modal.Body>
+          {/* </Modal.Body> */}
+        </div>
       </Modal>
 
-      {(isPendingUserDetails) ? <Loader /> : <Modal size="7xl" show={isFileSelected} onClose={() => setIsFileSelected(false)}>
-        <form className="w-full h-screen">
-          <div className="flex justify-content items-center gap-1">
+      {(isPendingUserDetails) ? <Loader /> : <Modal show={isFileSelected} onClose={() => {
+        setIsFileSelected(false);
+        setIsCreatePostOpen(false)
+      }}>
+        <form className="w-full p-1 overflow-y-auto">
+          <div className="flex justify-content gap-1">
             <ModalHeader></ModalHeader>
             <h5 className="mx-auto text-lg">Create new post</h5>
             <button onClick={handleSubmit(onSubmit)} className="text-blue-700 font-bold p-4">Share</button>
           </div>
-          <ModalBody className='h-screen'>
-            <div className="w-full flex justify-center gap-3">
+          {/* <ModalBody> */}
+          <div className='p-3'>
+            <div className="w-full h-full flex flex-col md:flex-row  justify-center gap-3">
               <img
                 src={preview}
                 alt="post"
-                className="w-1/2 h-[350px] object-scale-up"
+                className="w-full h-[350px] md:w-1/2 md:h-[350px]"
               />
-              <div className="w-full flex flex-1 flex-col">
+              <div className="w-full flex flex-col">
                 <div className="flex items-center">
                   <UserAvatar size="40px" />
                   <span className='text-black font-bold mx-2'>{userDetails?.username}</span>
@@ -165,7 +171,8 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
                 />
               </div>
             </div>
-          </ModalBody>
+            {/* </ModalBody> */}
+          </div>
         </form >
       </Modal>}
     </>
