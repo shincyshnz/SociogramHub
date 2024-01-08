@@ -1,4 +1,4 @@
-import { Textarea } from 'flowbite-react';
+import { Spinner, Textarea } from 'flowbite-react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
@@ -16,13 +16,15 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     data: userDetails,
     isPending: isPendingUserDetails,
     isError: isErrorGetUserDetails,
-    error } = useGetUserDetails();
+    error
+  } = useGetUserDetails();
 
   // React-Query - posting data
   const {
     mutateAsync: createPosts,
     isPending: isPendingCreatePosts,
-    isError: isErrorCreatePost
+    isError: isErrorCreatePost,
+    error: createPostError,
   } = useCreatePosts();
 
 
@@ -64,6 +66,11 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     handleError('userDetails', error?.message);
   }
 
+  if (isErrorCreatePost) {
+    setIsFileSelected(false);
+    setIsCreatePostOpen(false);
+  }
+
   const onSubmit = async (data) => {
     if (Object.keys(errors).length > 0) {
       console.log(errors, "==erros");
@@ -74,7 +81,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
       "userId": userDetails._id,
       "caption": data.caption,
       "location": data.location,
-      "taggedUser": taggedUsers.map(user => user._id),
+      "taggedUser": taggedUsers?.map(user => user._id) || [],
       "postFile": file,
     }
 
@@ -82,7 +89,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
       const response = await createPosts(formData);
       console.log(response);
     } catch (error) {
-      console.log(error);
+      handleError('createPostApiError', { message: error?.response?.data?.message || error?.message });
     }
   }
 
@@ -118,8 +125,13 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
 
       {(isPendingUserDetails) ? <Loader /> : <Modal show={isFileSelected} onClose={() => {
         setIsFileSelected(false);
-        setIsCreatePostOpen(false)
+        setIsCreatePostOpen(false);
       }}>
+        {isPendingCreatePosts &&
+          <div className='absolute top-64 w-full text-center flex justify-center items-center'>
+            <Spinner aria-label="Extra large spinner example" size="xl" />
+          </div>
+        }
         <form className="w-full p-1 overflow-y-auto">
           <div className="flex justify-content gap-1">
             <ModalHeader></ModalHeader>
