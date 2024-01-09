@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
-import { FormFields, UserAvatar } from '../../components';
-import { useAuth } from '../../hooks/customHooks';
-import { useForm } from 'react-hook-form';
-import { Select, Textarea } from 'flowbite-react';
-import TagSearchBar from '../../components/TagSearchBar';
+import Stories from "./Stories";
 
 const Home = () => {
- return (<div>Home</div>);
+    return (
+        <>
+            <div className='flex flex-col items-center gap-3'>
+                <div><Stories /></div>
+                <div>posts</div>
+            </div>
+
+            <div className='hidden lg:block'>Right SideBar</div>
+        </>
+    );
 }
 
 export default Home
