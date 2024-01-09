@@ -7,12 +7,12 @@ const UserAvatar = ({size = "25px"}) => {
     const { userDetails } = useAuth();
     if (userDetails.profile_pic) {
         return (
-            <Avatar size={size} alt="User Avatar" img={userDetails.profile_pic} rounded />
+            <Avatar size={size} alt="User Avatar" img={userDetails.profile_pic} />
         )
     }
 
     return (
-        <HiUserCircle size={size} className='text-gray-900 opacity-90' />
+        <HiUserCircle size={size}/>
     );
 }
 

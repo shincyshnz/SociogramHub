@@ -19,7 +19,7 @@ const RootLayout = () => {
 // }, []);
 
   return (
-    <div className='w-full flex flex-col justify-between md:flex-row p-2'>
+    <div className='w-full flex flex-col justify-between md:flex-row'>
       <TopBar />
       <LeftSideBar />
       <section className='flex h-[75vh]'>

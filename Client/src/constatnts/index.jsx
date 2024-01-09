@@ -34,12 +34,12 @@ export const sidebarLinks = [
         label: "Notifications"
     },
     {
-        icon: <HiPlus className=' border-2 border-gray-800 rounded-md' />,
+        icon: <HiPlus className='ml-1 text-[25px] font-bold border-[3px] border-gray-800 rounded-md' />,
         route: "",
         label: "Create"
     },
     {
-        icon: <UserAvatar />,
+        icon: <UserAvatar size="35px"/>,
         route: "/profile",
         label: "Profile"
     },
