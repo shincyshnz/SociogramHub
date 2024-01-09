@@ -2,13 +2,14 @@ import { Spinner, Textarea } from 'flowbite-react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
-import { FormFields, Loader, UserAvatar } from '../../components';
+import { FormFields, Loader, NotificationToast, UserAvatar } from '../../components';
 import { useCreatePosts, useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations';
 import TagSearchBar from '../../components/TagSearchBar';
 import { useError } from '../../hooks/customHooks';
 import { Modal } from 'flowbite-react/lib/esm/components/Modal/Modal';
 import { ModalHeader } from 'flowbite-react/lib/esm/components/Modal/ModalHeader';
 import { ModalBody } from 'flowbite-react/lib/esm/components/Modal/ModalBody';
+import { HiCheckCircle } from "react-icons/hi";
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   // React-Query - fetching loggedIn user data
@@ -25,6 +26,8 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     isPending: isPendingCreatePosts,
     isError: isErrorCreatePost,
     error: createPostError,
+    isSuccess,
+    data,
   } = useCreatePosts();
 
 
@@ -81,13 +84,16 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
       "userId": userDetails._id,
       "caption": data.caption,
       "location": data.location,
-      "taggedUser": taggedUsers?.map(user => user._id) || [],
+      "taggedUsers": taggedUsers?.map(user => user._id),
       "postFile": file,
     }
 
     try {
       const response = await createPosts(formData);
-      console.log(response);
+      if (response.status === 200) {
+        setIsFileSelected(false);
+        setIsCreatePostOpen(false);
+      }
     } catch (error) {
       handleError('createPostApiError', { message: error?.response?.data?.message || error?.message });
     }
@@ -187,6 +193,12 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
           </div>
         </form >
       </Modal>}
+
+      { isSuccess ? (<NotificationToast
+        Icon={<HiCheckCircle className='h-5 w-5' />}
+        message={"Post created succesfully"}
+        type='success' />) : console.log(data)}
+
     </>
   );
 }

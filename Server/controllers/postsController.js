@@ -3,7 +3,7 @@ const { PostsModel } = require('../model/posts');
 const { UsersModel } = require("../model/users");
 
 const createPosts = async (req, res, next) => {
-    const { userId } = req.body;
+    const { userId, caption, location, taggedUsers } = req.body;
     try {
         const isExists = UsersModel.findById({ _id: userId });
         if (!isExists) {
@@ -14,8 +14,14 @@ const createPosts = async (req, res, next) => {
             const cldRes = await handleUpload(dataURI);
             postFile = cldRes.url;
         }
-        console.log(postFile);
-        res.json();
+
+        let newTaggedUser = taggedUsers ?? [];
+        const postData = PostsModel.create({ userId, postFile, caption, location, newTaggedUser });
+        if (postData) {
+            res.status(200).json({
+                message: "Post created Succesfully"
+            });
+        }
     } catch (error) {
         next(error);
     }

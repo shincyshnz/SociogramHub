@@ -18,18 +18,21 @@ const postSchema = new mongoose.Schema({
         type: String,
         maxLength: 200,
     },
-    likes :{
-        type : Number,
-        default  : 0,
+    likes: {
+        type: Number,
+        default: 0,
     },
-    commentsCount :{
-        type : Number,
-        default  : 0,
+    commentsCount: {
+        type: Number,
+        default: 0,
     },
-    tagId : [{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "UsersModel"
-    }]
+    taggedUsers: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "UsersModel"
+        }],
+        default : [],
+    },
 
 }, { timestamps: true });
 
