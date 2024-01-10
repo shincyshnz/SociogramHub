@@ -7,9 +7,9 @@ import { moreLinks, sidebarLinks } from '../constatnts';
 
 const MoreDropdown = ({ position = "leftside" }) => {
     const navigate = useNavigate();
-    const { handleError,clearCustomErrors } = useError();
+    const { handleError, clearCustomErrors } = useError();
     const { removeToken, userDetails } = useAuth();
-    
+
     let profile = sidebarLinks.filter(link => link.label === "Profile");;
 
     const handleLogout = () => {
@@ -47,6 +47,7 @@ const MoreDropdown = ({ position = "leftside" }) => {
             <Dropdown.Item icon={HiOutlineSun}>Dark Mode </Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item icon={HiLogout} onClick={() => handleLogout()}>Log out</Dropdown.Item>
+
         </>
     )
 }
