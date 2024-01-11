@@ -5,7 +5,7 @@ import { useAuth, useError } from '../hooks/customHooks';
 
 const RootLayout = () => {
   const navigate = useNavigate();
-  const { getToken} = useAuth();
+  const { getToken } = useAuth();
   const { deleteError } = useError();
   let accessToken;
 
@@ -16,18 +16,20 @@ const RootLayout = () => {
       navigate("/sign-in");
     }
   }, [accessToken]);
-// }, []);
+  // }, []);
 
   return (
-    <div className='w-full flex flex-col justify-between md:flex-row'>
+    <div className='w-full flex flex-col md:flex-row'>
       <TopBar />
       <LeftSideBar />
-      <section className='flex h-[75vh]'>
-        <Outlet />
-      </section>
-      <RightSideBar />
+      {/* <section className='flex h-[75vh]'> */}
+      <div className='w-full h-full flex justify center px-2 md:px-20 lg:px-24'>
+        <section className='w-full h-full'>
+          <Outlet />
+        </section>
+        <RightSideBar />
+      </div>
       <BottomBar className="sticky self-end" />
-
     </div>
   )
 }

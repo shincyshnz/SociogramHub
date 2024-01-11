@@ -15,13 +15,13 @@ const LeftSideBar = () => {
 
   return (
     <>
-      <section className='hidden md:block border-r-2 text-[16px]'>
+      <section className='hidden md:block border-r-2 text-[16px] py-5'>
         <Sidebar className="max-w-[80px] lg:mx-auto lg:max-w-full">
           {/* <div className="flex flex-col justify-between items-baseline h-full w-full"> */}
             <Sidebar.Logo className="block lg:hidden ml-1" href="/" img="/assets/logoIcon.png" imgAlt="SociogramHub logo" />
-            <Sidebar.Logo className="hidden lg:block ml-10 mb-10" href="/" img="/assets/logo.png" imgAlt="SociogramHub logo" />
+            <Sidebar.Logo className="hidden lg:block ml-10" href="/" img="/assets/logo.png" imgAlt="SociogramHub logo" />
 
-            <Sidebar.Items>
+            <Sidebar.Items className='mt-14'>
               <Sidebar.ItemGroup>
                 {sidebarLinks.map((link, index) => {
                   const isActive = pathname === link.route;

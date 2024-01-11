@@ -2,7 +2,7 @@ import React from 'react'
 
 const RightSideBar = () => {
   return (
-    <div className="hidden md:block">
+    <div className="text-center hidden lg:block">
       RightSideBar
     </div>
   )

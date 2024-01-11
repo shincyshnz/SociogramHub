@@ -6,10 +6,10 @@ import { FormFields, Loader, NotificationToast, UserAvatar } from '../../compone
 import { useCreatePosts, useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations';
 import TagSearchBar from '../../components/TagSearchBar';
 import { useError } from '../../hooks/customHooks';
-import { Modal } from 'flowbite-react/lib/esm/components/Modal/Modal';
+import { HiCheckCircle } from "react-icons/hi";
 import { ModalHeader } from 'flowbite-react/lib/esm/components/Modal/ModalHeader';
 import { ModalBody } from 'flowbite-react/lib/esm/components/Modal/ModalBody';
-import { HiCheckCircle } from "react-icons/hi";
+import { Modal } from 'flowbite-react/lib/esm/components/Modal/Modal';
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   // React-Query - fetching loggedIn user data
@@ -103,7 +103,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     <>
       <Modal show={isCreatePostOpen} onClose={() => setIsCreatePostOpen(false)}>
         <ModalHeader className='w-full'>Create new post</ModalHeader>
-        {/* <Modal.Body> */}
+        {/* <ModalBody> */}
         <div className='overflow-auto'>
           <div className="w-full flex items-center justify-center">
             <label
@@ -125,7 +125,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
               />
             </label>
           </div>
-          {/* </Modal.Body> */}
+          {/* </ModalBody> */}
         </div>
       </Modal>
 
@@ -144,7 +144,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
             <h5 className="mx-auto text-lg">Create new post</h5>
             <button onClick={handleSubmit(onSubmit)} className="text-blue-700 font-bold p-4">Share</button>
           </div>
-          {/* <ModalBody> */}
+          <ModalBody>
           <div className='p-3'>
             <div className="w-full h-full flex flex-col md:flex-row  justify-center gap-3">
               <img
@@ -189,18 +189,21 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
                 />
               </div>
             </div>
-            {/* </ModalBody> */}
           </div>
+          </ModalBody>
+
         </form >
       </Modal>}
 
-      { isSuccess ? (<NotificationToast
+      {/* {isSuccess ? (<NotificationToast
         Icon={<HiCheckCircle className='h-5 w-5' />}
         message={"Post created succesfully"}
-        type='success' />) : console.log(data)}
+        type='success' />) : console.log(data)} */}
 
     </>
   );
 }
 
 export default CreatePost;
+
+
