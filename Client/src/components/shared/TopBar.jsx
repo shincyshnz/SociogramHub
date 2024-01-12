@@ -27,7 +27,7 @@ import { Link } from 'react-router-dom';
 
 const TopBar = () => {
   return (
-    <div className='visible md:hidden px-1'>
+    <div className='visible md:hidden pl-4 pt-2'>
       <div className='flex flex-1 justify-between items-center gap-1'>
         <Link to="/">
           <img src="/assets/logoIcon.png" className="h-9" alt="Logo" />
