@@ -29,7 +29,7 @@ const RootLayout = () => {
         </section>
         <RightSideBar />
       </div>
-      <BottomBar className="sticky self-end" />
+      <BottomBar className="self-end" />
     </div>
   )
 }

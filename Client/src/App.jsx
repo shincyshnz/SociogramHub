@@ -5,7 +5,7 @@ import { useError } from './hooks/customHooks'
 import { HiExclamation } from 'react-icons/hi'
 import { NotificationToast } from './components'
 import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
-import { EditPost, Explore, Home, Notifications, PostDetails, Profile, Reels, Saved, Search, Settings } from './_root/pages'
+import { EditPost, Explore, Home, Notifications, PostCards, Profile, Reels, Saved, Search, Settings } from './_root/pages'
 import './index.css'
 import { Route, Routes } from 'react-router-dom'
 
@@ -14,7 +14,7 @@ const App = () => {
   const { customError } = useError() || {};
 
   return (
-    <main className='flex h-screen font-inter'>
+    <main className='flex h-auto font-inter'>
       {customError && Object.keys(customError).length !== 0 && (
         // <div className="absolute float-right top-5 right-5 max-w-[300px]">
           Object.keys(customError).map((err, index) => (
@@ -48,7 +48,7 @@ const App = () => {
           <Route path='/notifications' element={<Notifications />} />
           {/* <Route path='/create-posts' element={<CreatePost />} /> */}
           <Route path='/update-posts/:id' element={<EditPost />} />
-          <Route path='/posts/:id' element={<PostDetails />} />
+          <Route path='/posts/:id' element={<PostCards />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/profile/:id/saved' element={<Saved />} />
