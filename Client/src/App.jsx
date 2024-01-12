@@ -16,16 +16,16 @@ const App = () => {
   return (
     <main className='flex h-screen font-inter'>
       {customError && Object.keys(customError).length !== 0 && (
-        <div className="absolute float-right top-5 right-5 max-w-[300px]">
-          {Object.keys(customError).map((err, index) => (
+        // <div className="absolute float-right top-5 right-5 max-w-[300px]">
+          Object.keys(customError).map((err, index) => (
             <NotificationToast
               key={index}
               Icon={customError[err].icon || <HiExclamation className='h-5 w-5' />}
               message={customError[err].message}
               type={customError[err].type || "error"}
             />
-          ))}
-        </div>
+          ))
+        // </div>
       )}
       
       <Routes>
