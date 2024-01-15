@@ -26,9 +26,9 @@ const LeftSideBar = () => {
                 {sidebarLinks.map((link, index) => {
                   const isActive = pathname === link.route;
 
-                  const LabelElement = <div className='flex items-center'>
-                    <div className={`text-xl mr-5 py-1 px-2 ${isActive && 'md:bg-gray-200 md:rounded-lg'}`}>{link.icon}</div>
-                    <div className="hidden lg:block">{link.label}</div>
+                  const LabelElement = <div className='flex items-center text-[16px]'>
+                    <div className={`text-2xl mr-5 py-1 px-2 ${isActive && 'md:bg-gray-200 md:rounded-lg'}`}>{link.icon}</div>
+                    <div className={`hidden lg:block ${isActive && 'font-bold'}`}>{link.label}</div>
                   </div>;
 
                   // Create-post modal 
