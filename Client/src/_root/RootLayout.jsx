@@ -23,7 +23,7 @@ const RootLayout = () => {
       <TopBar />
       <LeftSideBar />
       {/* <section className='flex h-[75vh]'> */}
-      <div className='w-full h-full flex justify center px-2 md:px-20 lg:px-24'>
+      <div className='w-full h-full flex justify-center gap-3 px-2 md:px-4'>
         <section className='w-full h-full'>
           <Outlet />
         </section>

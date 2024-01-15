@@ -27,7 +27,7 @@ const LeftSideBar = () => {
                   const isActive = pathname === link.route;
 
                   const LabelElement = <div className='flex items-center'>
-                    <div className={`text-2xl mr-5 py-1 px-2 ${isActive && 'md:bg-gray-200 md:rounded-lg'}`}>{link.icon}</div>
+                    <div className={`text-xl mr-5 py-1 px-2 ${isActive && 'md:bg-gray-200 md:rounded-lg'}`}>{link.icon}</div>
                     <div className="hidden lg:block">{link.label}</div>
                   </div>;
 
