@@ -20,7 +20,7 @@ const NotificationToast = ({ Icon = <HiFire className='h-5 w-5' />, message = ""
   }
 
   return (
-    <Toast className='absolute right-4 shadow-lg mb-2 mt-10'>
+    <Toast className='absolute right-4 shadow-lg mb-2 mt-10 z-50'>
       <div className={`${customStyle}`}>
         {Icon}
       </div>

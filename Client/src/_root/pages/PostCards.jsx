@@ -1,14 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline, IoBookmarkOutline } from "react-icons/io5";
+import { useForm } from 'react-hook-form';
+import { Textarea } from 'flowbite-react';
+import { useError } from '../../hooks/customHooks';
+import EmojiPicker from 'emoji-picker-react';
 
 const PostCards = () => {
+
+  // React - hook - form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+    setValue,
+    setError,
+  } = useForm();
+
+  const { handleError, deleteError } = useError();
+
   const [showMore, setShowMore] = useState(null);
+  const [showPostButton, setShowPostButton] = useState(false);
   const text = "ajsfhakjsf akjshfjkahsf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf";
-  const postId = 2, totalComments=10;
+  const postId = 2, totalComments = 10;
 
   const handleShowMore = (postId) => {
     setShowMore(postId);
+  }
+
+  const handleChangeComment = (event) => {
+    const { value } = event.target;
+
+    if (value.length > 0) {
+      setShowPostButton(true);
+    }
   }
 
   return (
@@ -60,12 +86,24 @@ const PostCards = () => {
                 <span className='text-gray-600'>more</span>
               </button>}
           </div>
-          
+
           <div>
-          <span className='text-gray-600'>{`View all ${totalComments} comments`}</span>
+            <span className='text-gray-600'>{`View all ${totalComments} comments`}</span>
           </div>
 
-          div
+          <div className='flex justify-between items-start'>
+            <Textarea
+              className="border-0 focus:border-transparent focus:ring-0 m-0 p-0 text-base"
+              {...register("comment")}
+              placeholder='Add Comment'
+              maxLength={1500}
+              name="comment"
+              id="comment"
+              onChange={handleChangeComment}
+              rows={10}
+            />
+            {showPostButton && <button className='text-blue-700 font-bold'>Post</button>}
+          </div>
         </div>
       </div>
 
