@@ -21,6 +21,7 @@ const PostCards = () => {
   const [showMore, setShowMore] = useState(null);
   const [showPostButton, setShowPostButton] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
+  const [commentText, setCommentText] = useState("");
   const text = "ajsfhakjsf akjshfjkahsf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf";
   const postId = 2, totalComments = 10;
 
@@ -30,8 +31,17 @@ const PostCards = () => {
 
   const handleChangeComment = (event) => {
     const { value } = event.target;
-
     (value.length > 0) ? setShowPostButton(true) : setShowPostButton(false);
+    setCommentText(value);
+  }
+
+  const addEmoji = (event) => {
+    const code = event.unified.split("_");
+    console.log(code);
+    const codeArray = [];
+    code.forEach(el => codeArray.push("0x" + el));
+    let emoji = String.fromCodePoint(...codeArray);
+    setCommentText(commentText + emoji)
   }
 
   return (
@@ -94,26 +104,28 @@ const PostCards = () => {
           <form>
             <label htmlFor="chat" className="sr-only">Add Comment</label>
             <div className="flex items-center rounded-lg bg-gray-50 dark:bg-gray-700">
-              <textarea id="chat" rows="1" onChange={handleChangeComment} className="block w-full text-sm text-gray-900 bg-white rounded-lg border-0 focus:ring-0 focus:border-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0" placeholder="Add Comment..."></textarea>
+              <textarea onFocus={() => setShowEmoji(false)} id="chat" value={commentText} rows="1" onChange={handleChangeComment} className="block w-full text-sm text-gray-900 bg-white rounded-lg border-0 focus:ring-0 focus:border-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0" placeholder="Add Comment..."></textarea>
               {showPostButton && (
                 <>
                   <button type="submit" className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer dark:text-blue-500 ">
                     Post
-                    <span className="sr-only">Send message</span>
                   </button>
-                  <button type="button" onClick={() => setShowEmoji(true)} className="p-2 text-gray-900 rounded-lg cursor-pointer dark:text-gray-400 ">
-                    <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z" />
-                    </svg>
-                    <span className="sr-only">
-                    </span>
-                  </button>
+                  <div>
+                    <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="p-2 text-gray-900 rounded-lg cursor-pointer dark:text-gray-400 ">
+                      <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z" />
+                      </svg>
+                    </button>
+                    {showEmoji &&
+                      <div className="absolute top-[135%] left-[50%]">
+                        <EmojiPicker data={emojiData} onEmojiSelect={addEmoji} emojiSize={20} maxFrequentRows={0} />
+                      </div>}
+                  </div>
+
                 </>
               )}
             </div>
           </form>
-
-          {showEmoji && <EmojiPicker className="relative" data={emojiData} onEmojiSelect={console.log} />}
 
 
         </div>
