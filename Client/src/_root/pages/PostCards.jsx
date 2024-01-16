@@ -46,8 +46,8 @@ const PostCards = () => {
 
   return (
     <>
-      <div className="w-full flex justify-center items-center px-3 lg:px-[66px] py-3">
-        <div className="w-full flex flex-col lg:px-3 gap-2 text-base">
+      <div className="w-full flex justify-center items-center px-3 pt-3 pb-20">
+        <div className="w-full flex flex-col lg:px-3 gap-2 text-[16px]">
           <div className="flex justify-start items-center">
             <div className="flex justify-start items-center w-full">
               <div className="rounded-full p-[2px] bg-gradient-to-t from-[#f4d254] via-[#f33c88] to-[#f381d4]">
@@ -80,9 +80,9 @@ const PostCards = () => {
             </div>
           </div>
 
-          <div className='font-bold'><span>12,3454 Likes</span></div>
+          <div className='font-bold mt-1'><span>12,3454 Likes</span></div>
 
-          <div className='inline-block'>
+          <div className='inline-block leading-snug text-[16px]'>
             <span className='font-bold mr-1'>Post Username</span>
             <span className="">
               {showMore ? text : text.substring(0, 250)}
@@ -101,10 +101,10 @@ const PostCards = () => {
           {/* Post Comment */}
 
 
-          <form>
+          <form className='relative border-b-2'>
             <label htmlFor="chat" className="sr-only">Add Comment</label>
             <div className="flex items-center rounded-lg bg-gray-50 dark:bg-gray-700">
-              <textarea onFocus={() => setShowEmoji(false)} id="chat" value={commentText} rows="1" onChange={handleChangeComment} className="block w-full text-sm text-gray-900 bg-white rounded-lg border-0 focus:ring-0 focus:border-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0" placeholder="Add Comment..."></textarea>
+              <textarea onFocus={() => setShowEmoji(false)} id="chat" value={commentText} rows="1" onChange={handleChangeComment} className="block  resize-none w-full text-sm text-gray-900 bg-white rounded-lg border-0 focus:ring-0 focus:border-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0" placeholder="Add Comment..."></textarea>
               {showPostButton && (
                 <>
                   <button type="submit" className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer dark:text-blue-500 ">
@@ -116,15 +116,15 @@ const PostCards = () => {
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z" />
                       </svg>
                     </button>
-                    {showEmoji &&
-                      <div className="absolute top-[135%] left-[50%]">
-                        <EmojiPicker data={emojiData} onEmojiSelect={addEmoji} emojiSize={20} maxFrequentRows={0} />
-                      </div>}
                   </div>
 
                 </>
               )}
             </div>
+            {showEmoji &&
+          <div className="absolute right-1 z-[60]">
+            <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={addEmoji} emojiSize={20} theme="light" previewPosition="none" />
+          </div>}
           </form>
 
 

@@ -11,45 +11,45 @@ const BottomBar = () => {
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
   return (
-    <>
-      <Navbar fluid rounded className='visible md:hidden border-t-2 p-0'>
-        <Navbar className='text-xl w-full'>
+      <div className="fixed md:hidden bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+        <Navbar fluid rounded className='w-full md:hidden border-t-2 p-0'>
+          <Navbar className='text-xl w-full'>
 
-          {sidebarLinks.map((link, index) => {
-            // Links excluded in Bottombar and Notification and Search included in Topbar
-            if (["Search", "Notifications", "Profile"].includes(link.label)) return;
+            {sidebarLinks.map((link, index) => {
+              // Links excluded in Bottombar and Notification and Search included in Topbar
+              if (["Search", "Notifications", "Profile"].includes(link.label)) return;
 
-            // Create-post modal 
-            if (link.label === "Create") {
-              return (
-                <button onClick={() => setIsCreatePostOpen(true)} key={index} className={"cursor-pointer key={index} p-3 rounded-sm"}>
+              // Create-post modal 
+              if (link.label === "Create") {
+                return (
+                  <button onClick={() => setIsCreatePostOpen(true)} key={index} className={"cursor-pointer key={index} p-3 rounded-sm"}>
                     {link.icon}
-                </button>
-              );
-            }
+                  </button>
+                );
+              }
 
-            // All other links
-            const isActive = pathname === link.route;
-            return (
-              <Link to={link.route} key={index} className={`${isActive && 'bg-gray-200'} p-3 rounded-sm`}>
-                {link.icon}
-              </Link>
-            )
-          })}
+              // All other links
+              const isActive = pathname === link.route;
+              return (
+                <Link to={link.route} key={index} className={`${isActive && 'bg-gray-200'} p-3 rounded-sm`}>
+                  {link.icon}
+                </Link>
+              )
+            })}
 
-          <Dropdown
-            arrowIcon={false}
-            inline
-            label={
-              <UserAvatar />
-            }>
-            <MoreDropdown position="bottom" />
-          </Dropdown>
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={
+                <UserAvatar />
+              }>
+              <MoreDropdown position="bottom" />
+            </Dropdown>
+          </Navbar>
         </Navbar>
-      </Navbar>
 
-      {isCreatePostOpen && <CreatePost isCreatePostOpen={isCreatePostOpen} setIsCreatePostOpen={setIsCreatePostOpen} />}
-    </>
+        {isCreatePostOpen && <CreatePost isCreatePostOpen={isCreatePostOpen} setIsCreatePostOpen={setIsCreatePostOpen} />}
+      </div>
   );
 
 }
