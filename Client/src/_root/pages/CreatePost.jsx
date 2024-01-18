@@ -37,14 +37,14 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     setError,
   } = useForm();
 
+  const fileInputRef = useRef();
   const { handleError, deleteError } = useError();
   const [charLength, setCharLength] = useState(0);
-  const fileInputRef = useRef();
-  const { ref: registerRef, ...rest } = register("fileUpload");
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState(null);
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [taggedUsers, setTaggedUsers] = useState(null);
   const [file, setFile] = useState(null);
+  const { ref: registerRef, ...rest } = register("fileUpload");
 
   // Handling character length for caption maximum 2200
   const handleCaptionChange = (event) => {
@@ -97,13 +97,9 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
 
   return (
     <>
-      {/* {isSuccess && (<NotificationToast
-        Icon={<HiCheckCircle className='h-5 w-5' />}
-        message={"Post created succesfully"}
-        type='success' />)} */}
 
       {isCreatePostOpen && (
-        <div className="w-full bg-slate-950 bg-opacity-55 flex flex-col justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-30 outline-none focus:outline-none">
+        <div className="fixed bg-slate-950 bg-opacity-55 flex flex-col justify-center items-center overflow-hidden inset-0 z-40 outline-none focus:outline-none">
           <button
             className="absolute top-5 right-5 bg-transparent border-0 text-white"
             onClick={() => {

@@ -4,7 +4,16 @@ import {
     useQueryClient,
     useInfiniteQuery,
 } from '@tanstack/react-query';
-import { LoginAPI, registerAPI, GenerateOtpAPI, ResetPasswordAPI, GetUserDetailsAPI, GetUsersAPI, createPostsAPI } from '../api';
+import {
+    LoginAPI,
+    registerAPI,
+    GenerateOtpAPI,
+    ResetPasswordAPI,
+    GetUserDetailsAPI,
+    GetUsersAPI,
+    createPostsAPI,
+    GetPostsAPI,
+} from '../api';
 
 export const useCreateUserAccount = () => {
     return useMutation({
@@ -49,5 +58,12 @@ export const useGetUsers = (searchName = '') => {
 export const useCreatePosts = () => {
     return useMutation({
         mutationFn: (data) => createPostsAPI(data)
+    });
+}
+
+export const useGetPosts = () => {
+    return useQuery({
+        queryKey: ['allPosts'],
+        queryFn: GetPostsAPI,
     });
 }

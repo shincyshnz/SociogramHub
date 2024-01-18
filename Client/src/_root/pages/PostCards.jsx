@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { Loader } from '../../components';
 import { IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline, IoBookmarkOutline } from 'react-icons/io5';
-import emojiData from '@emoji-mart/data'
-import emojiPicker from '@emoji-mart/react'
+import emojiData from '@emoji-mart/data';
 import EmojiPicker from '@emoji-mart/react';
+import { useForm } from 'react-hook-form';
+import { useGetPosts, useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations';
 
-const PostCards = () => {
-
+const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   // React - hook - form
   const {
     register,
@@ -18,12 +18,25 @@ const PostCards = () => {
     setError,
   } = useForm();
 
+  // React-Query
+  const {
+    data: userDetails,
+    isPending: isPendingUserDetails,
+    isError: isErrorGetUserDetails,
+    error: userDetailsError,
+  } = useGetUserDetails();
+
+  const {
+    data: posts,
+    isPending: isPendingPosts,
+    isError: isErrorPosts,
+    error: postsError,
+  } = useGetPosts();
+
   const [showMore, setShowMore] = useState(null);
   const [showPostButton, setShowPostButton] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const text = "ajsfhakjsf akjshfjkahsf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf aksjhfjkashfjkashfk akjfhjakshfkjasf akjsfhajkshfjkashf";
-  const postId = 2, totalComments = 10;
 
   const handleShowMore = (postId) => {
     setShowMore(postId);
@@ -44,7 +57,15 @@ const PostCards = () => {
     setCommentText(commentText + emoji)
   }
 
-  return (
+  if (isPendingUserDetails) {
+    return (<div className="h-full w-full mt-[25%] flex justify-center items-center">
+      <Loader size={"xl"} /></div>);
+  }
+
+  console.log(userDetails);
+  console.log(posts);
+
+  let postContent =  (
     <>
       <div className="w-full flex justify-center items-center px-3 pt-3 pb-20">
         <div className="w-full flex flex-col lg:px-3 gap-2 text-[16px]">
@@ -122,18 +143,20 @@ const PostCards = () => {
               )}
             </div>
             {showEmoji &&
-          <div className="absolute right-1 z-[60]">
-            <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={addEmoji} emojiSize={20} theme="light" previewPosition="none" />
-          </div>}
+              <div className="absolute right-1 z-[60]">
+                <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={addEmoji} emojiSize={20} theme="light" previewPosition="none" />
+              </div>}
           </form>
 
 
         </div>
       </div>
 
-
     </>
-  )
+  );
+
+  return postContent;
+
 }
 
 export default PostCards

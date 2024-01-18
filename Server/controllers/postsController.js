@@ -27,6 +27,19 @@ const createPosts = async (req, res, next) => {
     }
 }
 
+const getallPosts = async (req, res, next) => {
+    console.log(req.body);
+
+    try {
+        res.status(200).json({
+            posts: "posts details"
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     createPosts,
+    getallPosts,
 }
