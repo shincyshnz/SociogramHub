@@ -27,10 +27,13 @@ const createPosts = async (req, res, next) => {
     }
 }
 
-const getallPosts = async (req, res, next) => {
-    console.log(req.body);
+const getAllPosts = async (req, res, next) => {
+    const { userId } = req.body;
+    console.log(userId, "==userId");
 
     try {
+        const {followers} = await UsersModel.findById({ _id: userId }).select("followers");
+        console.log(followers, "==followersList");
         res.status(200).json({
             posts: "posts details"
         });
@@ -41,5 +44,5 @@ const getallPosts = async (req, res, next) => {
 
 module.exports = {
     createPosts,
-    getallPosts,
+    getAllPosts,
 }

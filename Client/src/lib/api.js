@@ -83,6 +83,6 @@ export const createPostsAPI = async (data) => {
 }
 
 export const GetPostsAPI = async () => {
-    const response = await axiosInstance.get(`${import.meta.env.VITE_POSTS_URL}/getallPosts`);
+    const response = await axiosInstance.get(`${import.meta.env.VITE_POSTS_URL}/getAllPosts`);
     return response?.data?.posts;
 }
