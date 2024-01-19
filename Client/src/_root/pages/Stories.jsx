@@ -5,7 +5,7 @@ import { FaChevronCircleRight, FaChevronCircleLeft } from "react-icons/fa";
 const Stories = () => {
   return (
     <>
-      <div className="w-full mt-3 h-[100px] lg:max-w-[630px] lg:h-[120px]">
+      <div className="w-full h-[100px] lg:max-w-[630px] lg:h-[120px]">
         <Carousel
           indicators={false}
           slide={false}
