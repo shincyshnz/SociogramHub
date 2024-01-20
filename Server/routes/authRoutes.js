@@ -1,13 +1,17 @@
 const express = require("express");
-const { register, login, handleRefreshtoken, getUsers, getUserDetails } = require("../controllers/authController");
-const { upload } = require("../middleware/cloudinaryUpload");
-const { checkAuth } = require("../middleware/checkAuth");
 const router = express.Router();
 
-router.post("/register",upload.single("profile_pic"), register);
+const { register,
+    login,
+    handleRefreshtoken,
+    getLoggedInUser,
+} = require("../controllers/authController");
+const { upload } = require("../middleware/cloudinaryUpload");
+const { checkAuth } = require("../middleware/checkAuth");
+
+router.post("/register", upload.single("profile_pic"), register);
 router.post("/login", login);
 router.get("/refreshToken", handleRefreshtoken);
-router.get("/profile", checkAuth, getUserDetails);
-router.get('/searchUser', getUsers);
+router.get("/profile", checkAuth, getLoggedInUser);
 
 module.exports = router;

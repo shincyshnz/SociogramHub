@@ -2,11 +2,12 @@ const express = require("express");
 const cors = require("cors");
 // const helmet = require("helmet");
 const connectDb = require("./config/db");
+const cookieParser = require("cookie-parser");
 const errorController = require("./controllers/errorController");
 const authRoutes = require("./routes/authRoutes");
 const forgotPasswordRoutes = require("./routes/forgotPasswordRoutes");
 const postsRoutes = require("./routes/postRoutes");
-const cookieParser = require("cookie-parser");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 connectDb();
@@ -29,6 +30,7 @@ app.use(cors({
 }));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/forgotPassword', forgotPasswordRoutes);
 app.use('/api/posts', postsRoutes);
 

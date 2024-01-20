@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
 import { FormFields, Loader, NotificationToast, UserAvatar } from '../../components';
-import { useCreatePosts, useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations';
+import { useCreatePosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
 import TagSearchBar from '../../components/TagSearchBar';
 import { useError } from '../../hooks/customHooks';
 
@@ -12,11 +12,11 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
 
   //  React-Query - fetching loggedIn user data
   const {
-    data: userDetails,
-    isPending: isPendingUserDetails,
-    isError: isErrorGetUserDetails,
-    error: userDetailsError,
-  } = useGetUserDetails();
+    data: profile,
+    isPending: isPendingProfile,
+    isError: isErrorProfile,
+    error: profileError,
+  } = useGetProfile();
 
   // React-Query - posting data
   const {
@@ -61,8 +61,8 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     setFile(file);
   }
 
-  if (isErrorGetUserDetails) {
-    handleError('userDetails', userDetailsError?.message);
+  if (isErrorProfile) {
+    handleError('profile', profileError?.message);
   }
 
   if (isErrorCreatePost) {
@@ -77,7 +77,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     }
 
     const formData = {
-      "userId": userDetails._id,
+      "userId": profile._id,
       "caption": data.caption,
       "location": data.location,
       "taggedUsers": taggedUsers?.map(user => user._id),
@@ -144,7 +144,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
           </div>
 
           {/* 2nd modal */}
-          {(isPendingUserDetails) ? <Loader /> :
+          {(isPendingProfile) ? <Loader /> :
             (isFileSelected) &&
             <>
               {isPendingCreatePosts &&
@@ -167,7 +167,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
                     <div className="w-full flex flex-col">
                       <div className="flex items-center">
                         <UserAvatar size="40px" />
-                        <span className='text-black font-bold mx-2'>{userDetails?.username}</span>
+                        <span className='text-black font-bold mx-2'>{profile?.username}</span>
                       </div>
 
                       <Textarea

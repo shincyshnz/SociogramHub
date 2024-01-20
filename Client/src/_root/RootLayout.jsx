@@ -24,13 +24,12 @@ const RootLayout = () => {
         <TopBar />
         <LeftSideBar />
 
-        {/* <section className='flex h-[75vh]'> */}
         <div className='w-full h-full flex justify-center md:ml-16 lg:ml-64 scroll-smooth'>
           <section className='w-full h-full'>
             <Outlet />
           </section>
-          <RightSideBar />
         </div>
+        
         <BottomBar className="self-end" />
       </div>
     </>

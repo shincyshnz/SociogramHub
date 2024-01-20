@@ -1,5 +1,4 @@
 const { handleUpload, ImageURIFormat } = require("../middleware/cloudinaryUpload");
-// const users = require("../model/users");
 const { UsersModel } = require("../model/users");
 const { generatePasswordHash, comparePasswordHash } = require("../utils/bcrypt");
 const { customErrorMessage } = require("../utils/customErrorMsg");
@@ -92,7 +91,7 @@ const handleRefreshtoken = (req, res, next) => {
     }
 };
 
-const getUserDetails = async (req, res, next) => {
+const getLoggedInUser = async (req, res, next) => {
     try {
         const { userId } = req.body;
         const userDetails = await UsersModel.findById({ _id: userId }).select("-password");
@@ -102,22 +101,9 @@ const getUserDetails = async (req, res, next) => {
     }
 }
 
-// Get all users matching the search name string from client
-const getUsers = async (req, res, next) => {
-    try {
-        const { name } = req.query;
-        let condition = { $or: [{ username: { $regex: name, $options: "i" } }, { fullname: { $regex: name, $options: "i" } }] };
-        const users = await UsersModel.find(condition).select("username fullname");
-        res.status(200).json({ users });
-    } catch (error) {
-        next(error);
-    }
-}
-
 module.exports = {
     register,
     login,
     handleRefreshtoken,
-    getUserDetails,
-    getUsers,
+    getLoggedInUser,
 }

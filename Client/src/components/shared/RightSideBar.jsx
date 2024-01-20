@@ -18,6 +18,9 @@ export const ProfileCard = ({ imgUrl, username, subText, text = "follow" }) => {
 }
 
 const RightSideBar = () => {
+
+  // react-query
+  
   return (
     <div className="w-2/4 px-5 mt-10 max-w-[380px] text-center hidden lg:block">
       <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="shincy" text="Switch" />

@@ -5,7 +5,7 @@ import { IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline, IoBookmarkOut
 import emojiData from '@emoji-mart/data';
 import EmojiPicker from '@emoji-mart/react';
 import { useForm } from 'react-hook-form';
-import { useGetPosts, useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations';
+import { useGetPosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
 
 const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   // React - hook - form
@@ -20,11 +20,11 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
 
   // React-Query
   const {
-    data: userDetails,
-    isPending: isPendingUserDetails,
-    isError: isErrorGetUserDetails,
-    error: userDetailsError,
-  } = useGetUserDetails();
+    data: profile,
+    isPending: isPendingProfile,
+    isError: isErrorProfile,
+    error: profileError,
+  } = useGetProfile();
 
   const {
     data: posts,
@@ -57,18 +57,18 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
     setCommentText(commentText + emoji)
   }
 
-  if (isPendingUserDetails) {
+  if (isPendingProfile) {
     return (<div className="h-full w-full mt-[25%] flex justify-center items-center">
       <Loader size={"xl"} /></div>);
   }
 
-  console.log(userDetails);
+  console.log(profile);
   console.log(posts);
 
   let postContent =  (
     <>
-      <div className="w-full flex justify-center items-center px-3 pt-3 pb-20">
-        <div className="w-full flex flex-col lg:px-3 gap-2 text-[16px]">
+      <div className="w-full flex justify-center items-center px-5 pt-3 pb-20">
+        <div className="w-[80%] flex flex-col lg:px-3 gap-2 text-[16px] px-5">
           <div className="flex justify-start items-center">
             <div className="flex justify-start items-center w-full">
               <div className="rounded-full p-[2px] bg-gradient-to-t from-[#f4d254] via-[#f33c88] to-[#f381d4]">

@@ -10,6 +10,8 @@ const createFormData = (data) => {
     return formData;
 }
 
+/* ---------------------- Authentication & Authorization -------------------------------- --*/
+
 export const registerAPI = async (data) => {
     // let formData = new FormData();
 
@@ -60,15 +62,24 @@ export const ResetPasswordAPI = async (data) => {
     return response;
 };
 
-export const GetUserDetailsAPI = async () => {
+/* ---------------------- Users Data ---------------------------------------- --*/
+
+export const GetProfileAPI = async () => {
     const response = await axiosInstance.get(`${import.meta.env.VITE_AUTH_URL}/profile`);
     return response?.data?.userDetails;
 }
 
 export const GetUsersAPI = async (searchTerm) => {
-    const response = await axios(`${import.meta.env.VITE_AUTH_URL}/searchUser?name=${searchTerm}`);
+    const response = await axios(`${import.meta.env.VITE_USERS_URL}/searchUser?name=${searchTerm}`);
     return response?.data?.users;
 }
+
+export const GetSuggestedUsersAPI = async () => {
+    const response = await axios(`${import.meta.env.VITE_USERS_URL}/suggestedUsers`);
+    return response?.data?.suggestedUsers;
+}
+
+/* ---------------------- Post Data ----------------------------------------- --*/
 
 export const createPostsAPI = async (data) => {
     const response = await axiosInstance(`${import.meta.env.VITE_POSTS_URL}/create`, {

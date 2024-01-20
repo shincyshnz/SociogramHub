@@ -9,11 +9,14 @@ import {
     registerAPI,
     GenerateOtpAPI,
     ResetPasswordAPI,
-    GetUserDetailsAPI,
+    GetProfileAPI,
     GetUsersAPI,
+    GetSuggestedUsersAPI,
     createPostsAPI,
     GetPostsAPI,
 } from '../api';
+
+/* ---------------------- Authentication & Authorization -------------------------------- --*/
 
 export const useCreateUserAccount = () => {
     return useMutation({
@@ -39,14 +42,18 @@ export const useResetPassword = () => {
     })
 }
 
-export const useGetUserDetails = () => {
+/* ---------------------- Users Data ---------------------------------------- --*/
+
+// Get loggedIn user Details
+export const useGetProfile = () => {
     return useQuery({
-        queryKey: ['userDetails'],
-        queryFn: GetUserDetailsAPI,
+        queryKey: ['profile'],
+        queryFn: GetProfileAPI,
         // retry: false,
     });
 }
 
+// Search users with username
 export const useGetUsers = (searchName = '') => {
     return useQuery({
         queryKey: ['allUsers', searchName],
@@ -54,6 +61,16 @@ export const useGetUsers = (searchName = '') => {
         enabled: searchName != '',
     });
 }
+
+// Random suggestions of users
+export const useSuggestedUsers = () => {
+    return useQuery({
+        queryKey: ["suggestedUsers"],
+        queryFn: GetSuggestedUsersAPI,
+    });
+}
+
+/* ---------------------- Post Data ----------------------------------------- --*/
 
 export const useCreatePosts = () => {
     return useMutation({

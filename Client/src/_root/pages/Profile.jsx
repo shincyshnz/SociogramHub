@@ -1,14 +1,14 @@
 import React from 'react';
 import { Loader } from '../../components'
-import { useGetUserDetails } from '../../lib/reactQuery/queriesAndMutations'
+import { useGetProfile} from '../../lib/reactQuery/queriesAndMutations'
 
 const Profile = () => {
   const {
-    data: userDetails,
+    data: profile,
     isPending,
     isSuccess,
     isError,
-    error } = useGetUserDetails();
+    error } = useGetProfile();
 
   if (isPending) {
     return <Loader />;
@@ -23,8 +23,8 @@ const Profile = () => {
   }
 
   return (
-    <div className='text-black font-bold text-xl'>{userDetails?.username}
-    ({userDetails?.email})</div>
+    <div className='text-black font-bold text-xl'>{profile?.username}
+    ({profile?.email})</div>
   );
 }
 
