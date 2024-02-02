@@ -1,5 +1,6 @@
 const errorController = (err, req, res, next) => {
     try {
+        console.log(err?.message, "==errorController ");
         res.status(err?.status || 400).json({
             message: err?.message,
         });

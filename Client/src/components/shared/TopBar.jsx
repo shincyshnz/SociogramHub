@@ -22,7 +22,7 @@
 import React from 'react';
 import { TextInput } from 'flowbite-react';
 import { HiSearch, HiOutlineHeart } from 'react-icons/hi';
-import { sidebarLinks } from '../../constatnts';
+import { sidebarLinks } from '../../constants';
 import { Link } from 'react-router-dom';
 
 const TopBar = () => {

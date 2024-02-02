@@ -3,7 +3,7 @@ import React from 'react'
 import { HiLogout, HiOutlineSun } from 'react-icons/hi'
 import { useAuth, useError } from '../hooks/customHooks';
 import { useNavigate, Link } from 'react-router-dom';
-import { moreLinks, sidebarLinks } from '../constatnts';
+import { moreLinks, sidebarLinks } from '../constants';
 
 const MoreDropdown = ({ position = "leftside" }) => {
     const navigate = useNavigate();

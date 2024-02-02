@@ -29,7 +29,6 @@ const createPosts = async (req, res, next) => {
 
 const getAllPosts = async (req, res, next) => {
     const { userId } = req.body;
-    console.log(userId, "==userId");
 
     try {
         const {followers} = await UsersModel.findById({ _id: userId }).select("followers");

@@ -37,7 +37,7 @@ const register = async (req, res, next) => {
     }
 };
 
-const generateTokens = (res,userId) => {
+const generateTokens = (res, userId) => {
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
 
@@ -48,7 +48,7 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
-        const user = await UsersModel.findOne({ email }).select(-password);
+        const user = await UsersModel.findOne({ email }).select("password");
         if (!user) {
             customErrorMessage(404, "User doesnot exists.!");
         }
@@ -83,7 +83,7 @@ const handleRefreshtoken = (req, res, next) => {
             customErrorMessage(401, "Refresh token has expired. Login to Continue");
         }
 
-        const [accessToken] = generateTokens(res,userId);
+        const [accessToken] = generateTokens(res, userId);
         res.status(200).json({ accessToken });
 
     } catch (error) {

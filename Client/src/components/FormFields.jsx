@@ -1,6 +1,7 @@
 import { Alert } from 'flowbite-react';
 import { useState } from 'react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import { CUSTOM_RULES } from '../constants';
 
 const FormFields = ({
     label,
@@ -16,53 +17,31 @@ const FormFields = ({
 }) => {
     const [passwordShown, setPasswordShown] = useState(false);
 
-    const customRules = {
-        email: {
-            required: "Email is required",
-            pattern: {
-                value: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
-                message: 'Invalid email format.',
-            },
-        },
-        fullname: {
-            required: "Full Name is required",
-            maxLength: {
-                value: 20,
-                message: 'Full Name must be of maximum 20 characters.',
-            }
-        },
-        username: {
-            required: "Username is required",
-            maxLength: {
-                value: 20,
-                message: 'Username must be of maximum 20 characters.',
-            }
-        },
-        password: {
-            required: "password is required",
-            minLength: {
-                value: 6,
-                message: "Password must be of minimum 6 character."
-            }
-        },
-        confirmPassword: {
-            required: "Confirm password required",
-        },
-        dob: {
-            required: "Date of birth is required",
-        },
-        otp: {
-            pattern: {
-                value: /^[0-9]*$/,
-            }
-        },
-        location: {
-            type: String,
-        },
+    const togglePasswordVisibility = () => {
+        // setPasswordShown(passwordShown => (passwordShown = !passwordShown));
+        setPasswordShown(!passwordShown);
     }
 
-    const togglePasswordVisibility = () => {
-        setPasswordShown(passwordShown => (passwordShown = !passwordShown));
+    const validateInput = (name, value) => {
+        const rule = CUSTOM_RULES[name];
+        if (!rule) return;
+
+        const VALIDATION_RULES = [
+            { type: "required", check: () => rule?.required && !value },
+            { type: "pattern", check: () => rule?.pattern?.value && !rule.pattern.value.test(value) },
+            { type: "minLength", check: () => value.length < rule?.minLength?.value },
+            { type: "maxLength", check: () => value.length > rule?.maxLength?.value },
+            { type: "validate", check: () => name === 'confirmPassword' && watch('password') !== value }
+        ];
+
+        for (const { type, check } of VALIDATION_RULES) {
+            if (check()) {
+                return setError(name, { type, message: rule?.[type]?.message });
+            }
+        }
+
+        clearErrors(name);
+        setValue(name, value);
     }
 
     const handleChange = (event) => {
@@ -70,27 +49,6 @@ const FormFields = ({
         validateInput(name, value);
     };
 
-    const validateInput = (name, value) => {
-        const rule = customRules[name];
-
-        if (!rule) return;
-
-        if (rule?.required && !value) {
-            setError(name, { type: "required", message: rule.required }
-            );
-        } else if (rule?.pattern && !rule?.pattern?.value.test(value)) {
-            setError(name, { type: "pattern", message: rule?.pattern?.message });
-        } else if (value.length < rule?.minLength?.value) {
-            setError(name, { type: "minLength", message: rule?.minLength?.message });
-        } else if (value.length > rule?.maxLength?.value) {
-            setError(name, { type: "maxLength", message: rule?.maxLength?.message });
-        } else if (name === 'confirmPassword' && watch('password') !== value) {
-            setError(name, { type: "validate", message: "password do not match" });
-        } else {
-            clearErrors(name);
-            setValue(name, value);
-        }
-    }
 
     return <>
         < div className="input-container" >
@@ -99,7 +57,7 @@ const FormFields = ({
                 id={name}
                 type={passwordShown ? "text" : type}
                 placeholder={label}
-                {...register(name, customRules)}
+                {...register(name, CUSTOM_RULES)}
                 aria-invalid={errors[name] ? 'true' : 'false'}
                 onChange={handleChange}
                 onBlur={handleChange}

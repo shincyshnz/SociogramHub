@@ -12,8 +12,19 @@ const getUsers = async (req, res, next) => {
     }
 };
 
-const getSuggestedUsers = ()=>{
-
+const getSuggestedUsers = async (req, res, next) => {
+    try {
+        const { userId, limit } = req.body;
+        console.log(userId, "==userId");
+        const followerList = await UsersModel.findById({ _id: userId });
+        console.log(followerList);
+        const suggestedUsers = await UsersModel.find().limit(20).select("name", "profile_pic", "followers");
+        res.status(200).json({
+            allUsers: followerList,
+        });
+    } catch (error) {
+        next(error);
+    }
 }
 
 module.exports = {

@@ -2,7 +2,7 @@ import { Dropdown, Sidebar } from 'flowbite-react';
 // import { useAuth } from '../../hooks/customHooks';
 import { HiMenu } from 'react-icons/hi';
 import MoreDropdown from '../MoreDropdown';
-import { sidebarLinks } from '../../constatnts';
+import { sidebarLinks } from '../../constants';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';

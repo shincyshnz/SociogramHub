@@ -1,4 +1,4 @@
-
+import { useEffect } from 'react'
 import AuthLayout from './_auth/AuthLayout'
 import RootLayout from './_root/RootLayout'
 import { useError } from './hooks/customHooks'
@@ -9,25 +9,23 @@ import { EditPost, Explore, Home, Notifications, PostCards, Profile, Reels, Save
 import './index.css'
 import { Route, Routes } from 'react-router-dom'
 
-
 const App = () => {
   const { customError } = useError() || {};
 
   return (
     <main className='flex h-auto font-inter'>
-      {customError && Object.keys(customError).length !== 0 && (
-        // <div className="absolute float-right top-5 right-5 max-w-[300px]">
-          Object.keys(customError).map((err, index) => (
-            <NotificationToast
-              key={index}
-              Icon={customError[err].icon || <HiExclamation className='h-5 w-5' />}
-              message={customError[err].message}
-              type={customError[err].type || "error"}
-            />
-          ))
-        // </div>
-      )}
-      
+
+      {(Object.keys(customError).length !== 0) &&
+        Object.keys(customError).map((err, index) => (
+          <NotificationToast
+            key={index}
+            Icon={customError[err].icon || <HiExclamation className='h-5 w-5' />}
+            message={customError[err].message}
+            type={customError[err].type || "error"}
+          />
+        ))
+      }
+
       <Routes>
         {/* Public Routes */}
         <Route element={<AuthLayout />}>
