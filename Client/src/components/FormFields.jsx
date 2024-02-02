@@ -3,22 +3,22 @@ import { useState } from 'react';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import { CUSTOM_RULES } from '../constants';
 
-const FormFields = ({
-    label,
-    name,
-    type,
-    register,
-    errors,
-    setValue,
-    clearErrors,
-    setError,
-    watch = null,
-    className = "input-form"
-}) => {
+const FormFields = ({ ...props }) => {
+    const {
+        label,
+        name,
+        type,
+        register,
+        errors,
+        setValue,
+        clearErrors,
+        setError,
+        watch = null,
+        className = "input-form"
+    } = props;
     const [passwordShown, setPasswordShown] = useState(false);
 
     const togglePasswordVisibility = () => {
-        // setPasswordShown(passwordShown => (passwordShown = !passwordShown));
         setPasswordShown(!passwordShown);
     }
 
@@ -51,7 +51,7 @@ const FormFields = ({
 
 
     return <>
-        < div className="input-container" >
+        <div className="input-container" >
             <input
                 className={`${className} text-xs w-full rounded-md`}
                 id={name}
@@ -63,20 +63,16 @@ const FormFields = ({
                 onBlur={handleChange}
             />
 
-            {
-                type === "password" && (
-                    <i className="password-toggle" onClick={togglePasswordVisibility}>{passwordShown ? <AiFillEye /> : <AiFillEyeInvisible />}</i>
-                )
-            }
+            {type === "password" && (
+                <i className="password-toggle" onClick={togglePasswordVisibility}>{passwordShown ? <AiFillEye /> : <AiFillEyeInvisible />}</i>
+            )}
         </div >
 
-        {
-            errors[name] && (
-                <Alert color="failure" className='alert'>
-                    {errors[name].message}
-                </Alert>
-            )
-        }
+        {errors[name] && (
+            <Alert color="failure" className='alert'>
+                {errors[name].message}
+            </Alert>
+        )}
     </>
 }
 
