@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form"
-import { SignUp, Dob, GetApp } from "../../components"
+import { SignUp, Dob, GetApp, GetAuthLinks } from "../../components"
 
 const SignUpForm = () => {
   const [isNext, setIsNext] = useState(false);
@@ -37,7 +37,14 @@ const SignUpForm = () => {
           <span className="text-blue-600">Log in</span>
         </Link>
         </p>
-      </div >
+      </div>
+      <GetAuthLinks
+        link={{
+          'text': 'Have an account?',
+          'link': '/sign-in'
+        }}
+        text={'Log in'}
+      />
       <GetApp />
     </form>
   </>

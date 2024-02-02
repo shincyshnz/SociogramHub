@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import MoreDropdown from '../MoreDropdown';
 import { Dropdown, Navbar } from 'flowbite-react';
 import { useLocation, Link } from 'react-router-dom';
 import { sidebarLinks } from '../../constants';
-import UserAvatar from './UserAvatar';
-import MoreDropdown from '../MoreDropdown';
 import { CreatePost } from '../../_root/pages';
+import { UserAvatar } from '../../components';
+
 
 const BottomBar = () => {
   const { pathname } = useLocation();

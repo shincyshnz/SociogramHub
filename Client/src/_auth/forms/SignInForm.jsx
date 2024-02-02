@@ -64,12 +64,12 @@ const SignInForm = () => {
 
         <OR />
 
-        <a href="#" className="flex justify-center items-center gap-2 w-full text-blue-800 bg-transparent hover:cursor-pointer font-medium text-sm py-2 mb-3">
+        <a href="#" className="flex-center w-full text-blue-800 bg-transparent hover:cursor-pointer font-medium text-sm py-2 mb-3">
           <img className="w-4 h-4" src="assets/facebook_3128304.png" alt="facebook login link" />
           <span>Log in With Facebook</span>
         </a>
 
-        <Link to="/forgot-password" className="flex justify-center items-center gap-2 w-full text-blue-800 bg-transparent hover:cursor-pointer">
+        <Link to="/forgot-password" className="flex-center w-full text-blue-800 bg-transparent hover:cursor-pointer">
           <span>Forgot Password?</span>
         </Link>
 

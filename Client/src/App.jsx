@@ -11,12 +11,13 @@ import { Route, Routes } from 'react-router-dom'
 
 const App = () => {
   const { customError } = useError() || {};
+  const errorKeysArray = Object.keys(customError);
 
   return (
     <main className='flex h-auto font-inter'>
 
-      {(Object.keys(customError).length !== 0) &&
-        Object.keys(customError).map((err, index) => (
+      { errorKeysArray.length !== 0 &&
+        errorKeysArray.map((err, index) => (
           <NotificationToast
             key={index}
             Icon={customError[err].icon || <HiExclamation className='h-5 w-5' />}

@@ -1,6 +1,6 @@
 import { HiChatAlt2, HiFilm, HiHome, HiOutlineBookmark, HiOutlineCog, HiOutlineHeart, HiOutlineSearch, HiPlus } from "react-icons/hi";
 import { MdOutlineExplore } from "react-icons/md";
-import UserAvatar from "../components/shared/UserAvatar";
+import { UserAvatar } from "../components";
 
 export const sidebarLinks = [
     {
