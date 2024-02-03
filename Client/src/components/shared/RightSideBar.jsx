@@ -11,7 +11,7 @@ export const ProfileCard = ({ imgUrl, username, subText, text = "follow" }) => {
           <span className='text-md font-bold'>{username}</span>
           <span className=' text-gray-600'>{subText}</span>
         </div>
-        <span className='mx-auto text-blue-700 font-bold'>{text}</span>
+        <span className='text-blue-700 font-bold'>{text}</span>
       </div>
     </div>
   );
@@ -22,7 +22,7 @@ const RightSideBar = () => {
   // react-query - get all users 
 
   return (
-    <div className="w-2/4 px-10 mt-10 max-w-[380px] text-center hidden lg:block">
+    <div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">
       <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="shincy" text="Switch" />
 
       <div className="flex items-center  font-bold text-[14px]">

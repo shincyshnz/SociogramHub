@@ -68,7 +68,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   let postContent =  (
     <>
       <div className="w-full flex-center px-5 pt-3 pb-20">
-        <div className="w-[80%] flex flex-col lg:px-3 gap-2 text-[16px] px-5">
+        <div className="w-full md:w-[80%] flex flex-col lg:px-3 lg:gap-2 text-[16px]">
           <div className="flex justify-start items-center">
             <div className="flex justify-start items-center w-full">
               <div className="rounded-full p-[2px] bg-gradient-to-t from-[#f4d254] via-[#f33c88] to-[#f381d4]">

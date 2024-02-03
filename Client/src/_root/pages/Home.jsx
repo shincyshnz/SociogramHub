@@ -6,8 +6,8 @@ const Home = () => {
 
     return (
         <>
-            <div className="flex justify-center gap-2">
-                <div className='flex flex-1 flex-col items-center px-2 md:px-5 lg:px-20'>
+            <div className="flex justify-center gap-2 px-2 xl:px-10">
+                <div className='flex flex-1 flex-col items-center md:px-2'>
                     <Stories />
                     <PostCards />
                 </div>
