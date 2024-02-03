@@ -18,15 +18,11 @@ const FormFields = ({ ...props }) => {
     } = props;
     const [passwordShown, setPasswordShown] = useState(false);
 
-    const togglePasswordVisibility = () => {
-        setPasswordShown(!passwordShown);
-    }
-
     const validateInput = (name, value) => {
         clearErrors(name);
 
         const rule = CUSTOM_RULES[name];
-        console.log(rule,value,"== rule");
+        console.log(rule, value, "== rule");
         if (!rule) return;
 
         const VALIDATION_RULES = [
@@ -39,7 +35,6 @@ const FormFields = ({ ...props }) => {
 
         for (const { type, check } of VALIDATION_RULES) {
             if (check()) {
-                console.log(name, rule?.[type]?.message ,"== error");
                 return setError(name, { type, message: rule?.[type]?.message });
             }
         }
@@ -67,15 +62,13 @@ const FormFields = ({ ...props }) => {
             />
 
             {type === "password" && (
-                <i className="password-toggle" onClick={togglePasswordVisibility}>{passwordShown ? <AiFillEye /> : <AiFillEyeInvisible />}</i>
+                <i className="password-toggle" onClick={() => setPasswordShown(!passwordShown)}>
+                    {passwordShown ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </i>
             )}
         </div >
 
-        {errors[name] && (
-            <Alert color="failure" className='alert'>
-                {errors[name].message}
-            </Alert>
-        )}
+        {errors[name] && <Alert color="failure" className='alert'> {errors[name].message} </Alert>}
     </>
 }
 

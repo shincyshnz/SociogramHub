@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { TopBar, LeftSideBar, RightSideBar, BottomBar } from '../components';
 import { useAuth, useError } from '../hooks/customHooks';
@@ -17,7 +17,6 @@ const RootLayout = () => {
     }
   }, [accessToken]);
 
-
   return (
     <>
       <div className='w-full max-h-screen flex flex-col md:flex-row'>
@@ -29,7 +28,7 @@ const RootLayout = () => {
             <Outlet />
           </section>
         </div>
-        
+
         <BottomBar className="self-end" />
       </div>
     </>

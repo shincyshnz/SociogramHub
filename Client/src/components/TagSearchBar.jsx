@@ -36,7 +36,7 @@
 
 
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from "react-select";
 import { useGetUsers } from '../lib/reactQuery/queriesAndMutations';
 import { useDebounce, useError } from '../hooks/customHooks';
@@ -46,6 +46,7 @@ const TagSearchBar = ({ name, placeholder, setTaggedUsers }) => {
     const [searchName, setSearchName] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const { debouncedValue } = useDebounce(searchName, 300);
+    
     const { data: users, isError, error, isSuccess } = useGetUsers(debouncedValue);
 
     const handleOptions = (inputValue) => {
