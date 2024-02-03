@@ -15,7 +15,7 @@
 
 @layer utilities {
     .flex-center {
-        @apply flex justify-center items-center gap-2
+        @apply flex justify-center items-center
     }
     .alert {
         @apply text-xs p-1 bg-transparent;
@@ -27,7 +27,7 @@
 
 @layer components {
     .form-container {
-        @apply max-w-[437px] max-h-[920px] py-10 px-10 flex flex-col gap-3 mb-3 justify-center items-center text-center
+        @apply w-full max-w-[337px] max-h-[920px] px-10 flex flex-col gap-3 mb-3 justify-center items-center text-center;
     }
 
     .input-container {

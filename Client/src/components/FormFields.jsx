@@ -23,7 +23,10 @@ const FormFields = ({ ...props }) => {
     }
 
     const validateInput = (name, value) => {
+        clearErrors(name);
+
         const rule = CUSTOM_RULES[name];
+        console.log(rule,value,"== rule");
         if (!rule) return;
 
         const VALIDATION_RULES = [
@@ -36,11 +39,11 @@ const FormFields = ({ ...props }) => {
 
         for (const { type, check } of VALIDATION_RULES) {
             if (check()) {
+                console.log(name, rule?.[type]?.message ,"== error");
                 return setError(name, { type, message: rule?.[type]?.message });
             }
         }
 
-        clearErrors(name);
         setValue(name, value);
     }
 
@@ -53,7 +56,7 @@ const FormFields = ({ ...props }) => {
     return <>
         <div className="input-container" >
             <input
-                className={`${className} text-xs w-full rounded-md`}
+                className={`${className} text-xs rounded-sm`}
                 id={name}
                 type={passwordShown ? "text" : type}
                 placeholder={label}

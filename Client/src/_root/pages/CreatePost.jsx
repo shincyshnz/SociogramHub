@@ -148,7 +148,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
             (isFileSelected) &&
             <>
               {isPendingCreatePosts &&
-                <div className='absolute top-64 w-full text-center flex justify-center items-center z-50'>
+                <div className='absolute top-64 w-full text-center flex-center z-50'>
                   <Spinner aria-label="Extra large spinner example" size="xl" />
                 </div>
               }

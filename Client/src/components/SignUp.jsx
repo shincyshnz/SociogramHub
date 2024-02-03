@@ -19,11 +19,11 @@ const SignUp = ({
 
   return (
     <>
-      <div className="form-container border">
-        <img className="max-w-[85%] px-10 mx-auto" src="/assets/logo.png" alt="logo" />
+      <div className="form-container pt-5 border">
+        <img className="px-8 mx-auto" src="/assets/logo.png" alt="logo" />
 
         <h6 className="text-gray-500 mb-4 font-bold text-base">Sign up to see photos and videos from your friends.</h6>
-        <a href="#" className="flex justify-center items-center gap-2 w-full text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm py-2 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700">
+        <a href="#" className="flex-center gap-2 w-full text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm py-2 mb-3 dark:bg-blue-600 dark:hover:bg-blue-700">
           <img className="bg-white w-4 h-4" src="assets/facebook_3128304.png" alt="facebook login link" />
           <span>Log in With Facebook</span>
         </a>

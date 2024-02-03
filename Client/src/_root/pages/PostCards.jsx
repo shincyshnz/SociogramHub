@@ -58,7 +58,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   }
 
   if (isPendingProfile) {
-    return (<div className="h-full w-full mt-[25%] flex justify-center items-center">
+    return (<div className="h-full w-full mt-[25%] flex-center">
       <Loader size={"xl"} /></div>);
   }
 
@@ -67,7 +67,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
 
   let postContent =  (
     <>
-      <div className="w-full flex justify-center items-center px-5 pt-3 pb-20">
+      <div className="w-full flex-center px-5 pt-3 pb-20">
         <div className="w-[80%] flex flex-col lg:px-3 gap-2 text-[16px] px-5">
           <div className="flex justify-start items-center">
             <div className="flex justify-start items-center w-full">

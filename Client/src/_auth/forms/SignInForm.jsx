@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { FormFields, Loader, GetApp, OR } from '../../components';
+import { FormFields, Loader, GetApp, OR, GetAuthLinks } from '../../components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignInAccount } from '../../lib/reactQuery/queriesAndMutations';
 import { useAuth, useError } from '../../hooks/customHooks';
@@ -24,11 +24,15 @@ const SignInForm = () => {
   const {
     mutateAsync: LoginUser,
     isPending: isLoading,
+    isSuccess,
+    error
   } = useSignInAccount();
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
     deleteError('apiError');
+
+    if (data.email === '' || data.password === '') return;
 
     try {
       const response = await LoginUser(data);
@@ -46,8 +50,8 @@ const SignInForm = () => {
 
   return (
     <>
-      <div className='form-container border'>
-        <img className="max-w-[85%] px-10 mx-auto" src="/assets/logo.png" alt="logo" />
+      <div className='form-container pt-8 pb-3 border mt-7'>
+        <img className="px-6 pt-1 pb-6 mx-auto" src="/assets/logo.png" alt="logo" />
         <form className="w-full" onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="flex flex-col gap-2 w-full">
             <FormFields label={"Email"} name={"email"} type={"text"} register={register} errors={errors} setValue={setValue} clearErrors={clearErrors} setError={setError} />
@@ -64,24 +68,24 @@ const SignInForm = () => {
 
         <OR />
 
-        <a href="#" className="flex-center w-full text-blue-800 bg-transparent hover:cursor-pointer font-medium text-sm py-2 mb-3">
+        <a href="#" className="flex-center gap-2 text-blue-800 bg-transparent hover:cursor-pointer font-medium text-sm py-2 mb-3">
           <img className="w-4 h-4" src="assets/facebook_3128304.png" alt="facebook login link" />
           <span>Log in With Facebook</span>
         </a>
 
-        <Link to="/forgot-password" className="flex-center w-full text-blue-800 bg-transparent hover:cursor-pointer">
+        <Link to="/forgot-password" className="flex-center gap-2 w-full text-blue-800 bg-transparent hover:cursor-pointer">
           <span>Forgot Password?</span>
         </Link>
 
       </div >
-
-      <div className="form-container w-full border p-6">
-        <p className="text-sm">Don't have an account? <Link to="/sign-up">
-          <span className="text-blue-600">Sign Up</span>
-        </Link>
-        </p>
-      </div>
-
+      
+      <GetAuthLinks
+        link={{
+          'text': "Don't have an account?",
+          'link': '/sign-up'
+        }}
+        text={'Sign Up'}
+      />
       <GetApp />
     </>
   )

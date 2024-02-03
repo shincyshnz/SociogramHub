@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import { SignUp, Dob, GetApp, GetAuthLinks } from "../../components"
 
@@ -32,12 +31,6 @@ const SignUpForm = () => {
           errors={errors}
         />}
 
-      <div className="form-container w-full border p-6">
-        <p className="text-sm">Have an account? <Link to="/sign-in">
-          <span className="text-blue-600">Log in</span>
-        </Link>
-        </p>
-      </div>
       <GetAuthLinks
         link={{
           'text': 'Have an account?',

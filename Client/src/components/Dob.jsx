@@ -46,7 +46,7 @@ const Dob = ({ handleSubmit, errors }) => {
     return (
         <div className="form-container border w-full">
             <img className='w-40 filter drop-shadow-lg' src="/assets/cake.png" alt="date of birth" />
-            <div className="flex justify-center items-center gap-4 mb-4">
+            <div className="flex-center gap-4 mb-4">
                 <div className="w-[150px] border-b-[3px] border-gray-300"></div>
             </div>
             <h6 className="mb-4 font-bold">Add your Birthday</h6>

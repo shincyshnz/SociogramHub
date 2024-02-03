@@ -12,7 +12,7 @@ const Stories = () => {
           leftControl={<FaChevronCircleLeft className='text-gray-300 text-[30px] lg:text-[36px]' />}
           rightControl={<FaChevronCircleRight className='text-gray-300 text-[30px] lg:text-[36px]' />}
         >
-          <div className='flex justify-center items-center gap-3'>
+          <div className='flex-center gap-3'>
             <div className="rounded-full bg-gradient-to-t from-[#f4d254] via-[#f33c88] to-[#f381d4] p-[3px]">
               <div className="rounded-full bg-white dark:bg-black back">
                 <a href='#'>
@@ -71,7 +71,7 @@ const Stories = () => {
             </div>
           </div>
 
-          <div className='flex justify-center items-center gap-3'>
+          <div className='flex-center gap-3'>
             <div className="rounded-full bg-gradient-to-t from-[#f4d254] via-[#f33c88] to-[#f381d4] p-[3px]">
               <div className="rounded-full bg-white dark:bg-black back">
                 <a href='#'>

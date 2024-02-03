@@ -39,7 +39,7 @@ export const sidebarLinks = [
         label: "Create"
     },
     {
-        icon: <UserAvatar size="25px"/>,
+        icon: <UserAvatar size="25px" />,
         route: "/profile",
         label: "Profile"
     },
@@ -61,39 +61,51 @@ export const moreLinks = [
 
 export const CUSTOM_RULES = {
     email: {
-        required: "Email is required",
+        required: {
+            message: "Email is required",
+        },
         pattern: {
             value: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
             message: 'Invalid email format.',
         },
     },
     fullname: {
-        required: "Full Name is required",
+        required:{
+            message:  "Full Name is required",
+        },
         maxLength: {
             value: 20,
             message: 'Full Name must be of maximum 20 characters.',
         }
     },
     username: {
-        required: "Username is required",
+        required:{
+            message:  "Username is required",
+        },
         maxLength: {
             value: 20,
             message: 'Username must be of maximum 20 characters.',
         }
     },
     password: {
-        required: "password is required",
+        required:{
+            message:  "Password is required",
+        },
         minLength: {
             value: 6,
             message: "Password must be of minimum 6 character."
         }
     },
     confirmPassword: {
-        required: "Confirm password required",
+        required:{
+            message: "Confirm password required",
+        },
     },
     dob: {
-        required: "Date of birth is required",
-    },
+        required:{
+            message: "Date of birth is required",
+        },
+        },
     otp: {
         pattern: {
             value: /^[0-9]*$/,

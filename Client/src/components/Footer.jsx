@@ -4,7 +4,7 @@ import { AiOutlineCopyright } from "react-icons/ai"
 const Footer = () => {
     return (
         <div className='mt-10 flex flex-col justify-center items-center text-gray-600 mx-10'>
-            <ul className='flex justify-center items-center gap-3 flex-wrap'>
+            <ul className='flex-center gap-3 flex-wrap'>
                 <li>SocioGram</li>
                 <li>ABout</li>
                 <li>Blog</li>
@@ -18,7 +18,7 @@ const Footer = () => {
                 <li>Contact Uploading & Non-Users</li>
                 <li>SocioGram Verified</li>
             </ul>
-            <ul className='flex justify-center items-center gap-3 flex-wrap mt-3'>
+            <ul className='flex-center gap-3 flex-wrap mt-3'>
                 <select className='border-none text-xs'>
                     <option>English</option>
                     <option>Arabic</option>
