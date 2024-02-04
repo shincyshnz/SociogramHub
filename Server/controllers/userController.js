@@ -56,6 +56,11 @@ const getSuggestedUsers = async (req, res, next) => {
                         { _id: { $nin: followersList.followers } }
                     ]
                 }
+            },{
+                $project : {
+                    username : 1,
+                    profile_pic : 1,
+                }
             }
         ];
 
