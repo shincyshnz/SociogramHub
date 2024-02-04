@@ -24,7 +24,7 @@ const RightSideBar = () => {
 
   // react-query - get user suggestions
   const {
-    data: suggestedUsers,
+    mutateAsync: suggestedUsers,
     isPending,
     error: suggestedUserError,
   } = useSuggestedUsers();

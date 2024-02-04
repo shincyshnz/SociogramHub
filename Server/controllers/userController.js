@@ -15,7 +15,8 @@ const getUsers = async (req, res, next) => {
 
 const getSuggestedUsers = async (req, res, next) => {
     try {
-        const { userId: user, limit } = req.body;
+        const { userId: user } = req.body;
+        const { limit } = req.query;
         const userId = new mongoose.Types.ObjectId(user);
 
         const getUserQuery = UsersModel.findOne({ _id: userId });
