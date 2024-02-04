@@ -75,7 +75,7 @@ export const GetUsersAPI = async (searchTerm) => {
 }
 
 export const GetSuggestedUsersAPI = async () => {
-    const response = await axios(`${import.meta.env.VITE_USERS_URL}/suggestedUsers`);
+    const response = await axiosInstance(`${import.meta.env.VITE_USERS_URL}/suggestedUsers`);
     return response?.data?.suggestedUsers;
 }
 

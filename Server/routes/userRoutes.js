@@ -5,8 +5,9 @@ const {
     getUsers,
     getSuggestedUsers,
 } = require("../controllers/userController");
+const { checkAuth } = require("../middleware/checkAuth");
 
 router.get('/searchUser', getUsers);
-router.get('/suggestedUsers', getSuggestedUsers);
+router.get('/suggestedUsers',checkAuth, getSuggestedUsers);
 
 module.exports = router;

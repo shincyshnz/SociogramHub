@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const { UsersModel } = require("../model/users");
 
 // Get all users matching the search name string from client
@@ -14,13 +15,43 @@ const getUsers = async (req, res, next) => {
 
 const getSuggestedUsers = async (req, res, next) => {
     try {
-        const { userId, limit } = req.body;
-        console.log(userId, "==userId");
-        const followerList = await UsersModel.findById({ _id: userId });
-        console.log(followerList);
-        const suggestedUsers = await UsersModel.find().limit(20).select("name", "profile_pic", "followers");
+        const { userId: user, limit } = req.body;
+        const userId = new mongoose.Types.ObjectId(user);
+
+        const getUserQuery = UsersModel.findOne({ _id: userId });
+        const followersList = await getUserQuery.populate("followers").select("followers, -_id");
+
+
+        // Suggested users if followers array empty
+        const randomSuggestions = UsersModel.aggregate([
+            {
+                $match: {
+                    _id: { $ne: userId }
+                }
+            }
+        ]);
+
+        // Suggested users if followers array is not empty
+        const followersExcludedSuggestions = UsersModel.aggregate([
+            {
+                $match: {
+                    $and: [
+                        { _id: { $ne: userId } },
+                        { _id: { $nin: followersList.followers } }
+                    ]
+                }
+            }
+        ]);
+        
+        const suggestedUsers = followersList.length === 0
+            ? await randomSuggestions.exec()
+            : await followersExcludedSuggestions.exec();
+
+        
+ 
+
         res.status(200).json({
-            allUsers: followerList,
+            allUsers: suggestedUsers,
         });
     } catch (error) {
         next(error);

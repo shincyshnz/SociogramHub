@@ -22,7 +22,6 @@ const FormFields = ({ ...props }) => {
         clearErrors(name);
 
         const rule = CUSTOM_RULES[name];
-        console.log(rule, value, "== rule");
         if (!rule) return;
 
         const VALIDATION_RULES = [
