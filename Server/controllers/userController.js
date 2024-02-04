@@ -68,7 +68,7 @@ const getSuggestedUsers = async (req, res, next) => {
         ];
 
         const suggestedUsers = await UsersModel.aggregate(suggestedUserPipeline);
-
+        console.log(suggestedUsers);
         res.status(200).json({
             suggestedUsers,
         });

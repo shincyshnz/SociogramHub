@@ -49,7 +49,6 @@ export const useGetProfile = () => {
     return useQuery({
         queryKey: ['profile'],
         queryFn: GetProfileAPI,
-        // retry: false,
     });
 }
 
@@ -65,7 +64,7 @@ export const useGetUsers = (searchName = '') => {
 // Random suggestions of users
 export const useSuggestedUsers = () => {
     return useQuery({
-        queryKey: ["suggestedUsers"],
+        queryKey: ['suggestedUsers'],
         queryFn: GetSuggestedUsersAPI,
     });
 }
