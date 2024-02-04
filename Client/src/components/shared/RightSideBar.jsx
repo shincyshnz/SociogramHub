@@ -1,6 +1,9 @@
 import React from 'react';
+import { Loader } from './GetComponents';
+import { useGetProfile, useSuggestedUsers } from '../../lib/reactQuery/queriesAndMutations';
 
-export const ProfileCard = ({ imgUrl, username, subText, text = "follow" }) => {
+export const ProfileCard = ({ ...props }) => {
+  const { imgUrl, username, subText, text = "follow" } = props;
   return (
     <div className="flex flex-col items-center justify-center mt-3">
       <div className="w-full flex items-center gap-3">
@@ -19,23 +22,46 @@ export const ProfileCard = ({ imgUrl, username, subText, text = "follow" }) => {
 
 const RightSideBar = () => {
 
-  // react-query - get all users 
+  // react-query - get user suggestions
+  const {
+    data: suggestedUsers,
+    isPending,
+    error: suggestedUserError,
+  } = useSuggestedUsers();
 
+  const {
+    data: profile,
+    error: profileError,
+  } = useGetProfile();
+
+  if (suggestedUserError || profileError) {
+    const error = suggestedUserError || profileError;
+    handleError('suggestedUsersApiError', { message: error?.response?.data?.message || error?.message });
+  }
+  
+  console.log(profile, suggestedUsers, "===");
+  
   return (
     <div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">
-      <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="shincy" text="Switch" />
+      <ProfileCard imgUrl="assets/cake.png" username={profile.username} subText={profile.fullname} text="Switch" />
 
       <div className="flex items-center  font-bold text-[14px]">
         <h5 className='flex-1 my-5 text-left text-gray-600'>Suggested for you</h5>
         <a href="#"><h5 className='text-right justify-self-end'>See all</h5></a>
       </div>
 
+
       <div className="flex flex-col">
-        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
-        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
-        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+        {isPending
+          ? <Loader />
+          : <>
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+          </>
+        }
       </div>
     </div >
   )

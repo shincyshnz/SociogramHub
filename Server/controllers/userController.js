@@ -42,7 +42,7 @@ const getSuggestedUsers = async (req, res, next) => {
         //         }
         //     }
         // ]);
-        
+
         // const suggestedUsers = followersList.length === 0
         //     ? await randomSuggestions.exec()
         //     : await followersExcludedSuggestions.exec();
@@ -56,18 +56,20 @@ const getSuggestedUsers = async (req, res, next) => {
                         { _id: { $nin: followersList.followers } }
                     ]
                 }
-            },{
-                $project : {
-                    username : 1,
-                    profile_pic : 1,
+            }, {
+                $project: {
+                    username: 1,
+                    profile_pic: 1,
                 }
+            }, {
+                $limit: +limit,
             }
         ];
 
         const suggestedUsers = await UsersModel.aggregate(suggestedUserPipeline);
 
         res.status(200).json({
-            allUsers: suggestedUsers,
+            suggestedUsers,
         });
     } catch (error) {
         next(error);
