@@ -22,33 +22,44 @@ const getSuggestedUsers = async (req, res, next) => {
         const followersList = await getUserQuery.populate("followers").select("followers, -_id");
 
 
-        // Suggested users if followers array empty
-        const randomSuggestions = UsersModel.aggregate([
-            {
-                $match: {
-                    _id: { $ne: userId }
-                }
-            }
-        ]);
+        // // Suggested users if followers array empty
+        // const randomSuggestions = UsersModel.aggregate([
+        //     {
+        //         $match: {
+        //             _id: { $ne: userId }
+        //         }
+        //     }
+        // ]);
 
-        // Suggested users if followers array is not empty
-        const followersExcludedSuggestions = UsersModel.aggregate([
+        // // Suggested users if followers array is not empty
+        // const followersExcludedSuggestions = UsersModel.aggregate([
+        //     {
+        //         $match: {
+        //             $and: [
+        //                 { _id: { $ne: userId } },
+        //                 { _id: { $nin: followersList.followers } }
+        //             ]
+        //         }
+        //     }
+        // ]);
+        
+        // const suggestedUsers = followersList.length === 0
+        //     ? await randomSuggestions.exec()
+        //     : await followersExcludedSuggestions.exec();
+
+        const suggestedUserPipeline = [
             {
                 $match: {
-                    $and: [
-                        { _id: { $ne: userId } },
+                    _id: { $ne: userId },
+                    $or: [
+                        { followers: { $exists: false, $size: 0 } },
                         { _id: { $nin: followersList.followers } }
                     ]
                 }
             }
-        ]);
-        
-        const suggestedUsers = followersList.length === 0
-            ? await randomSuggestions.exec()
-            : await followersExcludedSuggestions.exec();
+        ];
 
-        
- 
+        const suggestedUsers = await UsersModel.aggregate(suggestedUserPipeline);
 
         res.status(200).json({
             allUsers: suggestedUsers,
