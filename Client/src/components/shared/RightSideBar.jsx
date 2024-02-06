@@ -63,10 +63,6 @@ const RightSideBar = () => {
             {suggestedUsers.map((user, i) => (
               <ProfileCard imgUrl={user.profile_pic} username={user.username} subText="Follows You." />
             ))}
-            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
-            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
           </div>
         </>
       )}
