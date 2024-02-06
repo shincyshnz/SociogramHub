@@ -37,15 +37,10 @@ const {
     error: profileError,
   } = useGetProfile();
 
-  
-
   // if (suggestedUserError || profileError) {
   //   const error = suggestedUserError || profileError;
-  //   console.log(error);
-  //   // return handleError('suggestedUsersApiError', { message: error?.response?.data?.message || error?.message });
+  //   return handleError('suggestedUsersApiError', { message: error?.response?.data?.message || error?.message });
   // }
-  
-  console.log(suggestedUsers);
 
   const markup = (
     <div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">

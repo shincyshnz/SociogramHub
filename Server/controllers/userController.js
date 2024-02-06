@@ -16,7 +16,12 @@ const getUsers = async (req, res, next) => {
 const getSuggestedUsers = async (req, res, next) => {
     try {
         const { userId: user } = req.body;
-        const { limit } = req.query;
+        const { limit } = parseInt(req.query);
+
+        if (!limit) {
+            throw new Error('Limit must be an integer');
+        }
+
         const userId = new mongoose.Types.ObjectId(user);
 
         const getUserQuery = UsersModel.findOne({ _id: userId });
@@ -37,12 +42,12 @@ const getSuggestedUsers = async (req, res, next) => {
                     profile_pic: 1,
                 }
             }, {
-                $limit: parseInt(limit),
+                $limit: limit,
             }
         ];
 
         const suggestedUsers = await UsersModel.aggregate(suggestedUserPipeline);
-       
+
         res.status(200).json({
             suggestedUsers,
         });
