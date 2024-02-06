@@ -22,32 +22,6 @@ const getSuggestedUsers = async (req, res, next) => {
         const getUserQuery = UsersModel.findOne({ _id: userId });
         const followersList = await getUserQuery.populate("followers").select("followers, -_id");
 
-
-        // // Suggested users if followers array empty
-        // const randomSuggestions = UsersModel.aggregate([
-        //     {
-        //         $match: {
-        //             _id: { $ne: userId }
-        //         }
-        //     }
-        // ]);
-
-        // // Suggested users if followers array is not empty
-        // const followersExcludedSuggestions = UsersModel.aggregate([
-        //     {
-        //         $match: {
-        //             $and: [
-        //                 { _id: { $ne: userId } },
-        //                 { _id: { $nin: followersList.followers } }
-        //             ]
-        //         }
-        //     }
-        // ]);
-
-        // const suggestedUsers = followersList.length === 0
-        //     ? await randomSuggestions.exec()
-        //     : await followersExcludedSuggestions.exec();
-
         const suggestedUserPipeline = [
             {
                 $match: {
@@ -63,12 +37,12 @@ const getSuggestedUsers = async (req, res, next) => {
                     profile_pic: 1,
                 }
             }, {
-                $limit: +limit,
+                $limit: parseInt(limit),
             }
         ];
 
         const suggestedUsers = await UsersModel.aggregate(suggestedUserPipeline);
-        console.log(suggestedUsers);
+       
         res.status(200).json({
             suggestedUsers,
         });

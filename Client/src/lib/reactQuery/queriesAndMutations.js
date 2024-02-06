@@ -62,7 +62,7 @@ export const useGetUsers = (searchName = '') => {
 }
 
 // Random suggestions of users
-export const useSuggestedUsers = () => {
+export const useGetSuggestedUsers = () => {
     return useQuery({
         queryKey: ['suggestedUsers'],
         queryFn: GetSuggestedUsersAPI,

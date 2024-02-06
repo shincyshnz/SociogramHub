@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-// import { Loader } from './GetComponents';
-import { useGetProfile, useSuggestedUsers } from '../../lib/reactQuery/queriesAndMutations';
 import { Loader } from './GetComponents';
+import { useGetProfile, useGetSuggestedUsers } from '../../lib/reactQuery/queriesAndMutations';
+import { useError } from '../../hooks/customHooks';
 
 export const ProfileCard = ({ ...props }) => {
   const { imgUrl, username, subText, text = "follow" } = props;
@@ -21,26 +21,31 @@ export const ProfileCard = ({ ...props }) => {
   );
 }
 
-const RightSideBar = ({ profileData }) => {
+const RightSideBar = () => {
+  const { handleError } = useError();
+// Fetch suggested users
+const {
+  data: suggestedUsers,
+  isPending: isPendingUsers,
+  error: suggestedUserError,
+} = useGetSuggestedUsers();
+
+  // Fetch Profile Data
   const {
     data: profile,
     isPending: isPendingProfile,
-    isError: isErrorProfile,
     error: profileError,
-  } = profileData;
-  // react-query - get suggested users to follow
-  // const {
-  //   data: suggestedUsers,
-  //   isLoading,
-  //   error: suggestedUserError,
-  // } = useSuggestedUsers();
+  } = useGetProfile();
+
+  
 
   // if (suggestedUserError || profileError) {
   //   const error = suggestedUserError || profileError;
-  //   handleError('suggestedUsersApiError', { message: error?.response?.data?.message || error?.message });
+  //   console.log(error);
+  //   // return handleError('suggestedUsersApiError', { message: error?.response?.data?.message || error?.message });
   // }
-
-  // {isFetched && console.log(profile, "===");}  
+  
+  console.log(suggestedUsers);
 
   const markup = (
     <div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">
@@ -55,7 +60,7 @@ const RightSideBar = ({ profileData }) => {
 
 
       <div className="flex flex-col">
-        {/* {isLoading
+        {/* {isPendingUsers
         ? <Loader />
         : <> */}
         <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />

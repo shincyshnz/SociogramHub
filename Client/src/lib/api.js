@@ -75,8 +75,8 @@ export const GetUsersAPI = async (searchTerm) => {
 }
 
 export const GetSuggestedUsersAPI = async () => {
-    const response = await axiosInstance(`${import.meta.env.VITE_USERS_URL}/suggestedUsers?limit=${process.env.SUGGESTED_USER_LIMIT}`);
-    console.log(response?.data);
+    console.log(import.meta.env.VITE_SUGGESTED_USER_LIMIT);
+    const response = await axiosInstance.get(`${import.meta.env.VITE_USERS_URL}/suggestedUsers?limit=${import.meta.env.VITE_SUGGESTED_USER_LIMIT}`);
     return response?.data?.suggestedUsers;
 }
 
