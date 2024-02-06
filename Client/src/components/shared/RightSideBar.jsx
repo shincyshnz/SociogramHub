@@ -46,27 +46,29 @@ const RightSideBar = () => {
   }, [suggestedUserError, profileError, handleError]);
 
   // Markup
-  {
-    isPendingProfile
-      ? <Loader /> : (<div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">
-        <ProfileCard imgUrl="assets/cake.png" username={profile.username} subText={profile.fullname} text="Switch" />
+  return (
+    <div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">
+      {isPendingProfile ? <Loader /> : (
+        <>
+          <ProfileCard imgUrl="assets/cake.png" username={profile.username} subText={profile.fullname} text="Switch" />
 
-        <div className="flex items-center  font-bold text-[14px]">
-          <h5 className='flex-1 my-5 text-left text-gray-600'>Suggested for you</h5>
-          <a href="#"><h5 className='text-right justify-self-end'>See all</h5></a>
-        </div>
+          <div className="flex items-center  font-bold text-[14px]">
+            <h5 className='flex-1 my-5 text-left text-gray-600'>Suggested for you</h5>
+            <a href="#"><h5 className='text-right justify-self-end'>See all</h5></a>
+          </div>
 
 
-        <div className="flex flex-col">
-          <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
-          <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
-          <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-          <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-          <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-        </div>
-      </div >
-      );
-  }
+          <div className="flex flex-col">
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+          </div>
+        </>
+      )}
+    </div >
+  );
 }
 
 export default RightSideBar
