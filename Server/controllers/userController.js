@@ -16,7 +16,7 @@ const getUsers = async (req, res, next) => {
 const getSuggestedUsers = async (req, res, next) => {
     try {
         const { userId: user } = req.body;
-        const { limit } = parseInt(req.query);
+        const limit = parseInt(req.query.limit);
 
         if (!limit) {
             throw new Error('Limit must be an integer');
