@@ -18,8 +18,8 @@ const getSuggestedUsers = async (req, res, next) => {
         const { userId: user } = req.body;
         const limit = parseInt(req.query.limit);
 
-        if (!limit) {
-            throw new Error('Limit must be an integer');
+        if(!limit){
+            throw new Error("Issue with the API request. Check the Limit");
         }
 
         const userId = new mongoose.Types.ObjectId(user);
