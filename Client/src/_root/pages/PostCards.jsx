@@ -62,9 +62,6 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
       <Loader size={"xl"} /></div>);
   }
 
-  console.log(profile);
-  console.log(posts);
-
   let postContent =  (
     <>
       <div className="w-full flex-center px-5 pt-3 pb-20">

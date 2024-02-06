@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import { Loader } from './GetComponents';
 import { useGetProfile, useSuggestedUsers } from '../../lib/reactQuery/queriesAndMutations';
 import { Loader } from './GetComponents';
@@ -21,8 +21,13 @@ export const ProfileCard = ({ ...props }) => {
   );
 }
 
-const RightSideBar = () => {
-
+const RightSideBar = ({ profileData }) => {
+  const {
+    data: profile,
+    isPending: isPendingProfile,
+    isError: isErrorProfile,
+    error: profileError,
+  } = profileData;
   // react-query - get suggested users to follow
   // const {
   //   data: suggestedUsers,
@@ -30,25 +35,19 @@ const RightSideBar = () => {
   //   error: suggestedUserError,
   // } = useSuggestedUsers();
 
-  const {
-    data: profile,
-    error: profileError,
-  } = useGetProfile();
-
-  if(profile){
-    console.log(profile);
-  }
   // if (suggestedUserError || profileError) {
   //   const error = suggestedUserError || profileError;
   //   handleError('suggestedUsersApiError', { message: error?.response?.data?.message || error?.message });
   // }
-  
-  // {isFetched && console.log(profile, "===");}  
-  
-  return (
-    <div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">
-      <ProfileCard imgUrl="assets/cake.png" username={profile.username} subText={profile.fullname} text="Switch" />
 
+  // {isFetched && console.log(profile, "===");}  
+
+  const markup = (
+    <div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">
+      {isPendingProfile
+        ? <Loader />
+        : <ProfileCard imgUrl="assets/cake.png" username={profile.username} subText={profile.fullname} text="Switch" />
+      }
       <div className="flex items-center  font-bold text-[14px]">
         <h5 className='flex-1 my-5 text-left text-gray-600'>Suggested for you</h5>
         <a href="#"><h5 className='text-right justify-self-end'>See all</h5></a>
@@ -57,18 +56,20 @@ const RightSideBar = () => {
 
       <div className="flex flex-col">
         {/* {isLoading
-          ? <Loader />
-          : <> */}
-            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
-            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
-            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-            <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
-          {/* </>
-        } */}
+        ? <Loader />
+        : <> */}
+        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
+        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Follows You." />
+        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+        <ProfileCard imgUrl="assets/cake.png" username="shincy_raffy" subText="Suggested for you." />
+        {/* </>
+      } */}
       </div>
     </div >
   )
+
+  return markup;
 }
 
 export default RightSideBar

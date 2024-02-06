@@ -1,9 +1,11 @@
 import { RightSideBar } from "../../components";
+import { useGetProfile } from "../../lib/reactQuery/queriesAndMutations";
 import PostCards from "./PostCards";
 import Stories from "./Stories";
 
 const Home = () => {
-    
+    const profileData = useGetProfile();
+
     return (
         <>
             <div className="flex justify-center gap-2 px-2 xl:px-10">
@@ -11,7 +13,7 @@ const Home = () => {
                     <Stories />
                     <PostCards />
                 </div>
-                <RightSideBar />
+                <RightSideBar profileData={profileData} />
             </div>
         </>
     );

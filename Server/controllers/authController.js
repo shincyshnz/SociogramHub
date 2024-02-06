@@ -74,6 +74,7 @@ const login = async (req, res, next) => {
 const handleRefreshtoken = (req, res, next) => {
     try {
         // console.log(req.cookies.refreshToken, "==refreshToken");
+        // console.log(req.cookies.refreshToken);
         if (!req.cookies.refreshToken) {
             customErrorMessage(400, "Refresh token not found in the cookie.");
         }

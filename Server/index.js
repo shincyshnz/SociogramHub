@@ -13,8 +13,8 @@ const app = express();
 connectDb();
 
 // Middleware for parsing JSON data
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 // Middleware for parsing URL-encoded data
 // app.use(express.urlencoded({ extended: true }));
 // app.use(helmet());
