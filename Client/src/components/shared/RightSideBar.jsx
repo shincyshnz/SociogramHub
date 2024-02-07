@@ -60,7 +60,7 @@ const RightSideBar = () => {
 
 
           <div className="flex flex-col">
-            {suggestedUsers.map((user, i) => (
+            {suggestedUsers?.map((user, i) => (
               <ProfileCard imgUrl={user.profile_pic} username={user.username} subText="Suggested for You." />
             ))}
           </div>
