@@ -1,21 +1,34 @@
 import React, { useEffect } from 'react';
 import { Loader } from './GetComponents';
-import { useGetProfile, useGetSuggestedUsers } from '../../lib/reactQuery/queriesAndMutations';
+import { useGetProfile, useGetSuggestedUsers, useFollowUsers } from '../../lib/reactQuery/queriesAndMutations';
 import { useError } from '../../hooks/customHooks';
 
 export const ProfileCard = ({ ...props }) => {
   const { userId, imgUrl, username, subText, text = "follow" } = props;
+
+  // Follow User
+  const {
+    mutateAsync: followUser,
+    isPending,
+    isSuccess: isFollowSuccess,
+  } = useFollowUsers();
+
+  const handleFollowLink = async (event) => {
+    event.preventDefault();
+    console.log(userId);
+    const isFollowed = await followUser(userId);
+    console.log(isFollowed);
+  }
+
   return (
     <div className="flex flex-col items-center justify-center mt-3">
       <div className="w-full flex items-center gap-3">
-        <a href='#'>
-          <img className="w-12 h-12 p-[2px] rounded-full" src={imgUrl || "https://flowbite.com/docs/images/carousel/carousel-1.svg"} alt="profile picture" />
-        </a>
+        <img className="w-12 h-12 p-[2px] rounded-full" src={imgUrl || "https://flowbite.com/docs/images/carousel/carousel-1.svg"} alt="profile picture" />
         <div className="flex flex-1 flex-col items-start justify-center">
           <span className='text-md font-bold'>{username}</span>
           <span className=' text-gray-600'>{subText}</span>
         </div>
-        <a href={`${userId}/follow`}><span className='text-blue-700 font-bold'>{text}</span></a>
+        <button onClick={handleFollowLink}><span className='text-blue-700 font-bold'>{text}</span></button>
       </div>
     </div>
   );

@@ -27,14 +27,16 @@ const getSuggestedUsers = async (req, res, next) => {
 
         const getUserQuery = UsersModel.findOne({ _id: userId });
         const followersList = await getUserQuery.populate("followers").select("followers, -_id");
+        const excludedFollowersList = followersList.followers.map(followers => followers.followerId);
+
+
 
         const suggestedUserPipeline = [
             {
                 $match: {
-                    _id: { $ne: userId },
-                    $or: [
-                        { followers: { $exists: false, $size: 0 } },
-                        { _id: { $nin: followersList.followers } }
+                    $and: [
+                        { _id: { $ne: userId } },
+                        { _id: { $nin: excludedFollowersList } }
                     ]
                 }
             }, {
@@ -100,7 +102,7 @@ const followUser = async (req, res, next) => {
 
         console.log(isFollowersUpdate, "==updated");
         res.status(200).json({
-            message : "followed"  
+            message: "followed"
         });
     } catch (error) {
         next(error);

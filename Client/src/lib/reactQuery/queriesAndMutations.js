@@ -6,21 +6,22 @@ import {
 } from '@tanstack/react-query';
 import {
     LoginAPI,
-    registerAPI,
+    RegisterAPI,
     GenerateOtpAPI,
     ResetPasswordAPI,
     GetProfileAPI,
     GetUsersAPI,
     GetSuggestedUsersAPI,
-    createPostsAPI,
+    CreatePostsAPI,
     GetPostsAPI,
+    FollowUsers,
 } from '../api';
 
 /* ---------------------- Authentication & Authorization -------------------------------- --*/
 
 export const useCreateUserAccount = () => {
     return useMutation({
-        mutationFn: (data) => registerAPI(data)
+        mutationFn: (data) => RegisterAPI(data)
     })
 }
 
@@ -73,7 +74,7 @@ export const useGetSuggestedUsers = () => {
 
 export const useCreatePosts = () => {
     return useMutation({
-        mutationFn: (data) => createPostsAPI(data)
+        mutationFn: (data) => CreatePostsAPI(data)
     });
 }
 
@@ -81,5 +82,13 @@ export const useGetPosts = () => {
     return useQuery({
         queryKey: ['allPosts'],
         queryFn: GetPostsAPI,
+    });
+}
+
+/* ---------------------- Follow User ---------------------------------------- --*/
+
+export const useFollowUsers = () => {
+    return useMutation({
+        mutationFn: (data) => FollowUsers(data)
     });
 }

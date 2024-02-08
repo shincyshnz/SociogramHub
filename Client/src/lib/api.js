@@ -12,7 +12,7 @@ const createFormData = (data) => {
 
 /* ---------------------- Authentication & Authorization -------------------------------- --*/
 
-export const registerAPI = async (data) => {
+export const RegisterAPI = async (data) => {
     // let formData = new FormData();
 
     // for (const key in data) {
@@ -79,9 +79,15 @@ export const GetSuggestedUsersAPI = async () => {
     return response?.data?.suggestedUsers;
 }
 
+export const FollowUsers = async (data) => {
+    const response = await axiosInstance(`${import.meta.env.VITE_USERS_URL}/${data}/follow`, {
+        method: "POST"
+    });
+    return response?.data?.message;
+}
 /* ---------------------- Post Data ----------------------------------------- --*/
 
-export const createPostsAPI = async (data) => {
+export const CreatePostsAPI = async (data) => {
     const response = await axiosInstance(`${import.meta.env.VITE_POSTS_URL}/create`, {
         method: "POST",
         headers: {
@@ -97,3 +103,4 @@ export const GetPostsAPI = async () => {
     const response = await axiosInstance.get(`${import.meta.env.VITE_POSTS_URL}/getAllPosts`);
     return response?.data?.posts;
 }
+
