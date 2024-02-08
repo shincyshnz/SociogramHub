@@ -29,8 +29,6 @@ const getSuggestedUsers = async (req, res, next) => {
         const followersList = await getUserQuery.populate("followers").select("followers, -_id");
         const excludedFollowersList = followersList.followers.map(followers => followers.followerId);
 
-
-
         const suggestedUserPipeline = [
             {
                 $match: {
@@ -100,7 +98,6 @@ const followUser = async (req, res, next) => {
             { new: true }
         ).populate("followers");
 
-        console.log(isFollowersUpdate, "==updated");
         res.status(200).json({
             message: "followed"
         });

@@ -9,15 +9,25 @@ export const ProfileCard = ({ ...props }) => {
   // Follow User
   const {
     mutateAsync: followUser,
-    isPending,
+    isPending: isPendingFollowing,
     isSuccess: isFollowSuccess,
+    error: followError,
   } = useFollowUsers();
 
   const handleFollowLink = async (event) => {
     event.preventDefault();
-    console.log(userId);
-    const isFollowed = await followUser(userId);
-    console.log(isFollowed);
+    await followUser(userId);
+
+    if (followError) {
+      handleError('followApiError', { message: error?.response?.data?.message || error?.message });
+    }
+  }
+
+  const handleUnFollowLink = (event) => {
+    event.preventDefault();
+
+    // Load the unfollow confirmation modal
+    console.log("unfollow");
   }
 
   return (
@@ -28,7 +38,17 @@ export const ProfileCard = ({ ...props }) => {
           <span className='text-md font-bold'>{username}</span>
           <span className=' text-gray-600'>{subText}</span>
         </div>
-        <button onClick={handleFollowLink}><span className='text-blue-700 font-bold'>{text}</span></button>
+        {isPendingFollowing
+          ? <Loader />
+          : (isFollowSuccess
+            ? <button onClick={handleUnFollowLink}>
+              <span className='font-bold'>Following</span>
+            </button>
+            : <button onClick={handleFollowLink}>
+              <span className='text-blue-700 font-bold'>{text}</span>
+            </button>
+          )
+        }
       </div>
     </div>
   );
