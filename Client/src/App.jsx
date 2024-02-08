@@ -1,13 +1,22 @@
-import { useEffect } from 'react'
-import AuthLayout from './_auth/AuthLayout'
-import RootLayout from './_root/RootLayout'
-import { useError } from './hooks/customHooks'
+import { Suspense, lazy } from 'react'
+import { Route, Routes } from 'react-router-dom';
 import { HiExclamation } from 'react-icons/hi'
+import './index.css'
+// import AuthLayout from './_auth/AuthLayout'
+// import RootLayout from './_root/RootLayout'
 import { NotificationToast } from './components'
+import { useError } from './hooks/customHooks'
 import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
 import { EditPost, Explore, Home, Notifications, PostCards, Profile, Reels, Saved, Search, Settings } from './_root/pages'
-import './index.css'
-import { Route, Routes } from 'react-router-dom'
+
+const RootLayout = lazy(() => import('./_root/RootLayout'));
+const AuthLayout = lazy(() => import('./_auth/AuthLayout'));
+
+const logoLoader = (
+  <div className='flex-center w-full min-h-screen'>
+    <img className='w-5 h-5' src="assets/logoIcon.png" alt="logo" />
+  </div>
+);
 
 const App = () => {
   const { customError } = useError() || {};
@@ -16,7 +25,7 @@ const App = () => {
   return (
     <main className='flex h-auto font-inter'>
 
-      { errorKeysArray.length !== 0 &&
+      {errorKeysArray.length !== 0 &&
         errorKeysArray.map((err, index) => (
           <NotificationToast
             key={index}
@@ -27,9 +36,13 @@ const App = () => {
         ))
       }
 
+      {/* Public Routes */}
       <Routes>
-        {/* Public Routes */}
-        <Route element={<AuthLayout />}>
+        <Route element={
+          <Suspense fallback={logoLoader}>
+            <AuthLayout />
+          </Suspense>
+        }>
           <Route path='/sign-in' element={<SignInForm />} />
           <Route path='/sign-up' element={<SignUpForm />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
@@ -38,7 +51,11 @@ const App = () => {
         </Route>
 
         {/* Private Routes */}
-        <Route element={<RootLayout />}>
+        <Route element={
+          <Suspense fallback={logoLoader}>
+            <RootLayout />
+          </Suspense>
+        }>
           <Route index element={<Home />} />
           <Route path='/search' element={<Search />} />
           <Route path='/explore' element={<Explore />} />
@@ -52,6 +69,7 @@ const App = () => {
           <Route path='/settings' element={<Settings />} />
           <Route path='/profile/:id/saved' element={<Saved />} />
         </Route>
+
       </Routes>
     </main>
   )

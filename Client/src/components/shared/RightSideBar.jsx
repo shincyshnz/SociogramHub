@@ -43,7 +43,6 @@ const RightSideBar = () => {
       const error = suggestedUserError || profileError;
       handleError('suggestedUsersApiError', { message: error?.response?.data?.message || error?.message });
     }
-    console.log(suggestedUsers);
   }, [suggestedUserError, profileError]);
 
   // Markup
