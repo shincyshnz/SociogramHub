@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     },
     profile_pic: {
         type: String,
-        default : "",
+        default: "",
     },
     bio: {
         type: String,
@@ -39,16 +39,32 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "other",
     },
-    followers: [{
-        followerId : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "Users",
-        },
-        followed : {
-            type : Boolean,
-            defaul : false,
-        }
-    }],
+    // followers: [
+    //     {
+    //         followerId: {
+    //             type: mongoose.Schema.Types.ObjectId,
+    //             ref: "Users",
+    //         },
+    //         followed: {
+    //             type: Boolean,
+    //             default: false,
+    //         }
+    //     }
+    // ],
+
+    // Here the above cod eis replaced to remove adding new _id to followers array 
+    followers: [new mongoose.Schema(
+        {
+            followerId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Users",
+            },
+            followed: {
+                type: Boolean,
+                default: false,
+            }
+        }, { _id: false }
+    )]
 }, { timestamps: true });
 
 module.exports = {

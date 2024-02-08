@@ -13,12 +13,13 @@ const getUsers = async (req, res, next) => {
     }
 };
 
+// Get all suggested users for a person who are not in their followerlist
 const getSuggestedUsers = async (req, res, next) => {
     try {
         const { userId: user } = req.body;
         const limit = parseInt(req.query.limit);
 
-        if(!limit){
+        if (!limit) {
             throw new Error("Issue with the API request. Check the Limit");
         }
 
@@ -56,7 +57,58 @@ const getSuggestedUsers = async (req, res, next) => {
     }
 }
 
+// Add user to follower List
+const followUser = async (req, res, next) => {
+    const { userId: profileId } = req.body;
+    // const followerId = new mongoose.Types.ObjectId(req.params.id);
+    const followerId = req.params.id;
+
+    try {
+        const isUserExists = await UsersModel.findById({ _id: profileId });
+        if (!isUserExists) {
+            throw new Error("User doesnot exists. Please log in again!");
+        }
+
+        const followersArray = isUserExists.followers;
+        // console.log(followers,"==before",profileId);
+        // followers.push({
+        //     followerId,
+        //     followed: followers.includes(followerId),
+        // });
+        //
+        let isFollowersUpdate;
+        if (followersArray.includes(followerId)) {
+            // unfollow a user
+            console.log("UNFOLLOW");
+        } else {
+            // follow a user
+            isFollowersUpdate = await UsersModel.findByIdAndUpdate(
+                { _id: profileId },
+                {
+                    $push: {
+                        followers: {
+                            followerId,
+                            followed: false,
+                        }
+                    }
+                },
+                { new: true }
+            ).populate("followers");
+        }
+
+
+
+        console.log(isFollowersUpdate, "==updated");
+        res.status(200).json({
+            message: "hai"
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     getUsers,
     getSuggestedUsers,
+    followUser,
 }

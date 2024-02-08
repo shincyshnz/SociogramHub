@@ -8,6 +8,11 @@ import { useForm } from 'react-hook-form';
 import { useGetPosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
 
 const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
+  const [showMore, setShowMore] = useState(null);
+  const [showPostButton, setShowPostButton] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [commentText, setCommentText] = useState("");
+
   // React - hook - form
   const {
     register,
@@ -18,7 +23,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
     setError,
   } = useForm();
 
-  // React-Query
+  // Fetch profile data : React Query
   const {
     data: profile,
     isPending: isPendingProfile,
@@ -26,6 +31,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
     error: profileError,
   } = useGetProfile();
 
+  // Fetch posts : React Query
   const {
     data: posts,
     isPending: isPendingPosts,
@@ -33,11 +39,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
     error: postsError,
   } = useGetPosts();
 
-  const [showMore, setShowMore] = useState(null);
-  const [showPostButton, setShowPostButton] = useState(false);
-  const [showEmoji, setShowEmoji] = useState(false);
-  const [commentText, setCommentText] = useState("");
-
+  // Show more of post title
   const handleShowMore = (postId) => {
     setShowMore(postId);
   }
@@ -62,10 +64,13 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
       <Loader size={"xl"} /></div>);
   }
 
-  let postContent =  (
+  console.log(profile);
+  console.log(posts);
+
+  let postContent = (
     <>
       <div className="w-full flex-center px-5 pt-3 pb-20">
-        <div className="w-full md:w-[80%] flex flex-col lg:px-3 lg:gap-2 text-[16px]">
+        <div className="w-full md:w-[80%] flex flex-col gap-1 lg:px-3 lg:gap-2 text-[16px]">
           <div className="flex justify-start items-center">
             <div className="flex justify-start items-center w-full">
               <div className="rounded-full p-[2px] bg-gradient-to-t from-[#f4d254] via-[#f33c88] to-[#f381d4]">
@@ -76,8 +81,8 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
                 </div>
               </div>
               <div className='flex flex-col p-2'>
-                <span className='font-bold text-[14px]'>Name <span className='text-gray-500'>. 1 h</span></span>
-                <span>place </span>
+                <span className='font-bold text-[14px]'>{profile?.username} <span className='text-gray-500'>. 1 h</span></span>
+                <span>{posts?.place} </span>
               </div>
             </div>
             <HiOutlineDotsHorizontal size={"18px"} />
