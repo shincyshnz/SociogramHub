@@ -60,8 +60,7 @@ const getSuggestedUsers = async (req, res, next) => {
 // Add user to follower List
 const followUser = async (req, res, next) => {
     const { userId: profileId } = req.body;
-    // const followerId = new mongoose.Types.ObjectId(req.params.id);
-    const followerId = req.params.id;
+    const followerId = new mongoose.Types.ObjectId(req.params.id);
 
     try {
         const isUserExists = await UsersModel.findById({ _id: profileId });
@@ -69,38 +68,39 @@ const followUser = async (req, res, next) => {
             throw new Error("User doesnot exists. Please log in again!");
         }
 
-        const followersArray = isUserExists.followers;
-        // console.log(followers,"==before",profileId);
-        // followers.push({
-        //     followerId,
-        //     followed: followers.includes(followerId),
-        // });
-        //
-        let isFollowersUpdate;
-        if (followersArray.includes(followerId)) {
-            // unfollow a user
-            console.log("UNFOLLOW");
-        } else {
-            // follow a user
-            isFollowersUpdate = await UsersModel.findByIdAndUpdate(
-                { _id: profileId },
-                {
-                    $push: {
-                        followers: {
-                            followerId,
-                            followed: false,
-                        }
+        const followerDetails = isUserExists.followers.filter((follower) =>
+            (follower.followerId.equals(followerId)));
+
+        const query = (followerDetails.length > 0)
+            ? {
+                // Unfollow user 
+                $pull: {
+                    followers: {
+                        $in: [{
+                            followerId: followerDetails[0].followerId,
+                            followed: followerDetails[0].followed,
+                        }]
+                    },
+                }
+            } : {
+                // follow user 
+                $push: {
+                    followers: {
+                        followerId,
+                        followed: false,
                     }
-                },
-                { new: true }
-            ).populate("followers");
-        }
+                }
+            };
 
-
+        const isFollowersUpdate = await UsersModel.findByIdAndUpdate(
+            { _id: profileId },
+            query,
+            { new: true }
+        ).populate("followers");
 
         console.log(isFollowersUpdate, "==updated");
         res.status(200).json({
-            message: "hai"
+            message : "followed"  
         });
     } catch (error) {
         next(error);
