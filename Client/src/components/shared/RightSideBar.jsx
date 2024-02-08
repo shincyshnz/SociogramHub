@@ -4,7 +4,7 @@ import { useGetProfile, useGetSuggestedUsers } from '../../lib/reactQuery/querie
 import { useError } from '../../hooks/customHooks';
 
 export const ProfileCard = ({ ...props }) => {
-  const { imgUrl, username, subText, text = "follow" } = props;
+  const { userId, imgUrl, username, subText, text = "follow" } = props;
   return (
     <div className="flex flex-col items-center justify-center mt-3">
       <div className="w-full flex items-center gap-3">
@@ -15,7 +15,7 @@ export const ProfileCard = ({ ...props }) => {
           <span className='text-md font-bold'>{username}</span>
           <span className=' text-gray-600'>{subText}</span>
         </div>
-        <span className='text-blue-700 font-bold'>{text}</span>
+        <a href={`${userId}/follow`}><span className='text-blue-700 font-bold'>{text}</span></a>
       </div>
     </div>
   );
@@ -50,7 +50,7 @@ const RightSideBar = () => {
     <div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">
       {isPendingProfile ? <Loader /> : (
         <>
-          <ProfileCard imgUrl={profile.profile_pic} username={profile.username} subText={profile.fullname} text="Switch" />
+          <ProfileCard userId={profile._id} imgUrl={profile.profile_pic} username={profile.username} subText={profile.fullname} text="Switch" />
 
           <div className="flex items-center  font-bold text-[14px]">
             <h5 className='flex-1 my-5 text-left text-gray-600'>Suggested for you</h5>
@@ -60,7 +60,7 @@ const RightSideBar = () => {
 
           <div className="flex flex-col">
             {suggestedUsers?.map((user, index) => (
-              <ProfileCard key={index} imgUrl={user.profile_pic} username={user.username} subText="Suggested for You." />
+              <ProfileCard userId={user._id} key={index} imgUrl={user.profile_pic} username={user.username} subText="Suggested for You." />
             ))}
           </div>
         </>
