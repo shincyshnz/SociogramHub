@@ -1,4 +1,4 @@
-import { RightSideBar } from "../../components";
+import { ModalContainer, RightSideBar } from "../../components";
 import PostCards from "./PostCards";
 import Stories from "./Stories";
 
