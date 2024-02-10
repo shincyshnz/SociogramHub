@@ -15,6 +15,7 @@ export { default as MoreDropdown } from './MoreDropdown';
 export { default as SignUp } from './SignUp';
 export { default as ProfileCard } from './ProfileCard';
 export { default as ModalContainer } from './ModalContainer';
+export { default as UnfollowModal } from './UnfollowModal';
 
 export { default as BottomBar } from './shared/BottomBar';
 export { default as LeftSideBar } from './shared/LeftSideBar';
