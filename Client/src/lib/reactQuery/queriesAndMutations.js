@@ -15,6 +15,7 @@ import {
     CreatePostsAPI,
     GetPostsAPI,
     FollowUsers,
+    UnFollowUsers
 } from '../api';
 
 /* ---------------------- Authentication & Authorization -------------------------------- --*/
@@ -85,10 +86,16 @@ export const useGetPosts = () => {
     });
 }
 
-/* ---------------------- Follow User ---------------------------------------- --*/
+/* ---------------------- Updaate Follower list---------------------------------------- --*/
 
 export const useFollowUsers = () => {
     return useMutation({
         mutationFn: (data) => FollowUsers(data)
+    });
+}
+
+export const useUnFollowUsers = () => {
+    return useMutation({
+        mutationFn: (data) => UnFollowUsers(data)
     });
 }

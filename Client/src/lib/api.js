@@ -85,6 +85,14 @@ export const FollowUsers = async (data) => {
     });
     return response?.data?.message;
 }
+
+export const UnFollowUsers = async (data) => {
+    const response = await axiosInstance(`${import.meta.env.VITE_USERS_URL}/${data}/unfollow`, {
+        method: "POST"
+    });
+    return response?.data?.message;
+}
+
 /* ---------------------- Post Data ----------------------------------------- --*/
 
 export const CreatePostsAPI = async (data) => {

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Spinner } from 'flowbite-react';
-import ModalContainer from './ModalContainer';
 import { useError } from '../hooks/customHooks';
-import { useFollowUsers } from '../lib/reactQuery/queriesAndMutations';
+import { useFollowUsers, useUnFollowUsers } from '../lib/reactQuery/queriesAndMutations';
 import UnfollowModal from './UnfollowModal';
 
 const ProfileCard = ({ ...props }) => {
@@ -13,10 +12,18 @@ const ProfileCard = ({ ...props }) => {
     // Follow User
     const {
         mutateAsync: followUser,
-        isPending: isPendingFollowing,
+        isPending: isPendingFollow,
         isSuccess: isFollowSuccess,
         error: followError,
     } = useFollowUsers();
+
+    // UnFollow User
+    const {
+        mutateAsync: unfollowUser,
+        isPending: isPendingUnFollow,
+        isSuccess: isUnFollowSuccess,
+        error: unfollowError,
+    } = useUnFollowUsers();
 
     const handleFollow = async (event) => {
         event.preventDefault();
@@ -35,7 +42,7 @@ const ProfileCard = ({ ...props }) => {
         event.preventDefault();
         console.log("Unfollow clicked");
         try {
-            await followUser(userId);
+            await unfollowUser(userId);
         } catch (error) {
             handleError('followApiError', { message: error?.response?.data?.message || error?.message });
         } finally {
@@ -52,17 +59,28 @@ const ProfileCard = ({ ...props }) => {
                         <span className='text-md font-bold'>{username}</span>
                         <span className=' text-gray-600'>{subText}</span>
                     </div>
-                    {isFollowSuccess
+                    {/* {isFollowSuccess
                         ? <button onClick={() => setIsOpenModal(true)}>
                             <span className='font-bold'>Following</span>
                         </button>
-                        : (isPendingFollowing
+                        : (isPendingFollow
                             ? <Spinner />
                             : <button onClick={handleFollow}>
                                 <span className='text-blue-700 font-bold'>{text}</span>
                             </button>
                         )
-                    }
+                    } */}
+
+                    <div>
+                        {(isPendingFollow || isPendingUnFollow) && <Spinner />}
+                        {isFollowSuccess && <button onClick={() => setIsOpenModal(true)}>
+                            <span className={`font-bold ${isUnFollowSuccess && 'hidden'}`}>Following</span>
+                        </button>}
+                    </div>
+
+                    {<button onClick={handleFollow}>
+                        <span className='text-blue-700 font-bold'>{text}</span>
+                    </button>}
                 </div>
             </div>
 

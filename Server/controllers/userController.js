@@ -57,49 +57,96 @@ const getSuggestedUsers = async (req, res, next) => {
     }
 }
 
+const handleFolowerListUpdate = async (profileId, query) => {
+    const isFollowersUpdate = await UsersModel.findByIdAndUpdate(
+        { _id: profileId },
+        query,
+        { new: true }
+    ).populate("followers");
+    return isFollowersUpdate;
+}
+
 // Add user to follower List
 const followUser = async (req, res, next) => {
     const { userId: profileId } = req.body;
     const followerId = new mongoose.Types.ObjectId(req.params.id);
-console.log("follow/Unfollow");
+
     try {
-        const isUserExists = await UsersModel.findById({ _id: profileId });
-        if (!isUserExists) {
-            throw new Error("User doesnot exists. Please log in again!");
+        // const followerDetails = isUserExists.followers.filter((follower) =>
+        //     (follower.followerId.equals(followerId)));
+
+        // const query = (followerDetails.length > 0)
+        //     ? {
+        //         // Unfollow user 
+        //         $pull: {
+        //             followers: {
+        //                 $in: [{
+        //                     followerId: followerDetails[0].followerId,
+        //                     followed: followerDetails[0].followed,
+        //                 }]
+        //             },
+        //         }
+        //     } : {
+        //         // follow user 
+        //         $push: {
+        //             followers: {
+        //                 followerId,
+        //                 followed: false,
+        //             }
+        //         }
+        //     };
+
+        // follow user 
+        const query = {
+            $push: {
+                followers: {
+                    followerId,
+                    followed: false,
+                }
+            }
         }
 
+        const isFollowersUpdate = await handleFolowerListUpdate(profileId, query);
+
+        isFollowersUpdate && res.status(200).json({
+            message: "followed"
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+// Remove user from folower list
+const unfollowUser = async (req, res, next) => {
+    const { userId: profileId } = req.body;
+    const followerId = new mongoose.Types.ObjectId(req.params.id);
+
+    try {
+        const isUserExists = await UsersModel.findById({ _id: profileId });
         const followerDetails = isUserExists.followers.filter((follower) =>
             (follower.followerId.equals(followerId)));
 
-        const query = (followerDetails.length > 0)
-            ? {
-                // Unfollow user 
-                $pull: {
-                    followers: {
-                        $in: [{
-                            followerId: followerDetails[0].followerId,
-                            followed: followerDetails[0].followed,
-                        }]
-                    },
-                }
-            } : {
-                // follow user 
-                $push: {
-                    followers: {
-                        followerId,
-                        followed: false,
-                    }
-                }
-            };
+        // If follower ID is not in the followers array in user document
+        if (followerDetails.length < 0) {
+            throw new Error("Something went wrong. Please try again later!");
+        }
 
-        const isFollowersUpdate = await UsersModel.findByIdAndUpdate(
-            { _id: profileId },
-            query,
-            { new: true }
-        ).populate("followers");
+        const query = {
+            // Unfollow user 
+            $pull: {
+                followers: {
+                    $in: [{
+                        followerId: followerDetails[0].followerId,
+                        followed: followerDetails[0].followed,
+                    }]
+                },
+            }
+        };
 
-        res.status(200).json({
-            message: "followed"
+        const isFollowersUpdate = await handleFolowerListUpdate(profileId, query);
+
+        isFollowersUpdate && res.status(200).json({
+            message: "unfollowed"
         });
     } catch (error) {
         next(error);
@@ -110,4 +157,5 @@ module.exports = {
     getUsers,
     getSuggestedUsers,
     followUser,
+    unfollowUser,
 }
