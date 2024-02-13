@@ -23,13 +23,16 @@
     .custom-toast{
         @apply inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg;
     }
+    .unfollow-modal-btn{
+        @apply w-full border-t-2 text-center p-3;
+    }
+
 }
 
 @layer components {
     .form-container {
         @apply w-full max-w-[337px] max-h-[920px] px-10 flex flex-col gap-3 mb-3 justify-center items-center text-center;
     }
-
     .input-container {
         @apply relative;
     }

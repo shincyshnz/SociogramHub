@@ -61,7 +61,7 @@ const getSuggestedUsers = async (req, res, next) => {
 const followUser = async (req, res, next) => {
     const { userId: profileId } = req.body;
     const followerId = new mongoose.Types.ObjectId(req.params.id);
-
+console.log("follow/Unfollow");
     try {
         const isUserExists = await UsersModel.findById({ _id: profileId });
         if (!isUserExists) {

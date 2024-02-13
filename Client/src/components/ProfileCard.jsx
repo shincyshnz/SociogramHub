@@ -18,22 +18,31 @@ const ProfileCard = ({ ...props }) => {
         error: followError,
     } = useFollowUsers();
 
-    const handleFollowLink = async (event) => {
+    const handleFollow = async (event) => {
         event.preventDefault();
-        await followUser(userId);
+        try {
+            await followUser(userId);
 
-        if (followError) {
+            if (followError) {
+                throw new Error(followError);
+            }
+        } catch (error) {
             handleError('followApiError', { message: error?.response?.data?.message || error?.message });
         }
     }
 
-    const handleUnFollowLink = (event) => {
+    const handleUnFollow = async (event) => {
         event.preventDefault();
         console.log("Unfollow clicked");
-        // Load the unfollow confirmation modal
-        setIsOpenModal(true);
+        try {
+            await followUser(userId);
+        } catch (error) {
+            handleError('followApiError', { message: error?.response?.data?.message || error?.message });
+        } finally {
+            setIsOpenModal(false);
+        }
     }
-    console.log(isOpenModal);
+
     return (
         <>
             <div className="flex flex-col items-center justify-center mt-3">
@@ -44,12 +53,12 @@ const ProfileCard = ({ ...props }) => {
                         <span className=' text-gray-600'>{subText}</span>
                     </div>
                     {isFollowSuccess
-                        ? <button onClick={handleUnFollowLink}>
+                        ? <button onClick={() => setIsOpenModal(true)}>
                             <span className='font-bold'>Following</span>
                         </button>
                         : (isPendingFollowing
                             ? <Spinner />
-                            : <button onClick={handleFollowLink}>
+                            : <button onClick={handleFollow}>
                                 <span className='text-blue-700 font-bold'>{text}</span>
                             </button>
                         )
@@ -59,7 +68,7 @@ const ProfileCard = ({ ...props }) => {
 
             {/* Modal :  Implement HOC : Higher Order Component */}
 
-            {isOpenModal && <UnfollowModal imgUrl={imgUrl} username={username}/>}
+            {isOpenModal && <UnfollowModal imgUrl={imgUrl} username={username} handleUnFollow={handleUnFollow} setIsOpenModal={setIsOpenModal} />}
         </>
     );
 }
