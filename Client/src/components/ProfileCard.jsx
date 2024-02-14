@@ -27,12 +27,9 @@ const ProfileCard = ({ ...props }) => {
 
     const handleFollow = async (event) => {
         event.preventDefault();
+
         try {
             await followUser(userId);
-
-            if (followError) {
-                throw new Error(followError);
-            }
         } catch (error) {
             handleError('followApiError', { message: error?.response?.data?.message || error?.message });
         }
@@ -40,9 +37,10 @@ const ProfileCard = ({ ...props }) => {
 
     const handleUnFollow = async (event) => {
         event.preventDefault();
-        console.log("Unfollow clicked");
+
         try {
             await unfollowUser(userId);
+
         } catch (error) {
             handleError('followApiError', { message: error?.response?.data?.message || error?.message });
         } finally {
@@ -59,28 +57,24 @@ const ProfileCard = ({ ...props }) => {
                         <span className='text-md font-bold'>{username}</span>
                         <span className=' text-gray-600'>{subText}</span>
                     </div>
-                    {/* {isFollowSuccess
-                        ? <button onClick={() => setIsOpenModal(true)}>
-                            <span className='font-bold'>Following</span>
-                        </button>
-                        : (isPendingFollow
+
+                    <div className={`${(isUnFollowSuccess && 'hidden') || (isFollowSuccess && 'block') || 'hidden'}`}>
+                        {isPendingFollow
+                            ? <Spinner />
+                            : <button onClick={() => setIsOpenModal(true)}>
+                                <span className={`font-bold`}>Following</span>
+                            </button>
+                        }
+                    </div>
+                    <div className={`${isUnFollowSuccess ? 'block' : (isFollowSuccess ? 'hidden' : '')}`}>
+                        {isPendingUnFollow
                             ? <Spinner />
                             : <button onClick={handleFollow}>
-                                <span className='text-blue-700 font-bold'>{text}</span>
+                                <span className={`text-blue-700 font-bold`}>{text}</span>
                             </button>
-                        )
-                    } */}
-
-                    <div>
-                        {(isPendingFollow || isPendingUnFollow) && <Spinner />}
-                        {isFollowSuccess && <button onClick={() => setIsOpenModal(true)}>
-                            <span className={`font-bold ${isUnFollowSuccess && 'hidden'}`}>Following</span>
-                        </button>}
+                        }
                     </div>
 
-                    {<button onClick={handleFollow}>
-                        <span className='text-blue-700 font-bold'>{text}</span>
-                    </button>}
                 </div>
             </div>
 
