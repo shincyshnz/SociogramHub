@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Loader } from './GetComponents';
 import { useGetProfile, useGetSuggestedUsers } from '../../lib/reactQuery/queriesAndMutations';
 import ProfileCard from '../ProfileCard';
+import Footer from '../Footer';
 
 const RightSideBar = () => {
   // Fetch suggested users
@@ -44,6 +45,9 @@ const RightSideBar = () => {
               {suggestedUsers?.map((user, index) => (
                 <ProfileCard userId={user._id} key={index} imgUrl={user.profile_pic} username={user.username} subText="Suggested for You." />
               ))}
+            </div>
+            <div className="w-full pt-16">
+              <Footer show='hidden' textColor='text-gray-300' />
             </div>
           </>
         )}

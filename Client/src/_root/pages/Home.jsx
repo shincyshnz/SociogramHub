@@ -1,4 +1,4 @@
-import { ModalContainer, RightSideBar } from "../../components";
+import { Footer, ModalContainer, RightSideBar } from "../../components";
 import PostCards from "./PostCards";
 import Stories from "./Stories";
 
@@ -11,6 +11,9 @@ const Home = () => {
                     <PostCards />
                 </div>
                 <RightSideBar />
+            </div>
+            <div className='mt-10 flex-center flex-col mx-10'>
+                <Footer />
             </div>
         </>
     );
