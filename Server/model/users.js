@@ -40,19 +40,17 @@ const userSchema = new mongoose.Schema({
         default: "other",
     },
     // followers: [
-    //     {
-    //         followerId: {
-    //             type: mongoose.Schema.Types.ObjectId,
-    //             ref: "Users",
-    //         },
-    //         followed: {
-    //             type: Boolean,
-    //             default: false,
-    //         }
+    //     followerId: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: "Users",
+    //     },
+    //     followed: {
+    //         type: Boolean,
+    //         default: false,
     //     }
     // ],
 
-    // Here the above cod eis replaced to remove adding new _id to followers array 
+    // Here the above code is replaced to remove adding new _id to followers array 
     followers: [new mongoose.Schema(
         {
             followerId: {

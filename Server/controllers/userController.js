@@ -96,7 +96,17 @@ const followUser = async (req, res, next) => {
         //         }
         //     };
 
-        // follow user 
+        // Check whether follower(id) already follow the user(profile)
+        const isUserExists = await UsersModel.findById({ _id: profileId });
+        console.log(isUserExists, "===isUserExists");
+
+        const followerDetails = isUserExists.followers.filter((follower) =>
+            (follower.followerId.equals(followerId)));
+
+        if (followerDetails.length > 0) {
+            followerDetails.followed 
+        }
+
         const query = {
             $push: {
                 followers: {
