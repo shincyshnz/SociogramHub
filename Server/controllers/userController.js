@@ -57,9 +57,9 @@ const getSuggestedUsers = async (req, res, next) => {
     }
 }
 
-const handleFolowerListUpdate = async (profileId, query) => {
+const handleFolowerListUpdate = async (userId, query) => {
     const isFollowersUpdate = await UsersModel.findByIdAndUpdate(
-        { _id: profileId },
+        { _id: userId },
         query,
         { new: true }
     ).populate("followers");
@@ -68,6 +68,7 @@ const handleFolowerListUpdate = async (profileId, query) => {
 
 // Add user to follower List
 const followUser = async (req, res, next) => {
+    let query, followed = false;
     const { userId: profileId } = req.body;
     const followerId = new mongoose.Types.ObjectId(req.params.id);
 
@@ -96,26 +97,41 @@ const followUser = async (req, res, next) => {
         //         }
         //     };
 
-        // Check whether follower(id) already follow the user(profile)
-        const isUserExists = await UsersModel.findById({ _id: profileId });
-        console.log(isUserExists, "===isUserExists");
+        // Following a user who is already following us
 
-        const followerDetails = isUserExists.followers.filter((follower) =>
-            (follower.followerId.equals(followerId)));
+        // Check whether follower(id) already follow the user(profile) : 
+        // check our userId is inside followerId's follower list
+        const isUserExists = await UsersModel.findById({ _id: followerId });
 
-        if (followerDetails.length > 0) {
-            followerDetails.followed 
+        // Retrieve followers array of followerId, check profileId exists in followers Array of followerId
+        const isProfileIdExistsInFollowerIdDocument = isUserExists.followers.filter((follower) =>
+            (follower.followerId.equals(profileId)));
+
+        if (isProfileIdExistsInFollowerIdDocument.length > 0) {
+            // since followerId is following profileId, make followed : true before pushing
+            followed = true;
+
+            // update followed : true, inside followerId's document
+            query = {
+                $set: {
+                    followers: {
+                        followerId : profileId,
+                        followed : true,
+                    }
+                }
+            }
+            await handleFolowerListUpdate(followerId, query);
         }
 
-        const query = {
-            $push: {
+        // Following a user who is NOT already following us, followed : false otherwise followed :true while pushing
+        query = {
+            $addToSet: {
                 followers: {
                     followerId,
-                    followed: false,
+                    followed,
                 }
             }
         }
-
         const isFollowersUpdate = await handleFolowerListUpdate(profileId, query);
 
         isFollowersUpdate && res.status(200).json({
