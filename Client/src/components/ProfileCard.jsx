@@ -8,21 +8,17 @@ const ProfileCard = ({ ...props }) => {
     const { userId, imgUrl, username, subText, text = "follow" } = props;
     const { handleError } = useError();
     const [isOpenModal, setIsOpenModal] = useState(false);
-
+    const [isShow, setIsShow] = useState('unfollowed');
     // Follow User
     const {
         mutateAsync: followUser,
-        isPending: isPendingFollow,
-        isSuccess: isFollowSuccess,
-        error: followError,
+        isLoading: isLoadingFollow,
     } = useFollowUsers();
 
     // UnFollow User
     const {
         mutateAsync: unfollowUser,
-        isPending: isPendingUnFollow,
-        isSuccess: isUnFollowSuccess,
-        error: unfollowError,
+        isLoading: isLoadingUnFollow,
     } = useUnFollowUsers();
 
     const handleFollow = async (event) => {
@@ -30,6 +26,7 @@ const ProfileCard = ({ ...props }) => {
 
         try {
             await followUser(userId);
+            setIsShow('followed');
         } catch (error) {
             handleError('followApiError', { message: error?.response?.data?.message || error?.message });
         }
@@ -40,6 +37,7 @@ const ProfileCard = ({ ...props }) => {
 
         try {
             await unfollowUser(userId);
+            setIsShow('unfollowed');
 
         } catch (error) {
             handleError('followApiError', { message: error?.response?.data?.message || error?.message });
@@ -58,25 +56,24 @@ const ProfileCard = ({ ...props }) => {
                         <span className=' text-gray-600'>{subText}</span>
                     </div>
 
-                    <div className={`${(isUnFollowSuccess && 'hidden') || (isFollowSuccess && 'block') || 'hidden'}`}>
-                        {isPendingFollow
+                    <div className={`${(isShow === 'followed' ? 'block' : 'hidden')}`}>
+                        {isLoadingFollow
                             ? <Spinner />
                             : <button onClick={() => setIsOpenModal(true)}>
                                 <span className={`font-bold`}>Following</span>
                             </button>
                         }
                     </div>
-                    <div className={`${isUnFollowSuccess ? 'block' : (isFollowSuccess ? 'hidden' : '')}`}>
-                        {isPendingUnFollow
+                    <div className={`${(isShow === 'unfollowed' ? 'block' : 'hidden')}`}>
+                        {isLoadingUnFollow
                             ? <Spinner />
                             : <button onClick={handleFollow}>
                                 <span className={`text-blue-700 font-bold`}>{text}</span>
                             </button>
                         }
                     </div>
-
                 </div>
-            </div>
+            </div >
 
             {/* Modal :  Implement HOC : Higher Order Component */}
 
