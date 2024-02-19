@@ -65,8 +65,8 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   console.log(posts)
 
   let postContent = (post, index) => {
-    return <>
-      <div key ={index} className="w-full flex-center px-5 pt-3 pb-20">
+    return (
+      <div key={index} className="w-full flex-center px-5 pt-3 pb-20">
         <div className="w-full md:w-[80%] flex flex-col gap-1 lg:px-3 lg:gap-2 text-[16px]">
           <div className="flex justify-start items-center">
             <div className="flex justify-start items-center w-full">
@@ -78,8 +78,8 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
                 </div>
               </div>
               <div className='flex flex-col p-2'>
-                <span className='font-bold text-[14px]'>{profile?.username} <span className='text-gray-500'>. 1 h</span></span>
-                <span>{post?.place} </span>
+                <span className='font-bold text-[14px]'>{post?.username} <span className='text-gray-500'>. 1 h</span></span>
+                <span>{post?.location} </span>
               </div>
             </div>
             <HiOutlineDotsHorizontal size={"18px"} />
@@ -103,7 +103,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
           <div className='font-bold mt-1'><span>{(post.likes > 0) && `${post.likes} Likes`}</span></div>
 
           <div className='inline-block leading-snug text-[16px]'>
-            <span className='font-bold mr-1'>{'username'}</span>
+            <span className='font-bold mr-1'>{post.username}</span>
             <span className="">
               {showMore ? post.caption : post.caption.substring(0, 250)}
             </span>
@@ -115,7 +115,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
           </div>
 
           <div>
-            <span className='text-gray-600'>{(post.commentsCount>0) && `View all ${post.commentsCount} comments`}</span>
+            <span className='text-gray-600'>{(post.commentsCount > 0) && `View all ${post.commentsCount} comments`}</span>
           </div>
 
           {/* Post Comment */}
@@ -149,12 +149,11 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
 
 
         </div>
-      </div>
-    </>
+      </div>)
   }
 
   return (
-    posts ? posts.map((post,index) => postContent(post, index)) : 'No Posts'
+    posts ? posts.map((post, index) => postContent(post, index)) : 'No Posts'
   )
 }
 
