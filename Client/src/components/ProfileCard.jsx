@@ -83,10 +83,6 @@ const ProfileCard = ({ ...props }) => {
                     }
                 </div>
             </div >
-
-            {/* Modal :  Implement HOC : Higher Order Component */}
-
-            {/* {isOpenModal && <UnfollowModal imgUrl={imgUrl} username={username} handleUnFollow={handleUnFollow} setIsOpenModal={setIsOpenModal} />} */}
         </>
     );
 }
