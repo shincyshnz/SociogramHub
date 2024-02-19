@@ -73,33 +73,8 @@ const followUser = async (req, res, next) => {
     const followerId = new mongoose.Types.ObjectId(req.params.id);
 
     try {
-        // const followerDetails = isUserExists.followers.filter((follower) =>
-        //     (follower.followerId.equals(followerId)));
+        // ---- Following a user who is already following us -----
 
-        // const query = (followerDetails.length > 0)
-        //     ? {
-        //         // Unfollow user 
-        //         $pull: {
-        //             followers: {
-        //                 $in: [{
-        //                     followerId: followerDetails[0].followerId,
-        //                     followed: followerDetails[0].followed,
-        //                 }]
-        //             },
-        //         }
-        //     } : {
-        //         // follow user 
-        //         $push: {
-        //             followers: {
-        //                 followerId,
-        //                 followed: false,
-        //             }
-        //         }
-        //     };
-
-        // Following a user who is already following us
-
-        // Check whether follower(id) already follow the user(profile) : 
         // check our userId is inside followerId's follower list
         const isUserExists = await UsersModel.findById({ _id: followerId });
 
@@ -123,7 +98,8 @@ const followUser = async (req, res, next) => {
             await handleFolowerListUpdate(followerId, query);
         }
 
-        // Following a user who is NOT already following us, followed : false otherwise followed :true while pushing
+        // ---- Following a user who is NOT already following us, ----
+        //  followed : false otherwise followed :true while pushing
         query = {
             $addToSet: {
                 followers: {
