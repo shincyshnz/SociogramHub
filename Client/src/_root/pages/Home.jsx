@@ -12,9 +12,6 @@ const Home = () => {
                 </div>
                 <RightSideBar />
             </div>
-            <div className='mt-10 flex-center flex-col mx-10'>
-                <Footer />
-            </div>
         </>
     );
 }

@@ -31,8 +31,9 @@ const getAllPosts = async (req, res, next) => {
     const { userId } = req.body;
 
     try {
-        const {followers} = await UsersModel.findById({ _id: userId }).select("followers");
-       
+        const { followers } = await UsersModel.findById({ _id: userId }).select("followers");
+        console.log(followers);
+
         res.status(200).json({
             posts: "posts details"
         });
