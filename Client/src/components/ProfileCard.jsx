@@ -1,8 +1,3 @@
-// import { useState } from 'react';
-// import { Spinner } from 'flowbite-react';
-// import { useError } from '../hooks/customHooks';
-// import { useFollowUsers, useUnFollowUsers } from '../lib/reactQuery/queriesAndMutations';
-// import UnfollowModal from './UnfollowModal';
 import FollowUnfollowButton from './FollowUnfollowButton';
 
 
