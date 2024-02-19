@@ -14,46 +14,6 @@ const ProfileCard = ({ ...props }) => {
         username,
         imgUrl,
     };
-    // const { handleError } = useError();
-    // const [isOpenModal, setIsOpenModal] = useState(false);
-    // const [isShow, setIsShow] = useState(false);
-    // // Follow User
-    // const {
-    //     mutateAsync: followUser,
-    //     isPending: isPendingFollow,
-    // } = useFollowUsers();
-
-    // // UnFollow User
-    // const {
-    //     mutateAsync: unfollowUser,
-    //     isPending: isPendingUnFollow,
-    // } = useUnFollowUsers();
-
-    // const handleFollow = async (event) => {
-    //     event.preventDefault();
-
-    //     try {
-    //         await followUser(userId);
-    //         setIsShow(true);
-    //     } catch (error) {
-    //         handleError('followApiError', { message: error?.response?.data?.message || error?.message });
-    //     }
-    // }
-
-    // const handleUnFollow = async (event) => {
-    //     event.preventDefault();
-
-    //     try {
-    //         await unfollowUser(userId);
-    //         setIsShow(false);
-
-    //     } catch (error) {
-    //         handleError('followApiError', { message: error?.response?.data?.message || error?.message });
-    //     } finally {
-    //         setIsOpenModal(false);
-    //     }
-    // }
-
     return (
         <>
             <div className="flex flex-col items-center justify-center mt-3">
