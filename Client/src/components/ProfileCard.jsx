@@ -64,38 +64,6 @@ const ProfileCard = ({ ...props }) => {
                         <span className=' text-gray-600'>{subText}</span>
                     </div>
 
-                    {/* {(isPendingFollow || isPendingUnFollow)
-                        ? <Spinner />
-                        : isShow
-                            ? (
-                                <button onClick={() => setIsOpenModal(true)}>
-                                    <span className={`font-bold`}>Following</span>
-                                </button>
-                            )
-                            : (
-                                <button onClick={handleFollow}>
-                                    <span className={`text-blue-700 font-bold`}>{text}</span>
-                                </button>
-                            )
-                    } */}
-
-                    {/* {(isPendingFollow || isPendingUnFollow)
-                        ? <Spinner />
-                        : isShow
-                            ? <FollowUnfollowButton
-                                userDetails={userDetails}
-                                btnText={'Following'}
-                                spanClass={'font-bold'}
-                                type='unfollow'
-                            />
-                            : <FollowUnfollowButton
-                                userDetails={userDetails}
-                                btnText={'Follow'}
-                                spanClass={'text-blue-700 font-bold'}
-                                type='follow'
-                            />
-                    } */}
-
                     {text === 'switch' ? (
                         <button>
                             <span className='font-bold'>{text}</span>
