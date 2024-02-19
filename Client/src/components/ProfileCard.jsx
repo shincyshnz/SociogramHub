@@ -1,50 +1,58 @@
-import { useState } from 'react';
-import { Spinner } from 'flowbite-react';
-import { useError } from '../hooks/customHooks';
-import { useFollowUsers, useUnFollowUsers } from '../lib/reactQuery/queriesAndMutations';
-import UnfollowModal from './UnfollowModal';
+// import { useState } from 'react';
+// import { Spinner } from 'flowbite-react';
+// import { useError } from '../hooks/customHooks';
+// import { useFollowUsers, useUnFollowUsers } from '../lib/reactQuery/queriesAndMutations';
+// import UnfollowModal from './UnfollowModal';
+import FollowUnfollowButton from './FollowUnfollowButton';
+
+
 
 const ProfileCard = ({ ...props }) => {
     const { userId, imgUrl, username, subText, text = "follow" } = props;
-    const { handleError } = useError();
-    const [isOpenModal, setIsOpenModal] = useState(false);
-    const [isShow, setIsShow] = useState('unfollowed');
-    // Follow User
-    const {
-        mutateAsync: followUser,
-        isLoading: isLoadingFollow,
-    } = useFollowUsers();
+    const userDetails = {
+        userId,
+        username,
+        imgUrl,
+    };
+    // const { handleError } = useError();
+    // const [isOpenModal, setIsOpenModal] = useState(false);
+    // const [isShow, setIsShow] = useState(false);
+    // // Follow User
+    // const {
+    //     mutateAsync: followUser,
+    //     isPending: isPendingFollow,
+    // } = useFollowUsers();
 
-    // UnFollow User
-    const {
-        mutateAsync: unfollowUser,
-        isLoading: isLoadingUnFollow,
-    } = useUnFollowUsers();
+    // // UnFollow User
+    // const {
+    //     mutateAsync: unfollowUser,
+    //     isPending: isPendingUnFollow,
+    // } = useUnFollowUsers();
 
-    const handleFollow = async (event) => {
-        event.preventDefault();
+    // const handleFollow = async (event) => {
+    //     event.preventDefault();
 
-        try {
-            await followUser(userId);
-            setIsShow('followed');
-        } catch (error) {
-            handleError('followApiError', { message: error?.response?.data?.message || error?.message });
-        }
-    }
+    //     try {
+    //         await followUser(userId);
+    //         setIsShow(true);
+    //     } catch (error) {
+    //         handleError('followApiError', { message: error?.response?.data?.message || error?.message });
+    //     }
+    // }
 
-    const handleUnFollow = async (event) => {
-        event.preventDefault();
+    // const handleUnFollow = async (event) => {
+    //     event.preventDefault();
 
-        try {
-            await unfollowUser(userId);
-            setIsShow('unfollowed');
+    //     try {
+    //         await unfollowUser(userId);
+    //         setIsShow(false);
 
-        } catch (error) {
-            handleError('followApiError', { message: error?.response?.data?.message || error?.message });
-        } finally {
-            setIsOpenModal(false);
-        }
-    }
+    //     } catch (error) {
+    //         handleError('followApiError', { message: error?.response?.data?.message || error?.message });
+    //     } finally {
+    //         setIsOpenModal(false);
+    //     }
+    // }
 
     return (
         <>
@@ -56,28 +64,61 @@ const ProfileCard = ({ ...props }) => {
                         <span className=' text-gray-600'>{subText}</span>
                     </div>
 
-                    <div className={`${(isShow === 'followed' ? 'block' : 'hidden')}`}>
-                        {isLoadingFollow
-                            ? <Spinner />
-                            : <button onClick={() => setIsOpenModal(true)}>
-                                <span className={`font-bold`}>Following</span>
-                            </button>
-                        }
-                    </div>
-                    <div className={`${(isShow === 'unfollowed' ? 'block' : 'hidden')}`}>
-                        {isLoadingUnFollow
-                            ? <Spinner />
-                            : <button onClick={handleFollow}>
-                                <span className={`text-blue-700 font-bold`}>{text}</span>
-                            </button>
-                        }
-                    </div>
+                    {/* {(isPendingFollow || isPendingUnFollow)
+                        ? <Spinner />
+                        : isShow
+                            ? (
+                                <button onClick={() => setIsOpenModal(true)}>
+                                    <span className={`font-bold`}>Following</span>
+                                </button>
+                            )
+                            : (
+                                <button onClick={handleFollow}>
+                                    <span className={`text-blue-700 font-bold`}>{text}</span>
+                                </button>
+                            )
+                    } */}
+
+                    {/* {(isPendingFollow || isPendingUnFollow)
+                        ? <Spinner />
+                        : isShow
+                            ? <FollowUnfollowButton
+                                userDetails={userDetails}
+                                btnText={'Following'}
+                                spanClass={'font-bold'}
+                                type='unfollow'
+                            />
+                            : <FollowUnfollowButton
+                                userDetails={userDetails}
+                                btnText={'Follow'}
+                                spanClass={'text-blue-700 font-bold'}
+                                type='follow'
+                            />
+                    } */}
+
+                    {text === 'switch' ? (
+                        <button>
+                            <span className='font-bold'>{text}</span>
+                        </button>)
+                        : (text === 'follow')
+                            ? <FollowUnfollowButton
+                                userDetails={userDetails}
+                                btnText={text}
+                                spanClass={'text-blue-700 font-bold'}
+                            />
+                            : text !== 'switch' && <FollowUnfollowButton
+                                userDetails={userDetails}
+                                btnText={text}
+                                spanClass={'font-bold'}
+                            />
+
+                    }
                 </div>
             </div >
 
             {/* Modal :  Implement HOC : Higher Order Component */}
 
-            {isOpenModal && <UnfollowModal imgUrl={imgUrl} username={username} handleUnFollow={handleUnFollow} setIsOpenModal={setIsOpenModal} />}
+            {/* {isOpenModal && <UnfollowModal imgUrl={imgUrl} username={username} handleUnFollow={handleUnFollow} setIsOpenModal={setIsOpenModal} />} */}
         </>
     );
 }
