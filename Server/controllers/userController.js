@@ -90,8 +90,8 @@ const followUser = async (req, res, next) => {
             query = {
                 $set: {
                     followers: {
-                        followerId : profileId,
-                        followed : true,
+                        followerId: profileId,
+                        followed: true,
                     }
                 }
             }
@@ -120,6 +120,7 @@ const followUser = async (req, res, next) => {
 
 // Remove user from folower list
 const unfollowUser = async (req, res, next) => {
+    let query;
     const { userId: profileId } = req.body;
     const followerId = new mongoose.Types.ObjectId(req.params.id);
 
@@ -133,7 +134,26 @@ const unfollowUser = async (req, res, next) => {
             throw new Error("Something went wrong. Please try again later!");
         }
 
-        const query = {
+        /***
+         * If followerId exists in followers Array
+         * 1. check followed : true, if yes, 
+         *      1a. update followed:false  for folowerId
+         * 2. remove followerId and followed
+         */
+
+        if (followerDetails[0].followed) {
+            query = {
+                $set: {
+                    followers: {
+                        followerId: profileId,
+                        followed: false,
+                    }
+                }
+            }
+            await handleFolowerListUpdate(followerId, query);
+        }
+
+        query = {
             // Unfollow user 
             $pull: {
                 followers: {
