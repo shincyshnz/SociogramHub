@@ -47,9 +47,11 @@ const FollowUnfollowButton = ({ ...props }) => {
     }
 
     return <>
-        {(isPendingFollow || isPendingUnFollow) ? <Spinner /> : <button onClick={(e) => isShow ? setIsOpenModal(true) : handleFollow(e)}>
-            <span className={isShow ? 'font-bold' : spanClass}>{isShow ? 'Following' : 'Follow'}</span>
-        </button>}
+        {(isPendingFollow || isPendingUnFollow)
+            ? <Spinner />
+            : <button onClick={(e) => isShow ? setIsOpenModal(true) : handleFollow(e)}>
+                <span className={isShow ? 'font-bold' : spanClass}>{isShow ? 'Following' : 'Follow'}</span>
+            </button>}
         {/* Modal :  Implement HOC : Higher Order Component */}
 
         {isOpenModal && <UnfollowModal imgUrl={userDetails.imgUrl} username={userDetails.username} handleUnFollow={handleUnFollow} setIsOpenModal={setIsOpenModal} />}
