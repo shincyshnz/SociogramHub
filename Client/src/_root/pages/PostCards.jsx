@@ -27,8 +27,6 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   const {
     data: profile,
     isPending: isPendingProfile,
-    isError: isErrorProfile,
-    error: profileError,
   } = useGetProfile();
 
   // Fetch posts : React Query
@@ -64,32 +62,31 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
       <Loader size={"xl"} /></div>);
   }
 
-  console.log(profile);
-  console.log(posts);
+  console.log(posts)
 
-  let postContent = (
-    <>
-      <div className="w-full flex-center px-5 pt-3 pb-20">
+  let postContent = (post, index) => {
+    return <>
+      <div key ={index} className="w-full flex-center px-5 pt-3 pb-20">
         <div className="w-full md:w-[80%] flex flex-col gap-1 lg:px-3 lg:gap-2 text-[16px]">
           <div className="flex justify-start items-center">
             <div className="flex justify-start items-center w-full">
               <div className="rounded-full p-[2px] bg-gradient-to-t from-[#f4d254] via-[#f33c88] to-[#f381d4]">
                 <div className="rounded-full bg-white dark:bg-black back">
                   <a href='#'>
-                    <img className="w-10 h-10 p-[2px] rounded-full" src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
+                    <img className="w-10 h-10 p-[2px] rounded-full" src={profile?.imgUrl || "https://flowbite.com/docs/images/carousel/carousel-1.svg"} alt="profile image" />
                   </a>
                 </div>
               </div>
               <div className='flex flex-col p-2'>
                 <span className='font-bold text-[14px]'>{profile?.username} <span className='text-gray-500'>. 1 h</span></span>
-                <span>{posts?.place} </span>
+                <span>{post?.place} </span>
               </div>
             </div>
             <HiOutlineDotsHorizontal size={"18px"} />
           </div>
 
           <div className='flex justify-center rounded-sm outline outline-1 shadow-sm bg-black'>
-            <img className='max-h-[500px] object-contain' src="assets/food-1.jpg" alt="post" />
+            <img className='max-h-[500px] object-contain' src={post.postFile} alt="post" />
           </div>
 
           <div className="flex text-[27px] pt-2 justify-between">
@@ -103,22 +100,22 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
             </div>
           </div>
 
-          <div className='font-bold mt-1'><span>12,3454 Likes</span></div>
+          <div className='font-bold mt-1'><span>{(post.likes > 0) && `${post.likes} Likes`}</span></div>
 
           <div className='inline-block leading-snug text-[16px]'>
-            <span className='font-bold mr-1'>Post Username</span>
+            <span className='font-bold mr-1'>{'username'}</span>
             <span className="">
-              {showMore ? text : text.substring(0, 250)}
+              {showMore ? post.caption : post.caption.substring(0, 250)}
             </span>
             {!showMore &&
-              <button onClick={() => handleShowMore(postId)}>
+              <button onClick={() => handleShowMore(post._id)}>
                 <span>...</span>
                 <span className='text-gray-600'>more</span>
               </button>}
           </div>
 
           <div>
-            <span className='text-gray-600'>{`View all ${totalComments} comments`}</span>
+            <span className='text-gray-600'>{(post.commentsCount>0) && `View all ${post.commentsCount} comments`}</span>
           </div>
 
           {/* Post Comment */}
@@ -153,12 +150,12 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
 
         </div>
       </div>
-
     </>
-  );
+  }
 
-  return postContent;
-
+  return (
+    posts ? posts.map((post,index) => postContent(post, index)) : 'No Posts'
+  )
 }
 
 export default PostCards

@@ -6,6 +6,10 @@ const postSchema = new mongoose.Schema({
         ref: "UsersModel",
         required: [true, "User id cannot be empty"]
     },
+    username: {
+        type: String,
+        required: [true, "Username cannot be empty"]
+    },
     postFile: {
         type: String,
         required: [true, "Post file URL cannot be empty"]
