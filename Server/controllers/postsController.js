@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const { handleUpload, ImageURIFormat } = require("../middleware/cloudinaryUpload");
 const { PostsModel } = require('../model/posts');
 const { UsersModel } = require("../model/users");
@@ -28,14 +29,20 @@ const createPosts = async (req, res, next) => {
 }
 
 const getAllPosts = async (req, res, next) => {
+    let posts;
     const { userId } = req.body;
 
     try {
-        const { followers } = await UsersModel.findById({ _id: userId }).select("followers");
-        console.log(followers);
+        const { followers } = await UsersModel.findById({ _id: userId }).select("followers.followerId");
+        const followersArray = followers.map(follower => follower.followerId);
 
+        const posts = await PostsModel.find({
+            userId: {
+                $in: followersArray
+            }
+        });
         res.status(200).json({
-            posts: "posts details"
+            posts: posts || 'No posts'
         });
     } catch (error) {
         next(error);
