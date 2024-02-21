@@ -3,7 +3,7 @@ import { Spinner, Textarea } from 'flowbite-react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
-import { FormFields, Loader, NotificationToast, UserAvatar } from '../../components';
+import { FormFields, Loader, NotificationToast, PostModal, UserAvatar } from '../../components';
 import { useCreatePosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
 import TagSearchBar from '../../components/TagSearchBar';
 import { useError } from '../../hooks/customHooks';
@@ -152,7 +152,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
                   <Spinner aria-label="Extra large spinner example" size="xl" />
                 </div>
               }
-              <div className="fixed top-8 bg-white max-h-[480px] w-3/4 lg:w-1/2 mx-auto p-2 overflow-x-hidden overflow-y-auto inset-0 z-40 outline-none focus:outline-none rounded-lg">
+              {/* <div className="fixed top-8 bg-white max-h-[480px] w-3/4 lg:w-1/2 mx-auto p-2 overflow-x-hidden overflow-y-auto inset-0 z-40 outline-none focus:outline-none rounded-lg">
                 <form className="overflow-y-auto p-2">
                   <div className="flex justify-center items-baseline mb-6">
                     <h5 className="mx-auto  text-lg">Create new post</h5>
@@ -203,7 +203,15 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
                   </div>
 
                 </form>
-              </div>
+              </div> */}
+              <PostModal
+                modalContainerClassName='fixed top-8 bg-white max-h-[480px] w-3/4 lg:w-1/2 mx-auto p-2 overflow-x-hidden overflow-y-auto inset-0 z-40 outline-none focus:outline-none rounded-lg'
+                preview={preview}
+                profile={profile}
+                setTaggedUsers={setTaggedUsers}
+                onSubmit={onSubmit}
+              />
+
             </>}
         </div>
       )}

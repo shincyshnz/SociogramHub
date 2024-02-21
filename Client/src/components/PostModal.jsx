@@ -1,8 +1,35 @@
+import { useState } from "react";
 import WithModal from "./ModalContainer"
+import { useForm } from "react-hook-form";
+import FormFields from "./FormFields";
+import TagSearchBar from "./TagSearchBar";
+import { Textarea } from "flowbite-react";
+import { UserAvatar } from "./shared/GetComponents";
 
 const PostModal = ({ ...props }) => {
+    const { modalContainerClassName, preview, profile, setTaggedUsers, onSubmit } = props;
+
+    const [charLength, setCharLength] = useState(0);
+
+
+    // React - hook - form
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        clearErrors,
+        setValue,
+        setError,
+    } = useForm();
+
+    // Handling character length for caption maximum 2200
+    const handleCaptionChange = (event) => {
+        const { name, value } = event.target;
+        setCharLength(prev => prev = value.length);
+    }
+
     return (
-        <div className="fixed top-8 bg-white max-h-[480px] w-3/4 lg:w-1/2 mx-auto p-2 overflow-x-hidden overflow-y-auto inset-0 z-40 outline-none focus:outline-none rounded-lg">
+        // <div className="fixed top-8 bg-white max-h-[480px] w-3/4 lg:w-1/2 mx-auto p-2 overflow-x-hidden overflow-y-auto inset-0 z-40 outline-none focus:outline-none rounded-lg">
             <form className="overflow-y-auto p-2">
                 <div className="flex justify-center items-baseline mb-6">
                     <h5 className="mx-auto  text-lg">Create new post</h5>
@@ -53,7 +80,7 @@ const PostModal = ({ ...props }) => {
                 </div>
 
             </form>
-        </div>
+        // </div>
     )
 }
 
