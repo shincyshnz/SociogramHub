@@ -1,11 +1,10 @@
 import React from 'react';
-import { Spinner, Textarea } from 'flowbite-react';
+import { Spinner } from 'flowbite-react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
-import { FormFields, Loader, NotificationToast, PostModal, UserAvatar } from '../../components';
+import { Loader, PostModal } from '../../components';
 import { useCreatePosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
-import TagSearchBar from '../../components/TagSearchBar';
 import { useError } from '../../hooks/customHooks';
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
@@ -26,30 +25,27 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     error: createPostError,
   } = useCreatePosts();
 
-
   // React - hook - form
   const {
     register,
-    handleSubmit,
     formState: { errors },
-    clearErrors,
-    setValue,
-    setError,
   } = useForm();
 
   const fileInputRef = useRef();
-  const { handleError, deleteError } = useError();
-  const [charLength, setCharLength] = useState(0);
+  const { handleError } = useError();
   const [preview, setPreview] = useState(null);
   const [isFileSelected, setIsFileSelected] = useState(false);
   const [taggedUsers, setTaggedUsers] = useState(null);
   const [file, setFile] = useState(null);
   const { ref: registerRef, ...rest } = register("fileUpload");
 
-  // Handling character length for caption maximum 2200
-  const handleCaptionChange = (event) => {
-    const { name, value } = event.target;
-    setCharLength(prev => prev = value.length);
+  if (isErrorProfile) {
+    handleError('profile', profileError?.message);
+  }
+
+  if (isErrorCreatePost) {
+    setIsFileSelected(false);
+    setIsCreatePostOpen(false);
   }
 
   const handleUploadedFile = (event) => {
@@ -59,15 +55,6 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     setIsFileSelected(true);
 
     setFile(file);
-  }
-
-  if (isErrorProfile) {
-    handleError('profile', profileError?.message);
-  }
-
-  if (isErrorCreatePost) {
-    setIsFileSelected(false);
-    setIsCreatePostOpen(false);
   }
 
   const onSubmit = async (data) => {
@@ -98,8 +85,9 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   return (
     <>
 
+      {/* Select file modal */}
       {isCreatePostOpen && (
-        <div className="fixed bg-slate-950 bg-opacity-55 flex flex-col justify-center items-center overflow-hidden inset-0 z-40 outline-none focus:outline-none">
+        <div className="fixed bg-slate-950 bg-opacity-55 flex-center flex-col overflow-hidden inset-0 z-40 outline-none focus:outline-none">
           <button
             className="absolute top-5 right-5 bg-transparent border-0 text-white"
             onClick={() => {
@@ -143,7 +131,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
             </div>
           </div>
 
-          {/* 2nd modal */}
+          {/* Post modal */}
           {(isPendingProfile) ? <Loader /> :
             (isFileSelected) &&
             <>
@@ -152,58 +140,6 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
                   <Spinner aria-label="Extra large spinner example" size="xl" />
                 </div>
               }
-              {/* <div className="fixed top-8 bg-white max-h-[480px] w-3/4 lg:w-1/2 mx-auto p-2 overflow-x-hidden overflow-y-auto inset-0 z-40 outline-none focus:outline-none rounded-lg">
-                <form className="overflow-y-auto p-2">
-                  <div className="flex justify-center items-baseline mb-6">
-                    <h5 className="mx-auto  text-lg">Create new post</h5>
-                    <button onClick={handleSubmit(onSubmit)} className="text-blue-700 font-bold">Share</button>
-                  </div>
-                  <div className="w-full flex flex-col md:flex-row  justify-center items-center gap-3">
-                    <img
-                      src={preview}
-                      alt="post"
-                      className="w-full h-[350px] md:w-1/2 md:h-[350px] self-center"
-                    />
-                    <div className="w-full flex flex-col">
-                      <div className="flex items-center">
-                        <UserAvatar size="40px" />
-                        <span className='text-black font-bold mx-2'>{profile?.username}</span>
-                      </div>
-
-                      <Textarea
-                        className="border-0 focus:border-transparent focus:ring-0"
-                        {...register("caption")}
-                        placeholder='Write a caption...'
-                        maxLength={2200}
-                        name="caption"
-                        id="caption"
-                        onChange={handleCaptionChange}
-                        rows={10}
-                      />
-                      <div className='relative mb-3'>
-                        <span className='absolute right-1'>{charLength}/2,200</span>
-                      </div>
-                      <FormFields
-                        className="border-none focus:ring-0"
-                        label="Add Location"
-                        name="location"
-                        type="text"
-                        register={register}
-                        errors={errors}
-                        setValue={setValue}
-                        clearErrors={clearErrors}
-                        setError={setError}
-                      />
-                      <TagSearchBar
-                        name="users"
-                        placeholder="Tag People"
-                        setTaggedUsers={setTaggedUsers}
-                      />
-                    </div>
-                  </div>
-
-                </form>
-              </div> */}
               <PostModal
                 modalContainerClassName='fixed top-8 bg-white max-h-[480px] w-3/4 lg:w-1/2 mx-auto p-2 overflow-x-hidden overflow-y-auto inset-0 z-40 outline-none focus:outline-none rounded-lg'
                 preview={preview}
