@@ -3,14 +3,14 @@ import React from 'react'
 import { HiLogout, HiOutlineSun } from 'react-icons/hi'
 import { useAuth, useError } from '../hooks/customHooks';
 import { useNavigate, Link } from 'react-router-dom';
-import { moreLinks, sidebarLinks } from '../constants';
+import { MORE_LINKS, SIDEBAR_LINKS } from '../constants';
 
 const MoreDropdown = ({ position = "leftside" }) => {
     const navigate = useNavigate();
     const { handleError, clearCustomErrors } = useError();
     const { removeToken, userDetails } = useAuth();
 
-    let profile = sidebarLinks.filter(link => link.label === "Profile");;
+    let profile = SIDEBAR_LINKS.filter(link => link.label === "Profile");;
 
     const handleLogout = () => {
         try {
@@ -33,7 +33,7 @@ const MoreDropdown = ({ position = "leftside" }) => {
             )
             }
 
-            {moreLinks.map((link, index) => {
+            {MORE_LINKS.map((link, index) => {
                 return (
                     <Link to={link.route} key={index}>
                         <Dropdown.Item>

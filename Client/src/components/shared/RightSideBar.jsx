@@ -10,7 +10,6 @@ const RightSideBar = () => {
   // Fetch suggested users
   const {
     data: suggestedUsers,
-    isPending: isPendingUsers,
     error: suggestedUserError,
   } = useGetSuggestedUsers();
 

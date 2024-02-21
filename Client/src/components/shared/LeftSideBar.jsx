@@ -2,7 +2,7 @@ import { Dropdown, Sidebar } from 'flowbite-react';
 // import { useAuth } from '../../hooks/customHooks';
 import { HiMenu } from 'react-icons/hi';
 import MoreDropdown from '../MoreDropdown';
-import { sidebarLinks } from '../../constants';
+import { SIDEBAR_LINKS } from '../../constants';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -25,7 +25,7 @@ const LeftSideBar = () => {
 
             <Sidebar.Items className='mt-14'>
               <Sidebar.ItemGroup>
-                {sidebarLinks.map((link, index) => {
+                {SIDEBAR_LINKS.map((link, index) => {
                   const isActive = pathname === link.route;
 
                   const LabelElement = <div className='flex items-center text-[16px]'>

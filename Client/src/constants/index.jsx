@@ -2,7 +2,7 @@ import { HiChatAlt2, HiFilm, HiHome, HiOutlineBookmark, HiOutlineCog, HiOutlineH
 import { MdOutlineExplore } from "react-icons/md";
 import { UserAvatar } from "../components";
 
-export const sidebarLinks = [
+export const SIDEBAR_LINKS = [
     {
         icon: <HiHome />,
         route: "/",
@@ -45,7 +45,7 @@ export const sidebarLinks = [
     },
 ];
 
-export const moreLinks = [
+export const MORE_LINKS = [
     {
         icon: <HiOutlineCog />,
         route: "/settings",
