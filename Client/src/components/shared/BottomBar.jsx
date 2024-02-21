@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MoreDropdown from '../MoreDropdown';
 import { Dropdown, Navbar } from 'flowbite-react';
 import { useLocation, Link } from 'react-router-dom';
-import { sidebarLinks } from '../../constants';
+import { SIDEBAR_LINKS } from '../../constants';
 import { CreatePost } from '../../_root/pages';
 import { UserAvatar } from '../../components';
 
@@ -16,7 +16,7 @@ const BottomBar = () => {
         <Navbar fluid rounded className='w-full md:hidden border-t-2 p-0'>
           <Navbar className='text-xl w-full'>
 
-            {sidebarLinks.map((link, index) => {
+            {SIDEBAR_LINKS.map((link, index) => {
               // Links excluded in Bottombar and Notification and Search included in Topbar
               if (["Search", "Notifications", "Profile"].includes(link.label)) return;
 

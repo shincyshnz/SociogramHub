@@ -10,18 +10,19 @@ const FollowUnfollowButton = ({ ...props }) => {
     const [isShow, setIsShow] = useState(false);
     const [isOpenModal, setIsOpenModal] = useState(false);
 
-    // Follow User
+    // Follow User : react query
     const {
         mutateAsync: followUser,
         isPending: isPendingFollow,
     } = useFollowUsers();
 
-    // UnFollow User
+    // UnFollow User : react query
     const {
         mutateAsync: unfollowUser,
         isPending: isPendingUnFollow,
     } = useUnFollowUsers();
 
+    // handle follow button click
     const handleFollow = async (event) => {
         event.preventDefault();
 
@@ -33,6 +34,7 @@ const FollowUnfollowButton = ({ ...props }) => {
         }
     }
 
+    // handle unfollow / following button click
     const handleUnFollow = async (event) => {
         event.preventDefault();
 

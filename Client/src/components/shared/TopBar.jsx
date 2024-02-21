@@ -22,7 +22,7 @@
 import React from 'react';
 import { TextInput } from 'flowbite-react';
 import { HiSearch, HiOutlineHeart } from 'react-icons/hi';
-import { sidebarLinks } from '../../constants';
+import { SIDEBAR_LINKS } from '../../constants';
 import { Link } from 'react-router-dom';
 
 const TopBar = () => {
@@ -36,7 +36,7 @@ const TopBar = () => {
         <div className='flex items-center'>
           <TextInput sizing="md" id="search" type="Search" icon={HiSearch} placeholder="Search" />
 
-          {sidebarLinks.map((link, index) => {
+          {SIDEBAR_LINKS.map((link, index) => {
             if (link.label === "Notifications")
               return (
                 <Link to={link.route} key={index} className={`cursor-pointer block py-2 px-4`}>
