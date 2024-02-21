@@ -1,7 +1,7 @@
 import WithModal from "./ModalContainer";
 
 // Use HOC Modal Container
-const UnfollowModalBody = ({ imgUrl, username, handleUnFollow, setIsOpenModal }) => {
+const UnfollowModalBody = ({ imgUrl, username, handleUnFollow, setIsOpenModal, modalContainerClassName }) => {
     return (
         <>
             <div className="flex-center flex-col text-md">

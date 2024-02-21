@@ -56,7 +56,14 @@ const FollowUnfollowButton = ({ ...props }) => {
             </button>}
         {/* Modal :  Implement HOC : Higher Order Component */}
 
-        {isOpenModal && <UnfollowModal imgUrl={userDetails.imgUrl} username={userDetails.username} handleUnFollow={handleUnFollow} setIsOpenModal={setIsOpenModal} />}
+        {isOpenModal && <UnfollowModal
+            imgUrl={userDetails.imgUrl}
+            username={userDetails.username}
+            handleUnFollow={handleUnFollow}
+            setIsOpenModal={setIsOpenModal}
+            modalContainerClassName={'absolute w-full py-5 flex-center bg-opacity-60 max-h-screen px-10 md:px-0 bg-slate-900 inset-0 z-40 overflow-hidden'}
+        />}
+
     </>
 }
 
