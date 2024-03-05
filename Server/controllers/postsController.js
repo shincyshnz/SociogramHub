@@ -7,7 +7,7 @@ const createPosts = async (req, res, next) => {
     const { userId, caption, location, taggedUsers } = req.body;
     try {
         const isExists = await UsersModel.findById({ _id: userId });
-        
+
         if (!isExists) {
             customErrorMessage(400, "User doesnot exists. Please login Again");
         }
@@ -18,7 +18,7 @@ const createPosts = async (req, res, next) => {
         }
 
         let newTaggedUser = taggedUsers ?? [];
-        const postData = PostsModel.create({ userId, username : isExists.username, postFile, caption, location, newTaggedUser });
+        const postData = PostsModel.create({ userId, username: isExists.username, postFile, caption, location, newTaggedUser });
         if (postData) {
             res.status(200).json({
                 message: "Post created Succesfully"
@@ -50,7 +50,20 @@ const getAllPosts = async (req, res, next) => {
     }
 }
 
+const addComments = (req, res, next) => {
+    const userId = req.body;
+
+    try {
+        res.status(200).json({
+            message: "added comment"
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     createPosts,
     getAllPosts,
+    addComments
 }
