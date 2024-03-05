@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { Loader } from '../../components';
 import { IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline, IoBookmarkOutline } from 'react-icons/io5';
@@ -7,10 +7,11 @@ import EmojiPicker from '@emoji-mart/react';
 import { useForm } from 'react-hook-form';
 import { useAddComments, useGetPosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
 
+
 const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   const [showMore, setShowMore] = useState(null);
   const [showPostButton, setShowPostButton] = useState(false);
-  const [showEmoji, setShowEmoji] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(null);
   const [commentText, setCommentText] = useState("");
 
   // React - hook - form
@@ -47,21 +48,29 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   }
 
   const handleChangeComment = (event) => {
-    const { value } = event.target;
-    (value.length > 0) ? setShowPostButton(true) : setShowPostButton(false);
+    const { name, value } = event.target;
+    (value.length > 0) ? setShowPostButton(true) : setShowPostButton(null);
     setCommentText(value);
   }
 
-  const addEmoji = (event) => {
+  const addEmoji = (event, index) => {
     const code = event.unified.split("_");
     const codeArray = [];
     code.forEach(el => codeArray.push("0x" + el));
     let emoji = String.fromCodePoint(...codeArray);
-    setCommentText(commentText + emoji)
+    setCommentText(commentText + emoji);
+    setShowEmoji(prev => prev = null);
+  }
+
+  const EmojiComponent = ({ index }) => {
+    return (<div className="absolute right-1 z-[60]">
+      <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={(e) => addEmoji(e, index)} emojiSize={20} theme="light" previewPosition="none" />
+    </div>);
   }
 
   const onSubmit = async (data) => {
     try {
+      console.log(data, "==data");
       const formData = {
         commentText,
         postId: data.postId
@@ -147,17 +156,19 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
             <label htmlFor="chat" className="sr-only">Add Comment</label>
             <div className="flex items-center rounded-lg bg-gray-50 dark:bg-gray-700">
               <textarea
-                onFocus={() => setShowEmoji(false)}
+                // onFocus={() => setShowEmoji(index)}
                 id="chat"
                 value={commentText}
+                // onChange={(e) => handleChangeComment(e)}
                 rows="1"
-                // onChange={handleChangeComment}
                 className="block resize-none w-full text-sm text-gray-900 bg-white rounded-lg border-0 focus:ring-0 focus:border-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0"
                 placeholder="Add Comment..."
-                {...register("chat", {
+                {...register(`chat--${index}`, {
                   onChange: handleChangeComment,
                 })}
-              ></textarea>
+              >
+              </textarea>
+
               <input type="text" hidden defaultValue={post._id} {...register("postId")} />
               {showPostButton && (
                 <>
@@ -165,7 +176,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
                     Post
                   </button>
                   <div>
-                    <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="p-2 text-gray-900 rounded-lg cursor-pointer dark:text-gray-400 ">
+                    <button type="button" onClick={() => setShowEmoji(prev => ((prev === null) ? index : null))} className="p-2 text-gray-900 rounded-lg cursor-pointer dark:text-gray-400 ">
                       <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.408 7.5h.01m-6.876 0h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM4.6 11a5.5 5.5 0 0 0 10.81 0H4.6Z" />
                       </svg>
@@ -174,10 +185,8 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
                 </>
               )}
             </div>
-            {showEmoji &&
-              <div className="absolute right-1 z-[60]">
-                <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={addEmoji} emojiSize={20} theme="light" previewPosition="none" />
-              </div>}
+            {(showEmoji === index) && <EmojiComponent index={index} />}
+
           </form>
 
         </div>
