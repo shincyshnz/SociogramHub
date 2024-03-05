@@ -20,6 +20,7 @@ const Profile = () => {
 
   if (isError) {
     console.log(error);
+    
   }
 
   return (

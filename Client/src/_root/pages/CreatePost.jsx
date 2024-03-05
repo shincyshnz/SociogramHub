@@ -84,7 +84,6 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
 
   return (
     <>
-
       {/* Select file modal */}
       {isCreatePostOpen && (
         <div className="fixed bg-slate-950 bg-opacity-55 flex-center flex-col overflow-hidden inset-0 z-40 outline-none focus:outline-none">

@@ -4,8 +4,10 @@ import { useGetProfile, useGetSuggestedUsers } from '../../lib/reactQuery/querie
 import ProfileCard from '../ProfileCard';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router';
+import { useError } from '../../hooks/customHooks';
 
 const RightSideBar = () => {
+  const { handleError } = useError();
   const navigate = useNavigate();
   // Fetch suggested users
   const {

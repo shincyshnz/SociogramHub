@@ -21,11 +21,11 @@ app.use(express.json());
 // app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.use(cors({
-    origin: ["http://localhost","http://localhost:5173"],
+    origin: ["http://localhost", "http://localhost:5173"],
     credentials: true,
-    cookie:{
-        sameSite : "None",
-        secure:true,
+    cookie: {
+        sameSite: "None",
+        secure: true,
     }
 }));
 

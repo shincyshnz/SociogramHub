@@ -7,7 +7,7 @@ import { Textarea } from "flowbite-react";
 import { UserAvatar } from "./shared/GetComponents";
 
 const PostModal = ({ ...props }) => {
-    const { modalContainerClassName, preview, profile, setTaggedUsers, onSubmit } = props;
+    const { preview, profile, setTaggedUsers, onSubmit } = props;
 
     const [charLength, setCharLength] = useState(0);
 

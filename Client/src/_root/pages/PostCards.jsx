@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { Loader } from '../../components';
 import { IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline, IoBookmarkOutline } from 'react-icons/io5';
@@ -16,11 +16,8 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   // React - hook - form
   const {
     register,
-    handleSubmit,
     formState: { errors },
-    clearErrors,
-    setValue,
-    setError,
+    handleSubmit,
   } = useForm();
 
   // Fetch profile data : React Query
@@ -50,19 +47,20 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
 
   const addEmoji = (event) => {
     const code = event.unified.split("_");
-    console.log(code);
     const codeArray = [];
     code.forEach(el => codeArray.push("0x" + el));
     let emoji = String.fromCodePoint(...codeArray);
     setCommentText(commentText + emoji)
   }
 
+  const onSubmit = () => {
+    console.log(commentText);
+  }
+
   if (isPendingProfile) {
     return (<div className="h-full w-full mt-[25%] flex-center">
       <Loader size={"xl"} /></div>);
   }
-
-  console.log(posts)
 
   let postContent = (post, index) => {
     return (
@@ -118,13 +116,20 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
             <span className='text-gray-600'>{(post.commentsCount > 0) && `View all ${post.commentsCount} comments`}</span>
           </div>
 
-          {/* Post Comment */}
+          {/* Post Comment  - Form*/}
 
-
-          <form className='relative border-b-2'>
+          <form className='relative border-b-2' onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="chat" className="sr-only">Add Comment</label>
             <div className="flex items-center rounded-lg bg-gray-50 dark:bg-gray-700">
-              <textarea onFocus={() => setShowEmoji(false)} id="chat" value={commentText} rows="1" onChange={handleChangeComment} className="block  resize-none w-full text-sm text-gray-900 bg-white rounded-lg border-0 focus:ring-0 focus:border-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0" placeholder="Add Comment..."></textarea>
+              <textarea
+                onFocus={() => setShowEmoji(false)}
+                id="chat"
+                value={commentText}
+                rows="1"
+                onChange={handleChangeComment}
+                className="block resize-none w-full text-sm text-gray-900 bg-white rounded-lg border-0 focus:ring-0 focus:border-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0"
+                placeholder="Add Comment..."
+              ></textarea>
               {showPostButton && (
                 <>
                   <button type="submit" className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer dark:text-blue-500 ">
@@ -146,7 +151,6 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
                 <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={addEmoji} emojiSize={20} theme="light" previewPosition="none" />
               </div>}
           </form>
-
 
         </div>
       </div>)
