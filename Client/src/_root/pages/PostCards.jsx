@@ -60,14 +60,19 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
     setCommentText(commentText + emoji)
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     try {
-      const response = await addComments(commentText);
-      if (response.status === 200) {
-        console.log("comment added");
-
-        // update the comment section in the postCard
+      const formData = {
+        commentText,
+        postId: data.postId
       }
+      console.log(formData);
+      // const response = await addComments(commentText);
+      // if (response.status === 200) {
+      //   console.log("comment added");
+
+      //   // update the comment section in the postCard
+      // }
     } catch (error) {
       console.log(error);
     }
@@ -146,10 +151,14 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
                 id="chat"
                 value={commentText}
                 rows="1"
-                onChange={handleChangeComment}
+                // onChange={handleChangeComment}
                 className="block resize-none w-full text-sm text-gray-900 bg-white rounded-lg border-0 focus:ring-0 focus:border-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0"
                 placeholder="Add Comment..."
+                {...register("chat", {
+                  onChange: handleChangeComment,
+                })}
               ></textarea>
+              <input type="text" hidden defaultValue={post._id} {...register("postId")} />
               {showPostButton && (
                 <>
                   <button type="submit" className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer dark:text-blue-500 ">
