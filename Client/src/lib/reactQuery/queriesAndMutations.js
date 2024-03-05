@@ -13,6 +13,7 @@ import {
     GetUsersAPI,
     GetSuggestedUsersAPI,
     CreatePostsAPI,
+    AddCommentsAPI,
     GetPostsAPI,
     FollowUsers,
     UnFollowUsers
@@ -86,7 +87,13 @@ export const useGetPosts = () => {
     });
 }
 
-/* ---------------------- Updaate Follower list---------------------------------------- --*/
+export const useAddComments = ()=>{
+    return useMutation({
+        mutationFn : (data)=> AddCommentsAPI(data)
+    });
+}
+
+/* ---------------------- Update Follower list---------------------------------------- --*/
 
 export const useFollowUsers = () => {
     return useMutation({

@@ -112,3 +112,12 @@ export const GetPostsAPI = async () => {
     return response?.data?.posts;
 }
 
+export const AddCommentsAPI = async (data) => {
+    const response = axiosInstance(`${import.meta.env.VITE_POSTS_URL}/addComment`, {
+        method: "POST",
+        withCredentials: true,
+        data,
+    });
+    return response;
+}
+

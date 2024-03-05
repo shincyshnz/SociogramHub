@@ -5,7 +5,7 @@ import { IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline, IoBookmarkOut
 import emojiData from '@emoji-mart/data';
 import EmojiPicker from '@emoji-mart/react';
 import { useForm } from 'react-hook-form';
-import { useGetPosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
+import { useAddComments, useGetPosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
 
 const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   const [showMore, setShowMore] = useState(null);
@@ -34,6 +34,13 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
     error: postsError,
   } = useGetPosts();
 
+  // Add Comments : React Query
+  const {
+    mutateAsync: addComments,
+    isError: isErrorAddComment,
+    error: errorAddComment,
+  } = useAddComments();
+
   // Show more of post title
   const handleShowMore = (postId) => {
     setShowMore(postId);
@@ -53,13 +60,26 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
     setCommentText(commentText + emoji)
   }
 
-  const onSubmit = () => {
-    console.log(commentText);
+  const onSubmit = async () => {
+    try {
+      const response = await addComments(commentText);
+      if (response.status === 200) {
+        console.log("comment added");
+
+        // update the comment section in the postCard
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   if (isPendingProfile) {
     return (<div className="h-full w-full mt-[25%] flex-center">
       <Loader size={"xl"} /></div>);
+  }
+
+  if (isErrorPosts) {
+    console.log(errorAddComment);
   }
 
   let postContent = (post, index) => {
@@ -142,7 +162,6 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
                       </svg>
                     </button>
                   </div>
-
                 </>
               )}
             </div>
