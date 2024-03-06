@@ -32,22 +32,15 @@ const AddCommentForm = ({ post, index }) => {
         setShowEmoji(prev => !prev);
     }
 
-    const EmojiComponent = ({ index }) => {
-        return (<div className="absolute right-1 z-[60]">
-            <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={(e) => addEmoji(e, index)} emojiSize={20} theme="light" previewPosition="none" />
-        </div>);
-    }
-
     const onSubmit = async (data) => {
         try {
-            console.log(data, "==data");
-
             const formData = {
                 commentText: data[`chat--${index}`],
-                postId: post.postId
+                postId: post._id
             }
             console.log(formData);
             setValue(`chat--${index}`, "");
+            setShowPostButton(false);
             // const response = await addComments(commentText);
             // if (response.status === 200) {
             //   console.log("comment added");
@@ -75,7 +68,6 @@ const AddCommentForm = ({ post, index }) => {
                 >
                 </textarea>
 
-                <input type="text" hidden defaultValue={post._id} {...register("postId")} />
                 {showPostButton && (
                     <>
                         <button type="submit" className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer dark:text-blue-500 ">
@@ -91,7 +83,9 @@ const AddCommentForm = ({ post, index }) => {
                     </>
                 )}
             </div>
-            {(showEmoji) && <EmojiComponent index={index} />}
+            {(showEmoji) && (<div className="absolute right-1 z-[60]">
+                <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={(e) => addEmoji(e, index)} emojiSize={20} theme="light" previewPosition="none" />
+            </div>)}
 
         </form>
     )
