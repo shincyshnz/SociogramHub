@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
-import { Loader } from '../../components';
+import { AddCommentForm, Loader } from '../../components';
 import { IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline, IoBookmarkOutline } from 'react-icons/io5';
 import emojiData from '@emoji-mart/data';
 import EmojiPicker from '@emoji-mart/react';
@@ -10,16 +10,17 @@ import { useAddComments, useGetPosts, useGetProfile } from '../../lib/reactQuery
 
 const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
   const [showMore, setShowMore] = useState(null);
-  const [showPostButton, setShowPostButton] = useState(false);
-  const [showEmoji, setShowEmoji] = useState(null);
-  const [commentText, setCommentText] = useState("");
+  // const [showPostButton, setShowPostButton] = useState(false);
+  // const [showEmoji, setShowEmoji] = useState(null);
+  // const [commentText, setCommentText] = useState("");
 
   // React - hook - form
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
+  // const {
+  //   register,
+  //   setValue,
+  //   formState: { errors },
+  //   handleSubmit,
+  // } = useForm();
 
   // Fetch profile data : React Query
   const {
@@ -47,45 +48,45 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
     setShowMore(postId);
   }
 
-  const handleChangeComment = (event) => {
-    const { name, value } = event.target;
-    (value.length > 0) ? setShowPostButton(true) : setShowPostButton(null);
-    setCommentText(value);
-  }
+  // const handleChangeComment = (event) => {
+  //   const { name, value } = event.target;
+  //   (value.length > 0) ? setShowPostButton(true) : setShowPostButton(null);
+  //   setCommentText(value);
+  // }
 
-  const addEmoji = (event, index) => {
-    const code = event.unified.split("_");
-    const codeArray = [];
-    code.forEach(el => codeArray.push("0x" + el));
-    let emoji = String.fromCodePoint(...codeArray);
-    setCommentText(commentText + emoji);
-    setShowEmoji(prev => prev = null);
-  }
+  // const addEmoji = (event, index) => {
+  //   const code = event.unified.split("_");
+  //   const codeArray = [];
+  //   code.forEach(el => codeArray.push("0x" + el));
+  //   let emoji = String.fromCodePoint(...codeArray);
+  //   setCommentText(commentText + emoji);
+  //   setShowEmoji(prev => prev = null);
+  // }
 
-  const EmojiComponent = ({ index }) => {
-    return (<div className="absolute right-1 z-[60]">
-      <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={(e) => addEmoji(e, index)} emojiSize={20} theme="light" previewPosition="none" />
-    </div>);
-  }
+  // const EmojiComponent = ({ index }) => {
+  //   return (<div className="absolute right-1 z-[60]">
+  //     <EmojiPicker showPreview={0} data={emojiData} onEmojiSelect={(e) => addEmoji(e, index)} emojiSize={20} theme="light" previewPosition="none" />
+  //   </div>);
+  // }
 
-  const onSubmit = async (data) => {
-    try {
-      console.log(data, "==data");
-      const formData = {
-        commentText,
-        postId: data.postId
-      }
-      console.log(formData);
-      // const response = await addComments(commentText);
-      // if (response.status === 200) {
-      //   console.log("comment added");
+  // const onSubmit = async (data) => {
+  //   try {
+  //     console.log(data, "==data");
+  //     const formData = {
+  //       commentText,
+  //       postId: data.postId
+  //     }
+  //     console.log(formData);
+  //     // const response = await addComments(commentText);
+  //     // if (response.status === 200) {
+  //     //   console.log("comment added");
 
-      //   // update the comment section in the postCard
-      // }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  //     //   // update the comment section in the postCard
+  //     // }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   if (isPendingProfile) {
     return (<div className="h-full w-full mt-[25%] flex-center">
@@ -152,7 +153,7 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
 
           {/* Post Comment  - Form*/}
 
-          <form className='relative border-b-2' onSubmit={handleSubmit(onSubmit)}>
+          {/* <form className='relative border-b-2' onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="chat" className="sr-only">Add Comment</label>
             <div className="flex items-center rounded-lg bg-gray-50 dark:bg-gray-700">
               <textarea
@@ -187,7 +188,18 @@ const PostCards = ({ text = "asdasd", postId = 1, totalComments = 0 }) => {
             </div>
             {(showEmoji === index) && <EmojiComponent index={index} />}
 
-          </form>
+          </form> */}
+
+          <AddCommentForm
+            // commentText={commentText}
+            // setCommentText={setCommentText}
+            post={post}
+            index={index}
+            // register={register}
+            // setValue={setValue}
+            // handleSubmit={handleSubmit} 
+            // onSubmit={onSubmit}
+            />
 
         </div>
       </div>)

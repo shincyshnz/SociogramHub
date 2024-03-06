@@ -18,6 +18,7 @@ export { default as ModalContainer } from './ModalContainer';
 export { default as UnfollowModal } from './UnfollowModal';
 export { default as FollowUnfollowButton } from './FollowUnfollowButton';
 export { default as PostModal } from './PostModal';
+export { default as AddCommentForm } from './AddCommentForm';
 
 export { default as BottomBar } from './shared/BottomBar';
 export { default as LeftSideBar } from './shared/LeftSideBar';
