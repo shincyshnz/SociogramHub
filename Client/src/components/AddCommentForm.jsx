@@ -3,13 +3,11 @@ import emojiData from '@emoji-mart/data';
 import EmojiPicker from '@emoji-mart/react';
 import { useForm } from 'react-hook-form';
 
-const AddCommentForm = ({ ...props }) => {
-    const { post, index } = props;
+const AddCommentForm = ({ post, index }) => {
     const [showPostButton, setShowPostButton] = useState(false);
     const [showEmoji, setShowEmoji] = useState(false);
-    // const [commentText, setCommentText] = useState("");
 
-
+    // React-hook form
     const {
         register,
         setValue,
@@ -21,12 +19,7 @@ const AddCommentForm = ({ ...props }) => {
     const handleChangeComment = (event) => {
         const { value } = event.target;
         (value.length > 0) ? setShowPostButton(true) : setShowPostButton(null);
-        // setCommentText(value);
         setValue(`chat--${index}`, value);
-        // if (+name.slice(6) === index) {
-        //     (value.length > 0) ? setShowPostButton(true) : setShowPostButton(null);
-        //     setCommentText(value);
-        // }
     }
 
     const addEmoji = (event, index) => {
@@ -34,9 +27,7 @@ const AddCommentForm = ({ ...props }) => {
         const codeArray = [];
         code.forEach(el => codeArray.push("0x" + el));
         let emoji = String.fromCodePoint(...codeArray);
-        // const updatedComment = commentText + emoji;
         const updatedComment = getValues(`chat--${index}`) + emoji;
-        // setCommentText(updatedComment);
         setValue(`chat--${index}`, updatedComment)
         setShowEmoji(prev => !prev);
     }
@@ -74,15 +65,11 @@ const AddCommentForm = ({ ...props }) => {
             <label htmlFor="chat" className="sr-only">Add Comment</label>
             <div className="flex items-center rounded-lg bg-gray-50 dark:bg-gray-700">
                 <textarea
-                    // onFocus={() => setShowEmoji(index)}
                     id="chat"
-                    // value={commentText}
-                    // onChange={(e) => handleChangeComment(e)}
                     rows="1"
                     className="block resize-none w-full text-sm text-gray-900 bg-white rounded-lg border-0 focus:ring-0 focus:border-none dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-0"
                     placeholder="Add Comment..."
                     {...register(`chat--${index}`, {
-                        // value: commentText,
                         onChange: handleChangeComment,
                     })}
                 >
