@@ -50,7 +50,22 @@ const getAllPosts = async (req, res, next) => {
     }
 }
 
+const updatePostsCommentCount = async (postId) => {
+    try {
+        const postDetails = PostsModel.findByIdAndUpdate(
+            postId,
+            { $inc: { commentsCount: 1 } },
+            { new: true },
+        );
+        return postDetails;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     createPosts,
-    getAllPosts
+    getAllPosts,
+    updatePostsCommentCount
 }

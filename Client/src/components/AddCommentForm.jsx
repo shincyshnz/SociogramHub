@@ -3,11 +3,11 @@ import emojiData from '@emoji-mart/data';
 import EmojiPicker from '@emoji-mart/react';
 import { useForm } from 'react-hook-form';
 
-const AddCommentForm = ({ post, index, addComments }) => {
+const AddCommentForm = ({ ...props }) => {
+    const { post, index, addComments, setComments } = props;
     const [showPostButton, setShowPostButton] = useState(false);
     const [showEmoji, setShowEmoji] = useState(false);
-    const [comments, setComments] = useState([]);
-    
+
     // React-hook form
     const {
         register,
@@ -34,25 +34,27 @@ const AddCommentForm = ({ post, index, addComments }) => {
     }
 
     const onSubmit = async (data) => {
+        const commentText = data[`chat--${index}`];
         try {
             const formData = {
-                commentText: data[`chat--${index}`],
+                commentText,
                 postId: post._id
             }
-            console.log(formData);
-            setValue(`chat--${index}`, "");
-            setShowPostButton(false);
+
             const response = await addComments(formData);
             if (response.status === 200) {
-                console.log("comment added");
-
                 // update the comment section in the postCard
+                setComments(prev => ([
+                    ...prev,
+                    commentText,
+                ]));
+                setValue(`chat--${index}`, "");
+                setShowPostButton(false);
             }
         } catch (error) {
             console.log(error);
         }
     }
-
 
     return (
         <form className='relative border-b-2' onSubmit={handleSubmit(onSubmit)}>

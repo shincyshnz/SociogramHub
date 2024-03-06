@@ -7,6 +7,7 @@ import { useAddComments, useGetPosts, useGetProfile } from '../../lib/reactQuery
 
 const PostCards = () => {
   const [showMore, setShowMore] = useState(null);
+  const [comments, setComments] = useState([]);
 
   // Fetch profile data : React Query
   const {
@@ -102,12 +103,13 @@ const PostCards = () => {
             post={post}
             index={index}
             addComments={addComments}
-            />
+            setComments={setComments}
+          />
 
         </div>
       </div>)
   }
-
+  console.log(comments, "==comments");
   return (
     posts ? posts.map((post, index) => postContent(post, index)) : 'No Posts'
   )
