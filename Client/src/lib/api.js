@@ -113,7 +113,7 @@ export const GetPostsAPI = async () => {
 }
 
 export const AddCommentsAPI = async (data) => {
-    const response = axiosInstance(`${import.meta.env.VITE_POSTS_URL}/addComments`, {
+    const response = axiosInstance(`${import.meta.env.VITE_COMMENTS_URL}/addComments`, {
         method: "POST",
         withCredentials: true,
         data,
