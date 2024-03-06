@@ -101,6 +101,7 @@ const PostCards = () => {
           <AddCommentForm
             post={post}
             index={index}
+            addComments={addComments}
             />
 
         </div>

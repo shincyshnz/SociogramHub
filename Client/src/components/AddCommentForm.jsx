@@ -3,10 +3,11 @@ import emojiData from '@emoji-mart/data';
 import EmojiPicker from '@emoji-mart/react';
 import { useForm } from 'react-hook-form';
 
-const AddCommentForm = ({ post, index }) => {
+const AddCommentForm = ({ post, index, addComments }) => {
     const [showPostButton, setShowPostButton] = useState(false);
     const [showEmoji, setShowEmoji] = useState(false);
-
+    const [comments, setComments] = useState([]);
+    
     // React-hook form
     const {
         register,
@@ -41,12 +42,12 @@ const AddCommentForm = ({ post, index }) => {
             console.log(formData);
             setValue(`chat--${index}`, "");
             setShowPostButton(false);
-            // const response = await addComments(commentText);
-            // if (response.status === 200) {
-            //   console.log("comment added");
+            const response = await addComments(formData);
+            if (response.status === 200) {
+                console.log("comment added");
 
-            //   // update the comment section in the postCard
-            // }
+                // update the comment section in the postCard
+            }
         } catch (error) {
             console.log(error);
         }

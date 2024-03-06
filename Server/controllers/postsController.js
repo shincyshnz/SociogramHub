@@ -50,20 +50,7 @@ const getAllPosts = async (req, res, next) => {
     }
 }
 
-const addComments = (req, res, next) => {
-    const userId = req.body;
-
-    try {
-        res.status(200).json({
-            message: "added comment"
-        });
-    } catch (error) {
-        next(error);
-    }
-}
-
 module.exports = {
     createPosts,
-    getAllPosts,
-    addComments
+    getAllPosts
 }

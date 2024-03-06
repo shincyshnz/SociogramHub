@@ -7,6 +7,7 @@ const errorController = require("./controllers/errorController");
 const authRoutes = require("./routes/authRoutes");
 const forgotPasswordRoutes = require("./routes/forgotPasswordRoutes");
 const postsRoutes = require("./routes/postRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
@@ -33,6 +34,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/forgotPassword', forgotPasswordRoutes);
 app.use('/api/posts', postsRoutes);
+app.use('/api/comments', commentRoutes);
 
 app.use(errorController);
 
