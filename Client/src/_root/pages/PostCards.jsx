@@ -3,6 +3,7 @@ import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { AddCommentForm, Loader } from '../../components';
 import { IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline, IoBookmarkOutline } from 'react-icons/io5';
 import { useAddComments, useGetPosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
+import { getTimeDifference } from '../../lib/utils';
 
 
 const PostCards = () => {
@@ -45,6 +46,17 @@ const PostCards = () => {
   }
 
   let postContent = (post, index) => {
+    // const timeDifference = new Date() - new Date(post.createdAt);
+    // const hours = Math.floor(timeDifference / 1000 * 60 * 60);
+    // let days = 0, months = 0, years = 0;
+
+    // if (hours > 24) {
+    //   days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    //   months = Math.floor(days / 31);
+    //   years = Math.floor(months / 12);
+    // }
+    let createdAt = getTimeDifference(post.createdAt);
+
     return (
       <div key={index} className="w-full flex-center px-5 pt-3 pb-20">
         <div className="w-full md:w-[80%] flex flex-col gap-1 lg:px-3 lg:gap-2 text-[16px]">
@@ -96,6 +108,10 @@ const PostCards = () => {
 
           <div>
             <span className='text-gray-600'>{(post.commentsCount > 0) && `View all ${post.commentsCount} comments`}</span>
+          </div>
+
+          <div>
+            <span className='text-gray-600 text-sm'>{createdAt}</span>
           </div>
 
           {/* Post Comment  - Form*/}
