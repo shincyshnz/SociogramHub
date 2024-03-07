@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import emojiData from '@emoji-mart/data';
 import EmojiPicker from '@emoji-mart/react';
 import { useForm } from 'react-hook-form';
