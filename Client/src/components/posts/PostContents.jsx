@@ -4,7 +4,7 @@ import { useAddComments, useGetProfile } from '../../lib/reactQuery/queriesAndMu
 import { Loader } from '../shared/GetComponents';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { IoBookmarkOutline, IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline } from 'react-icons/io5';
-import AddCommentForm from '../AddCommentForm';
+import AddCommentForm from './AddCommentForm';
 
 const PostContents = ({ post, index }) => {
     const [showMore, setShowMore] = useState(null);

@@ -8,6 +8,9 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
+        if (error?.response?.status === 404) {
+            alert("Server Error, Please try again later");
+        }
         if (error?.response?.status === 401) {
             try {
                 const response = await axiosInstance.get("/refreshToken");
