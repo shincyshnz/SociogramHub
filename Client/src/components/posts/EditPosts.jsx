@@ -15,6 +15,7 @@ const EditPosts = ({ modalContainer, post, setOpenEditPostModal }) => {
             {openDeleteModal && <DeletePosts
                 postId={post._id}
                 setOpenDeleteModal={setOpenDeleteModal}
+                setOpenEditPostModal={setOpenEditPostModal}
             />}
         </>
 

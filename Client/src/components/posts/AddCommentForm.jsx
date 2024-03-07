@@ -57,7 +57,7 @@ const AddCommentForm = ({ ...props }) => {
     }
 
     return (
-        <form className='relative border-b-2' onSubmit={handleSubmit(onSubmit)}>
+        <form id="addComments" className='relative border-b-2' onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="chat" className="sr-only">Add Comment</label>
             <div className="flex items-center rounded-lg bg-gray-50 dark:bg-gray-700">
                 <textarea

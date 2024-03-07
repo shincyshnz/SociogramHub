@@ -1,7 +1,17 @@
 import WithModal from "../ModalContainer"
 
-const DeletePosts = ({ postId, setOpenDeleteModal }) => {
-    const handleDeletePost = () => {
+const DeletePosts = ({ postId, setOpenDeleteModal, setOpenEditPostModal }) => {
+    const handleDeletePost = (e) => {
+        e.preventDefault();
+
+        try {
+            console.log(postId);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setOpenDeleteModal(false);
+            setOpenEditPostModal(false);
+        }
 
     }
 
