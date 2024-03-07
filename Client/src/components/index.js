@@ -25,5 +25,4 @@ export { default as RightSideBar } from './shared/RightSideBar';
 export { default as TopBar } from './shared/TopBar';
 
 export { default as PostContents } from './posts/PostContents';
-export { default as AddCommentForm } from './posts/AddCommentForm';
 

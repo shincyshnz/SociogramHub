@@ -5,11 +5,13 @@ import { Loader } from '../shared/GetComponents';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { IoBookmarkOutline, IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline } from 'react-icons/io5';
 import AddCommentForm from './AddCommentForm';
+import EditPosts from './EditPosts';
 
 const PostContents = ({ post, index }) => {
     const [showMore, setShowMore] = useState(null);
     const [commentsCount, setCommentsCount] = useState(post.commentsCount);
     const [comments, setComments] = useState([]);
+    const [openEditPostModal, setOpenEditPostModal] = useState(false);
 
     // Fetch profile data : React Query
     const {
@@ -47,6 +49,7 @@ const PostContents = ({ post, index }) => {
         setShowMore(postId);
     }
 
+
     return (
         <>
             <div className="flex justify-start items-center">
@@ -63,7 +66,7 @@ const PostContents = ({ post, index }) => {
                         <span>{post?.location} </span>
                     </div>
                 </div>
-                <HiOutlineDotsHorizontal size={"18px"} />
+                <HiOutlineDotsHorizontal size={"18px"} onClick={() => setOpenEditPostModal(true)} />
             </div>
 
             <div className='flex justify-center rounded-sm outline outline-1 shadow-sm bg-black'>
@@ -110,6 +113,12 @@ const PostContents = ({ post, index }) => {
                 addComments={addComments}
                 setComments={setComments}
             />
+
+            {/* Open Edit Modal */}
+            {openEditPostModal && <EditPosts
+                setOpenEditPostModal={setOpenEditPostModal}
+                post={post}
+            />}
         </>
     )
 }
