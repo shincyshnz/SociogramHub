@@ -44,6 +44,10 @@
     .password-toggle {
         @apply absolute top-[50%] right-[10px] translate-y-[-50%] cursor-pointer text-sm;
     }
+
+    .grey-button{
+        @apply bg-slate-200 p-3 rounded-md font-bold;
+    }
 }
 
 /* Scrollbar */

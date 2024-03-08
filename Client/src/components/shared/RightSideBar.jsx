@@ -47,7 +47,14 @@ const RightSideBar = () => {
 
             <div className="flex flex-col">
               {suggestedUsers?.map((user, index) => (
-                <ProfileCard userId={user._id} key={index} imgUrl={user.profile_pic} username={user.username} subText="Suggested for You." />
+                <ProfileCard
+                  userId={user._id}
+                  key={index}
+                  imgUrl={user.profile_pic}
+                  username={user.username}
+                  subText="Suggested for You."
+                  text={"follow"}
+                />
               ))}
             </div>
             <div className="w-full pt-16">

@@ -54,7 +54,6 @@ export const useGetProfile = () => {
     return useQuery({
         queryKey: ['profile'],
         queryFn: GetProfileAPI,
-        client : queryClient,
     });
 }
 

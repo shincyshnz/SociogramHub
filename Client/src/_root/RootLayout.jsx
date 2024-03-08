@@ -5,7 +5,7 @@ const RootLayout = () => {
 
   return (
     <>
-      <div className='w-full max-h-screen flex flex-col md:flex-row'>
+      <div className='w-full min-h-screen flex flex-col md:flex-row'>
         <TopBar />
         <LeftSideBar />
 
