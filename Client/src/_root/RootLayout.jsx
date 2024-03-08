@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { TopBar, LeftSideBar, BottomBar } from '../components';
 
 const RootLayout = () => {
+
   return (
     <>
       <div className='w-full max-h-screen flex flex-col md:flex-row'>

@@ -49,9 +49,12 @@ export const useResetPassword = () => {
 
 // Get loggedIn user Details
 export const useGetProfile = () => {
+    const queryClient = useQueryClient(); 
+
     return useQuery({
         queryKey: ['profile'],
         queryFn: GetProfileAPI,
+        client : queryClient,
     });
 }
 

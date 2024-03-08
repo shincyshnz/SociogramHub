@@ -6,6 +6,7 @@ import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { IoBookmarkOutline, IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline } from 'react-icons/io5';
 import AddCommentForm from './AddCommentForm';
 import EditPosts from './EditPosts';
+import { useQueryClient } from '@tanstack/react-query';
 
 const PostContents = ({ post, index }) => {
     const [showMore, setShowMore] = useState(null);
@@ -118,6 +119,7 @@ const PostContents = ({ post, index }) => {
             {openEditPostModal && <EditPosts
                 setOpenEditPostModal={setOpenEditPostModal}
                 post={post}
+                profile ={profile}
             />}
         </>
     )
