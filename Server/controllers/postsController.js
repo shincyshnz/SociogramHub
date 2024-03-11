@@ -71,7 +71,7 @@ const getUserPosts = async (req, res, next) => {
         const posts = await PostsModel.find({ userId });
         if (posts) {
             res.status(200).json({
-                result: posts
+                result: posts.reverse(),
             });
         }
     } catch (error) {

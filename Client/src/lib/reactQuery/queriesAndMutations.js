@@ -78,8 +78,20 @@ export const useGetSuggestedUsers = () => {
 /* ---------------------- Post Data ----------------------------------------- --*/
 
 export const useCreatePosts = () => {
+    const queryClient = useQueryClient();
+
     return useMutation({
-        mutationFn: (data) => CreatePostsAPI(data)
+        mutationFn: (data) => CreatePostsAPI(data),
+        // Update the userPosts cache when new post is created
+        onSuccess: () => {
+            queryClient.invalidateQueries(
+                {
+                    queryKey: ['userPosts'],
+                    // exact,
+                    refetchType: 'active',
+                },
+            )
+        }
     });
 }
 
@@ -100,6 +112,7 @@ export const useGetUserPosts = () => {
     return useQuery({
         queryKey: ['userPosts'],
         queryFn: GetUserPostsAPI,
+        queryClient: useQueryClient(),
     });
 }
 

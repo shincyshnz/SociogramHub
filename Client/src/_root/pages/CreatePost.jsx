@@ -6,8 +6,10 @@ import { IoIosImages } from "react-icons/io";
 import { Loader, PostModal } from '../../components';
 import { useCreatePosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
 import { useError } from '../../hooks/customHooks';
+import { useQueryClient } from '@tanstack/react-query';
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
+  const queryClient = useQueryClient();
 
   //  React-Query - fetching loggedIn user data
   const {
@@ -73,6 +75,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
 
     try {
       const response = await createPosts(formData);
+
       if (response.status === 200) {
         setIsFileSelected(false);
         setIsCreatePostOpen(false);

@@ -16,10 +16,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('');
 
-  // Accessing profile data from cache
-  const queryClient = useQueryClient();
-  const profile = queryClient.getQueryData(['profile']);
-
   // React-query : Get all posts of profile 
   const {
     data: userPosts,
@@ -28,13 +24,18 @@ const Profile = () => {
     error,
   } = useGetUserPosts();
 
+  // Accessing profile data from cache
+  const queryClient = useQueryClient();
+  const profile = queryClient.getQueryData(['profile']);
+  const userPostsCache = queryClient.getQueryData(['userPosts']);
+
   useEffect(() => {
     setIsActive('post');
 
     if (!profile?.email) {
       navigate('/sign-in')
     }
-  }, [profile, userPostsCache]);
+  }, [profile]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -46,11 +47,11 @@ const Profile = () => {
     <div className='profile px-4 py-4 md:px-24 md:py-16'>
       <div className="section--1 w-full flex flex-row  justify-start gap-8 md:gap-32 px-15">
         <div className="profile-image">
-          <img className='w-10 h-10 md:w-36 md:h-36 rounded-full object-contain' src={profile.profile_pic || import.meta.env.VITE_TEMP_PROFILE_PIC_URL} alt={profile.username} />
+          <img className='w-10 h-10 md:w-36 md:h-36 rounded-full object-contain' src={profile?.profile_pic || import.meta.env.VITE_TEMP_PROFILE_PIC_URL} alt={profile.username} />
         </div>
         <div className="profile-data flex flex-col gap-8 md:text-[16px]">
           <div className="flex-center gap-5">
-            <h4>{profile.username}</h4>
+            <h4>{profile?.username}</h4>
             <button className='grey-button'>Edit Profile</button>
             <button className='grey-button'>View Archive</button>
             <IoIosSettings size={'30px'} />
@@ -98,17 +99,15 @@ const Profile = () => {
         />
 
       </div>
-      <div className="section--4">
-
-        <div className="flex-center flex-wrap gap-5 mt-7">
+      <div className="section--4 flex-center">
+        <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
           {isPendig ? "Loading..." : (
-            userPosts.map((item, index) => (
-              <div key={index} className='w-[250px] h-[250px] object-cover'>
+            userPostsCache?.map((item, index) => (
+              <div key={index} className='flex w-[250px] h-[250px] object-contain bg-black'>
                 <img src={item.postFile} />
               </div>
             ))
           )}
-
         </div>
       </div>
     </div>
