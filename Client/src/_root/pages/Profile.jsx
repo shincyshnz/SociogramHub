@@ -35,10 +35,9 @@ const Profile = () => {
     if (!profile?.email) {
       navigate('/sign-in')
     }
-  }, [profile]);
+  }, []);
 
   const handleClick = (e) => {
-    e.preventDefault();
     setIsActive(prev => prev = e.target.name);
     console.log(e.target.name);
   }
@@ -66,6 +65,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      
+      {/* Highlights */}
       <div className="section--2 flex gap-6 my-10 justify-self-center">
         <div className="flex flex-col items-center font-bold">
           <img className='highlight-img-icon' src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?t=st=1709901405~exp=1709905005~hmac=c4f410a7eb4de48e3fad6d86ffbe7cc275c174a19d9c5cab271ce741cc354561&w=1380" alt="highlights" />
@@ -76,7 +77,10 @@ const Profile = () => {
           <p className='my-2'>New</p>
         </div>
       </div>
+      
       <hr />
+      
+      {/* Post, Saved, Tagged Buttons */}
       <div className="section--3 text-[16px] flex-center gap-10">
 
         <Button
@@ -99,8 +103,10 @@ const Profile = () => {
         />
 
       </div>
+
       <div className="section--4 flex-center">
-        <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
+        {/* Posts */}
+        {isActive === "post" && <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
           {isPendig ? "Loading..." : (
             userPostsCache?.map((item, index) => (
               <div key={index} className='flex w-[250px] h-[250px] object-contain bg-black'>
@@ -108,7 +114,19 @@ const Profile = () => {
               </div>
             ))
           )}
-        </div>
+        </div>}
+
+        {/* saved */}
+        {isActive === "saved" && 
+        <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
+          Saved
+        </div>}
+
+        {/* saved */}
+        {isActive === "tagged" && 
+        <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
+          Tagged
+        </div>}
       </div>
     </div>
   );
