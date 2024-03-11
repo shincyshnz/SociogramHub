@@ -28,6 +28,7 @@ const Profile = () => {
   const queryClient = useQueryClient();
   const profile = queryClient.getQueryData(['profile']);
   const userPostsCache = queryClient.getQueryData(['userPosts']);
+  const postsCount = userPostsCache?.length;
 
   useEffect(() => {
     setIsActive('post');
@@ -56,7 +57,7 @@ const Profile = () => {
             <IoIosSettings size={'30px'} />
           </div>
           <div className="flex items-center gap-5">
-            <p><span className='font-bold'>1</span> post</p>
+            <p><span className='font-bold'>{ postsCount}</span> post</p>
             <p><span className='font-bold'>217</span> followers</p>
             <p><span className='font-bold'>519</span> following</p>
           </div>
@@ -65,7 +66,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Highlights */}
       <div className="section--2 flex gap-6 my-10 justify-self-center">
         <div className="flex flex-col items-center font-bold">
@@ -77,9 +78,9 @@ const Profile = () => {
           <p className='my-2'>New</p>
         </div>
       </div>
-      
+
       <hr />
-      
+
       {/* Post, Saved, Tagged Buttons */}
       <div className="section--3 text-[16px] flex-center gap-10">
 
@@ -106,7 +107,7 @@ const Profile = () => {
 
       <div className="section--4 flex-center">
         {/* Posts */}
-        {isActive === "post" && <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
+        {isActive === "post" && <div className="flex-center md:justify-start max-w-[782px] gap-4 flex-wrap mt-7">
           {isPendig ? "Loading..." : (
             userPostsCache?.map((item, index) => (
               <div key={index} className='flex w-[250px] h-[250px] object-contain bg-black'>
@@ -117,16 +118,16 @@ const Profile = () => {
         </div>}
 
         {/* saved */}
-        {isActive === "saved" && 
-        <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
-          Saved
-        </div>}
+        {isActive === "saved" &&
+          <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
+            Saved
+          </div>}
 
         {/* saved */}
-        {isActive === "tagged" && 
-        <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
-          Tagged
-        </div>}
+        {isActive === "tagged" &&
+          <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
+            Tagged
+          </div>}
       </div>
     </div>
   );
