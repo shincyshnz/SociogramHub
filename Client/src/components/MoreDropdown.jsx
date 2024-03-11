@@ -25,7 +25,8 @@ const MoreDropdown = ({ position = "leftside" }) => {
     return (
         <>
             {position === "bottom" && (
-                <Link to={`${profile[0].route}/${userDetails._id}`}>
+                // <Link to={`${profile[0].route}/${userDetails._id}`}>
+                <Link to={`${profile[0].route}`}>
                     <Dropdown.Item>
                         <div className='flex flex-1 gap-3 items-center'>{profile[0].icon} {profile[0].label}</div>
                     </Dropdown.Item>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { axiosInstance } from './Interceptors';
+import { useQuery } from '@tanstack/react-query';
 
 const createFormData = (data) => {
     let formData = new FormData();
@@ -79,14 +80,14 @@ export const GetSuggestedUsersAPI = async () => {
     return response?.data?.suggestedUsers;
 }
 
-export const FollowUsers = async (data) => {
+export const FollowUsersAPI = async (data) => {
     const response = await axiosInstance(`${import.meta.env.VITE_USERS_URL}/${data}/follow`, {
         method: "POST"
     });
     return response?.data?.message;
 }
 
-export const UnFollowUsers = async (data) => {
+export const UnFollowUsersAPI = async (data) => {
     const response = await axiosInstance(`${import.meta.env.VITE_USERS_URL}/${data}/unfollow`, {
         method: "POST"
     });
@@ -119,5 +120,10 @@ export const AddCommentsAPI = async (data) => {
         data,
     });
     return response;
+}
+
+export const GetUserPostsAPI = async () =>{
+    const response = await axiosInstance.get(`${import.meta.env.VITE_POSTS_URL}/userPosts`);
+    return response?.data?.result;
 }
 

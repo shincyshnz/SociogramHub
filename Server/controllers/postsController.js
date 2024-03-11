@@ -64,8 +64,24 @@ const updatePostsCommentCount = async (postId) => {
     }
 }
 
+const getUserPosts = async (req, res, next) => {
+    try {
+        const { userId } = req.body;
+        const userObjectId = new mongoose.Types.ObjectId(userId) 
+        const posts = await PostsModel.find({ userId });
+        if (posts) {
+            res.status(200).json({
+                result: posts
+            });
+        }
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     createPosts,
     getAllPosts,
-    updatePostsCommentCount
+    updatePostsCommentCount,
+    getUserPosts,
 }

@@ -15,8 +15,9 @@ import {
     CreatePostsAPI,
     AddCommentsAPI,
     GetPostsAPI,
-    FollowUsers,
-    UnFollowUsers
+    GetUserPostsAPI,
+    FollowUsersAPI,
+    UnFollowUsersAPI,
 } from '../api';
 
 /* ---------------------- Authentication & Authorization -------------------------------- --*/
@@ -49,7 +50,7 @@ export const useResetPassword = () => {
 
 // Get loggedIn user Details
 export const useGetProfile = () => {
-    const queryClient = useQueryClient(); 
+    const queryClient = useQueryClient();
 
     return useQuery({
         queryKey: ['profile'],
@@ -89,9 +90,16 @@ export const useGetPosts = () => {
     });
 }
 
-export const useAddComments = ()=>{
+export const useAddComments = () => {
     return useMutation({
-        mutationFn : (data)=> AddCommentsAPI(data)
+        mutationFn: (data) => AddCommentsAPI(data)
+    });
+}
+
+export const useGetUserPosts = () => {
+    return useQuery({
+        queryKey: ['userPosts'],
+        queryFn: GetUserPostsAPI,
     });
 }
 
@@ -99,12 +107,12 @@ export const useAddComments = ()=>{
 
 export const useFollowUsers = () => {
     return useMutation({
-        mutationFn: (data) => FollowUsers(data)
+        mutationFn: (data) => FollowUsersAPI(data)
     });
 }
 
 export const useUnFollowUsers = () => {
     return useMutation({
-        mutationFn: (data) => UnFollowUsers(data)
+        mutationFn: (data) => UnFollowUsersAPI(data)
     });
 }

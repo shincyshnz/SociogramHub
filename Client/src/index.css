@@ -48,6 +48,10 @@
     .grey-button{
         @apply bg-slate-200 p-3 rounded-md font-bold;
     }
+
+    .highlight-img-icon{
+        @apply border border-gray-200 border-spacing-0 p-1 w-10 h-10  md:w-24 md:h-24 rounded-full;
+    }
 }
 
 /* Scrollbar */
