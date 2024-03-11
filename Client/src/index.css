@@ -46,7 +46,7 @@
     }
 
     .grey-button{
-        @apply bg-slate-200 p-3 rounded-md font-bold;
+        @apply bg-slate-200 p-1 md:p-3 rounded-md font-bold;
     }
 
     .highlight-img-icon{

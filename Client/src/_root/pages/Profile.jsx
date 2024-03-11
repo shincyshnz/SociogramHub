@@ -44,15 +44,15 @@ const Profile = () => {
 
   return (
     <div className='profile px-4 py-4 md:px-24 md:py-16'>
-      <div className="section--1 w-full flex flex-row  justify-start gap-8 md:gap-32 px-15">
-        <div className="profile-image">
-          <img className='w-10 h-10 md:w-36 md:h-36 rounded-full object-contain' src={profile?.profile_pic || import.meta.env.VITE_TEMP_PROFILE_PIC_URL} alt={profile.username} />
+      <div className="section--1 w-full flex flex-row justify-between md:justify-start gap-1 md:gap-32 px-15">
+        <div className="profile-image w-10 h-10 md:w-36 md:h-36 rounded-full overflow-hidden bg-slate-500">
+          <img className='object-cover' src={profile?.profile_pic || import.meta.env.VITE_TEMP_PROFILE_PIC_URL} alt={profile.username} />
         </div>
-        <div className="profile-data flex flex-col gap-8 md:text-[16px]">
+        <div className="profile-data flex flex-col px-1 gap-3 md:gap-8 md:text-[16px]">
           <div className="flex-center gap-5">
             <h4>{profile?.username}</h4>
-            <button className='grey-button'>Edit Profile</button>
-            <button className='grey-button'>View Archive</button>
+            <button className='grey-button'>Edit</button>
+            <button className='grey-button'>Archive</button>
             <IoIosSettings size={'30px'} />
           </div>
           <div className="flex items-center gap-5">
