@@ -37,13 +37,13 @@ const App = () => {
   const { getToken } = useAuth();
   const accessToken = getToken("accessToken");
   const navigate = useNavigate();
-  
+
   const { customError, deleteError } = useError() || {};
   const errorKeysArray = Object.keys(customError);
 
   useEffect(() => {
     deleteError("apiError");
-    (!accessToken) ? navigate("/sign-in") : navigate("/") ;
+    (!accessToken) ? navigate("/sign-in") : navigate("/");
 
   }, [accessToken]);
 
@@ -90,7 +90,7 @@ const App = () => {
           {/* <Route path='/create-posts' element={<CreatePost />} /> */}
           <Route path='/update-posts/:id' element={<EditPost />} />
           <Route path='/posts/:id' element={<PostCards />} />
-          <Route path='/profile' element={
+          <Route path='/profile/:id' element={
             <Suspense fallback={logoLoader}>
               <Profile />
             </Suspense>

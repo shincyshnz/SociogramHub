@@ -175,9 +175,25 @@ const unfollowUser = async (req, res, next) => {
     }
 }
 
+// Get profile details matching the userId
+const getProfile = async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        const user = await UserModal.findById({ userId }).select("-password");
+        if (user) {
+            res.status(200).json({
+                result: user,
+            })
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getUsers,
     getSuggestedUsers,
+    getProfile,
     followUser,
     unfollowUser,
 }

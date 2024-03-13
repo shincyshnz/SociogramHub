@@ -7,11 +7,15 @@ import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { CreatePost } from '../../../_root/pages';
+import { useQueryClient } from '@tanstack/react-query';
 
 const LeftSideBar = () => {
   const { pathname } = useLocation();
-  // const { userDetails } = useAuth();
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+
+  // Accessing profile data from cache
+  const queryClient = useQueryClient();
+  const profile = queryClient.getQueryData(['profile']);
 
   return (
     <>
@@ -32,6 +36,11 @@ const LeftSideBar = () => {
                     <div className={`text-2xl mr-5 py-1 px-2 ${isActive && 'md:bg-gray-200 md:rounded-lg'}`}>{link.icon}</div>
                     <div className={`hidden lg:block ${isActive && 'font-bold'}`}>{link.label}</div>
                   </div>;
+
+                  // Add userId with profile route
+                  if (link.label === "Profile") {
+                    link.route = `${link.route}/${profile._id}`;
+                  }
 
                   // Create-post modal 
                   if (link.label === "Create") {

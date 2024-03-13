@@ -40,7 +40,7 @@ export const SIDEBAR_LINKS = [
     },
     {
         icon: <UserAvatar size="25px" />,
-        route: "/profile",
+        route: `/profile`,
         label: "Profile"
     },
 ];

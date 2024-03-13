@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { IoIosSettings } from 'react-icons/io';
 import { GoPlus } from 'react-icons/go';
 import { IoBookmarkOutline } from 'react-icons/io5';
@@ -13,6 +13,7 @@ const Button = ({ isActive, handleClick, icon, name }) => {
 }
 
 const Profile = () => {
+  const { id: userId } = useParams();
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('');
 
@@ -27,9 +28,8 @@ const Profile = () => {
   // Accessing profile data from cache
   const queryClient = useQueryClient();
   const profile = queryClient.getQueryData(['profile']);
-  const allPosts = queryClient.getQueryData(['allPosts']);
   const userPostsCache = queryClient.getQueryData(['userPosts']);
-  const postsCount = userPostsCache?.length;
+  const postsCount = userPostsCache?.posts?.length;
 
   useEffect(() => {
     setIsActive('post');
@@ -43,9 +43,6 @@ const Profile = () => {
     setIsActive(prev => prev = e.target.name);
     console.log(e.target.name);
   }
-
-  console.log(userPosts);
-  console.log(allPosts);
 
   return (
     <div className='profile px-4 py-4 md:px-24 md:py-16'>
@@ -63,8 +60,8 @@ const Profile = () => {
           </div>
           <div className="flex items-center gap-5">
             <p><span className='font-bold'>{postsCount}</span> post</p>
-            <p><span className='font-bold'>217</span> followers</p>
-            <p><span className='font-bold'>519</span> following</p>
+            <p><span className='font-bold'>{userPosts?.followers}</span> {userPosts?.followers > 1 ? 'followers' : 'follower'}</p>
+            <p><span className='font-bold'>{userPosts?.following}</span> following</p>
           </div>
           <div className="text-left">
             <p>{profile.fullname}</p>
@@ -115,7 +112,7 @@ const Profile = () => {
         {/* Posts */}
         {isActive === "post" && <div className="flex-center md:justify-start max-w-[782px] gap-4 flex-wrap mt-7">
           {isPendig ? "Loading..." : (
-            userPostsCache?.map((item, index) => (
+            userPostsCache?.posts?.map((item, index) => (
               <div key={index} className='flex w-[250px] h-[250px] object-contain bg-black'>
                 <img src={item.postFile} />
               </div>

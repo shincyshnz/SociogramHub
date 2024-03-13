@@ -67,11 +67,18 @@ const updatePostsCommentCount = async (postId) => {
 const getUserPosts = async (req, res, next) => {
     try {
         const { userId } = req.body;
-        const userObjectId = new mongoose.Types.ObjectId(userId) 
+        // const userObjectId = 
         const posts = await PostsModel.find({ userId });
+        const user = await UsersModel.findOne({ _id: userId });
+
+        const followers = user.followers.filter(follower => !follower.followed);
+        const following = user.followers.filter(follower => follower.followed);
+
         if (posts) {
             res.status(200).json({
-                result: posts.reverse(),
+                posts: posts.reverse(),
+                followers : followers.length,
+                following : following.length,
             });
         }
     } catch (error) {
