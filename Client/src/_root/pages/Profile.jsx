@@ -27,6 +27,7 @@ const Profile = () => {
   // Accessing profile data from cache
   const queryClient = useQueryClient();
   const profile = queryClient.getQueryData(['profile']);
+  const allPosts = queryClient.getQueryData(['allPosts']);
   const userPostsCache = queryClient.getQueryData(['userPosts']);
   const postsCount = userPostsCache?.length;
 
@@ -43,8 +44,12 @@ const Profile = () => {
     console.log(e.target.name);
   }
 
+  console.log(userPosts);
+  console.log(allPosts);
+
   return (
     <div className='profile px-4 py-4 md:px-24 md:py-16'>
+      {/* profile header */}
       <div className="section--1 w-full flex flex-row justify-between md:justify-start gap-1 md:gap-32 px-15">
         <div className="profile-image w-10 h-10 md:w-36 md:h-36 rounded-full overflow-hidden bg-slate-500">
           <img className='object-cover' src={profile?.profile_pic || import.meta.env.VITE_TEMP_PROFILE_PIC_URL} alt={profile.username} />
@@ -57,7 +62,7 @@ const Profile = () => {
             <IoIosSettings size={'30px'} />
           </div>
           <div className="flex items-center gap-5">
-            <p><span className='font-bold'>{ postsCount}</span> post</p>
+            <p><span className='font-bold'>{postsCount}</span> post</p>
             <p><span className='font-bold'>217</span> followers</p>
             <p><span className='font-bold'>519</span> following</p>
           </div>
@@ -106,6 +111,7 @@ const Profile = () => {
       </div>
 
       <div className="section--4 flex-center">
+
         {/* Posts */}
         {isActive === "post" && <div className="flex-center md:justify-start max-w-[782px] gap-4 flex-wrap mt-7">
           {isPendig ? "Loading..." : (
@@ -123,7 +129,7 @@ const Profile = () => {
             Saved
           </div>}
 
-        {/* saved */}
+        {/* tagged */}
         {isActive === "tagged" &&
           <div className="flex-center md:flex-start max-w-[782px] gap-4 flex-wrap mt-7">
             Tagged
