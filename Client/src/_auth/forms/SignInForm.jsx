@@ -78,7 +78,7 @@ const SignInForm = () => {
         </Link>
 
       </div >
-      
+
       <GetAuthLinks
         link={{
           'text': "Don't have an account?",

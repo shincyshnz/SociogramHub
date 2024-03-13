@@ -1,40 +1,6 @@
-import { Link } from 'react-router-dom';
 import { Avatar, Spinner, Toast } from 'flowbite-react';
 import { HiFire, HiUserCircle } from 'react-icons/hi';
 import { useAuth } from '../../hooks/customHooks';
-
-// Sign-in sign-up form components 
-export const GetApp = () => {
-    return (
-        <div className="form-container text-sm">Get the app.
-            <div className="flex-center gap-3 mt-2">
-                <img className="w-36" src="assets/getItONgoogleplay.png" alt="google play" />
-                <img className="w-36" src="assets/getitonPlayStore.png" alt="app store" />
-            </div>
-        </div>
-    )
-}
-
-export const GetAuthLinks = ({ link, text }) => {
-    return (
-        <div className="form-container py-5 border">
-            <p className="text-sm">{link.text}<Link to={link.link}>
-                <span className="text-blue-600 font-bold ml-1">{text}</span>
-            </Link>
-            </p>
-        </div>
-    )
-}
-
-export const OR = () => {
-    return (
-        <div className="flex-center gap-4 mb-4">
-            <div className="w-[100px] border-b-[1px] border-gray-300"></div>
-            <h6 className="font-semibold text-gray-500 text-sm">OR</h6>
-            <div className="w-[100px] border-b-[1px] border-gray-300"></div>
-        </div>
-    )
-}
 
 // Loader
 export const Loader = ({ text = "Loading...", size = "sm" }) => {

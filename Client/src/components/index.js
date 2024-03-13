@@ -2,13 +2,17 @@ export { default as Dob } from './Dob';
 export { default as Footer } from './Footer';
 
 export {
-    GetApp,
-    GetAuthLinks,
+    // GetApp,
+    // GetAuthLinks,
     Loader,
-    OR,
+    // OR,
     UserAvatar,
     NotificationToast,
 } from './shared/GetComponents';
+
+export { default as GetApp } from './auth/GetApp';
+export { default as GetAuthLinks } from './auth/GetAuthLinks';
+export { default as OR } from './auth/OR';
 
 export { default as FormFields } from './FormFields';
 export { default as MoreDropdown } from './MoreDropdown';
