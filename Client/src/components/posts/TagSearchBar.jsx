@@ -38,8 +38,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Select from "react-select";
-import { useGetUsers } from '../lib/reactQuery/queriesAndMutations';
-import { useDebounce, useError } from '../hooks/customHooks';
+import { useGetUsers } from '../../lib/reactQuery/queriesAndMutations';
+import { useDebounce, useError } from '../../hooks/customHooks';
 
 const TagSearchBar = ({ name, placeholder, setTaggedUsers }) => {
     const { handleError, deleteError } = useError();

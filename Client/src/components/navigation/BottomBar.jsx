@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import MoreDropdown from '../MoreDropdown';
+import MoreDropdown from './leftSideBar/MoreDropdown';
 import { Dropdown, Navbar } from 'flowbite-react';
 import { useLocation, Link } from 'react-router-dom';
 import { SIDEBAR_LINKS } from '../../constants';
 import { CreatePost } from '../../_root/pages';
-import { UserAvatar } from '../../components';
+import { UserAvatar } from '..';
 
 
 const BottomBar = () => {

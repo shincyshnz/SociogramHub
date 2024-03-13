@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { getTimeDifference } from '../../lib/utils'
 import { useAddComments, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
-import { Loader } from '../shared/GetComponents';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { IoBookmarkOutline, IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline } from 'react-icons/io5';
 import AddCommentForm from './AddCommentForm';
 import EditPosts from './EditPosts';
-import { useQueryClient } from '@tanstack/react-query';
+import Loader from '../shared/Loader';
 
 const PostContents = ({ post, index }) => {
     const [showMore, setShowMore] = useState(null);

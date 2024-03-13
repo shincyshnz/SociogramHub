@@ -1,4 +1,4 @@
-import FollowUnfollowButton from "./FollowUnfollowButton";
+import FollowUnfollowButton from "../navigation/rightSideBar/FollowUnfollowButton";
 
 const ProfileCard = ({ ...props }) => {
     const { userId, imgUrl, username, subText = "", text = "" } = props;

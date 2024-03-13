@@ -1,9 +1,9 @@
 import { Dropdown } from 'flowbite-react'
 import React from 'react'
 import { HiLogout, HiOutlineSun } from 'react-icons/hi'
-import { useAuth, useError } from '../hooks/customHooks';
+import { useAuth, useError } from '../../../hooks/customHooks';
 import { useNavigate, Link } from 'react-router-dom';
-import { MORE_LINKS, SIDEBAR_LINKS } from '../constants';
+import { MORE_LINKS, SIDEBAR_LINKS } from '../../../constants';
 
 const MoreDropdown = ({ position = "leftside" }) => {
     const navigate = useNavigate();

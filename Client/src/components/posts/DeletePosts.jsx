@@ -1,4 +1,4 @@
-import WithModal from "../ModalContainer"
+import WithModal from "../HOC/ModalContainer"
 
 const DeletePosts = ({ postId, setOpenDeleteModal, setOpenEditPostModal }) => {
     const handleDeletePost = (e) => {

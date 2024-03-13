@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { formatDate } from '../lib/utils';
+import { formatDate } from '../../lib/utils';
 import { Alert, Datepicker } from 'flowbite-react';
-import { useError } from '../hooks/customHooks';
-import { Loader } from '../components';
-import { useCreateUserAccount } from '../lib/reactQuery/queriesAndMutations';
+import { useError } from '../../hooks/customHooks';
+import { Loader } from '..';
+import { useCreateUserAccount } from '../../lib/reactQuery/queriesAndMutations';
 
 const Dob = ({ handleSubmit, errors }) => {
     const navigate = useNavigate();

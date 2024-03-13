@@ -1,12 +1,12 @@
 import { Dropdown, Sidebar } from 'flowbite-react';
 // import { useAuth } from '../../hooks/customHooks';
 import { HiMenu } from 'react-icons/hi';
-import MoreDropdown from '../MoreDropdown';
-import { SIDEBAR_LINKS } from '../../constants';
+import MoreDropdown from './MoreDropdown';
+import { SIDEBAR_LINKS } from '../../../constants';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { CreatePost } from '../../_root/pages';
+import { CreatePost } from '../../../_root/pages';
 
 const LeftSideBar = () => {
   const { pathname } = useLocation();

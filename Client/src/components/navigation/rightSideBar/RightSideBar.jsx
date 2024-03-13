@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { Loader } from './GetComponents';
-import { useGetProfile, useGetSuggestedUsers } from '../../lib/reactQuery/queriesAndMutations';
-import ProfileCard from '../ProfileCard';
+import { useEffect } from 'react';
 import Footer from '../Footer';
+import { useGetProfile, useGetSuggestedUsers } from '../../../lib/reactQuery/queriesAndMutations';
 import { useNavigate } from 'react-router';
-import { useError } from '../../hooks/customHooks';
+import { useError } from '../../../hooks/customHooks';
+import Loader from '../../shared/Loader';
+import ProfileCard from '../../shared/ProfileCard';
 
 const RightSideBar = () => {
   const { handleError } = useError();

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import WithModal from "./ModalContainer"
 import { useForm } from "react-hook-form";
-import FormFields from "./FormFields";
-import TagSearchBar from "./TagSearchBar";
 import { Textarea } from "flowbite-react";
-import { UserAvatar } from "./shared/GetComponents";
+import WithModal from "../HOC/ModalContainer"
+import FormFields from "../shared/FormFields";
+import TagSearchBar from "./TagSearchBar";
+import UserAvatar from "../shared/UserAvatar";
 
 const PostModal = ({ ...props }) => {
     const { preview, profile, setTaggedUsers, onSubmit } = props;

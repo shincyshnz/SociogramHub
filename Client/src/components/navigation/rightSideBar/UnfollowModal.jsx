@@ -1,4 +1,4 @@
-import WithModal from "./ModalContainer";
+import WithModal from "../../HOC/ModalContainer";
 
 // Use HOC Modal Container
 const UnfollowModalBody = ({ imgUrl, username, handleUnFollow, setIsOpenModal, modalContainerClassName }) => {

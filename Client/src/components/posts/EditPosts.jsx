@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import WithModal from '../ModalContainer'
+import WithModal from '../HOC/ModalContainer'
 import DeletePosts from './DeletePosts'
 import { useQueryClient } from '@tanstack/react-query'
 
