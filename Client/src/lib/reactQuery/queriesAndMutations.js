@@ -108,9 +108,9 @@ export const useAddComments = () => {
     });
 }
 
-export const useGetUserPosts = () => {
+export const useGetUserPosts = (userId) => {
     return useQuery({
-        queryKey: ['userPosts'],
+        queryKey: ['userPosts', userId],
         queryFn: GetUserPostsAPI,
         queryClient: useQueryClient(),
     });

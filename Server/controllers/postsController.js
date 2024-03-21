@@ -66,8 +66,8 @@ const updatePostsCommentCount = async (postId) => {
 
 const getUserPosts = async (req, res, next) => {
     try {
-        const { userId } = req.body;
-        // const userObjectId = 
+        const { userId } = req.params;
+        console.log(userId);
         const posts = await PostsModel.find({ userId });
         const user = await UsersModel.findOne({ _id: userId });
 

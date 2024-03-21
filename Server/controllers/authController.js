@@ -50,7 +50,6 @@ const login = async (req, res, next) => {
     try {
         const user = await UsersModel.findOne({ email });
         const { password: userPassword, ...userDetails } = user._doc;
-        console.log(userDetails);
         if (!user) {
             customErrorMessage(404, "User doesnot exists.!");
         }

@@ -122,8 +122,8 @@ export const AddCommentsAPI = async (data) => {
     return response;
 }
 
-export const GetUserPostsAPI = async () =>{
-    const response = await axiosInstance.get(`${import.meta.env.VITE_POSTS_URL}/userPosts`);
+export const GetUserPostsAPI = async (userId) =>{
+    const response = await axiosInstance.get(`${import.meta.env.VITE_POSTS_URL}/userPosts/userId`);
     return response?.data;
 }
 

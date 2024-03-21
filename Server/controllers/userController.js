@@ -179,7 +179,8 @@ const unfollowUser = async (req, res, next) => {
 const getProfile = async (req, res, next) => {
     try {
         const { userId } = req.params;
-        const user = await UserModal.findById({ userId }).select("-password");
+        console.log(userId);
+        const user = await UsersModel.findById({ userId }).select("-password");
         if (user) {
             res.status(200).json({
                 result: user,

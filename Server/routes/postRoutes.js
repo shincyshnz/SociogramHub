@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/create", upload.single("postFile"), checkAuth, createPosts);
 router.get("/getAllPosts", checkAuth, getAllPosts);
-router.get("/userPosts", checkAuth, getUserPosts);
+router.get("/userPosts/(:id)", getUserPosts);
 
 module.exports = router;
