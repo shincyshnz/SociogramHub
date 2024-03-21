@@ -48,12 +48,14 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
-        const user = await UsersModel.findOne({ email }).select("password");
+        const user = await UsersModel.findOne({ email });
+        const { password: userPassword, ...userDetails } = user._doc;
+        console.log(userDetails);
         if (!user) {
             customErrorMessage(404, "User doesnot exists.!");
         }
 
-        const validPassword = await comparePasswordHash(password, user.password);
+        const validPassword = await comparePasswordHash(password, userPassword);
 
         if (!validPassword) {
             customErrorMessage(404, "Username/Password is not valid!");
@@ -65,7 +67,7 @@ const login = async (req, res, next) => {
         res.status(200).cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: true,
-        }).json({ user, accessToken });
+        }).json({ user: userDetails, accessToken });
     } catch (error) {
         next(error);
     }
