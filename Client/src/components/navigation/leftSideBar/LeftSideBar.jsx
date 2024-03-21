@@ -1,33 +1,18 @@
 import { Dropdown, Sidebar } from 'flowbite-react';
-// import { useAuth } from '../../hooks/customHooks';
+import { useAuth } from '../../../hooks/customHooks';
 import { HiMenu } from 'react-icons/hi';
 import MoreDropdown from './MoreDropdown';
 import { SIDEBAR_LINKS } from '../../../constants';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { CreatePost } from '../../../_root/pages';
-import { useQueryClient } from '@tanstack/react-query';
-import { useGetProfile } from '../../../lib/reactQuery/queriesAndMutations';
-import { useAuth } from '../../../hooks/customHooks';
 
 const LeftSideBar = () => {
   const { pathname } = useLocation();
-  const { userDetails } = useAuth();
+  // Getting loggedin user details from auth Context
+  const { userDetails: profile } = useAuth();
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
-
-  // // Accessing profile data from cache
-  // const queryClient = useQueryClient();
-  // const profile = queryClient.getQueryData(['profile']);
-
-  //  React-Query - fetching loggedIn user data
-  // const {
-  //   data: profile,
-  //   isPending: isPendingProfile,
-  //   isError: isErrorProfile,
-  //   error: profileError,
-  // } = useGetProfile();
-  console.log(userDetails);
 
   return (
     <>
