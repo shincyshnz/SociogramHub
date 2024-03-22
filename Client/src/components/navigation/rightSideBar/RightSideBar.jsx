@@ -3,8 +3,9 @@ import Footer from '../Footer';
 import { useGetProfile, useGetSuggestedUsers } from '../../../lib/reactQuery/queriesAndMutations';
 import { useNavigate } from 'react-router';
 import { useError } from '../../../hooks/customHooks';
-import Loader from '../../shared/Loader';
+// import Loader from '../../shared/Loader';
 import ProfileCard from '../../shared/ProfileCard';
+import { useQueryClient } from '@tanstack/react-query';
 
 const RightSideBar = () => {
   const { handleError } = useError();
@@ -15,27 +16,31 @@ const RightSideBar = () => {
     error: suggestedUserError,
   } = useGetSuggestedUsers();
 
-  // Fetch Profile Data
-  const {
-    data: profile,
-    isPending: isPendingProfile,
-    error: profileError,
-  } = useGetProfile();
+  // // Fetch Profile Data
+  // const {
+  //   data: profile,
+  //   isPending: isPendingProfile,
+  //   error: profileError,
+  // } = useGetProfile();
+
+  // Getting loggedin user details from react query cache
+  const queryClient = useQueryClient();
+  const profile = queryClient.getQueryData(['profile']);
 
   // Handle errors
   useEffect(() => {
-    if (suggestedUserError || profileError) {
-      const error = suggestedUserError || profileError;
+    if (suggestedUserError ) {
+      const error = suggestedUserError ;
       handleError('suggestedUsersApiError', { message: error?.response?.data?.message || error?.message });
     }
-  }, [suggestedUserError, profileError]);
+  }, [suggestedUserError]);
 
 
   // Markup
   return (
     <>
       <div className="w-full px-3 md:px-8 mt-6 max-w-[380px] text-center hidden lg:block">
-        {isPendingProfile ? <Loader /> : (
+        {/* {isPendingProfile ? <Loader /> : ( */}
           <>
             <ProfileCard userId={profile?._id} imgUrl={profile?.profile_pic} username={profile?.username} subText={profile?.fullname} text="switch" />
 
@@ -61,7 +66,7 @@ const RightSideBar = () => {
               <Footer show='hidden' textColor='text-gray-300' />
             </div>
           </>
-        )}
+        {/* )} */}
       </div>
     </>
   );

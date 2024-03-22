@@ -7,13 +7,16 @@ import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { CreatePost } from '../../../_root/pages';
+import { useQueryClient } from '@tanstack/react-query';
 
 const LeftSideBar = () => {
   const { pathname } = useLocation();
-  // Getting loggedin user details from auth Context
-  const { userDetails: profile } = useAuth();
+  // Getting loggedin user details from react query cache
+  const queryClient = useQueryClient();
+  const profile = queryClient.getQueryData(['profile']);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
+  console.log(profile);
   return (
     <>
       <aside id="default-sidebar" className="hidden md:block fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">

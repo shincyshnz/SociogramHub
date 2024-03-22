@@ -6,6 +6,7 @@ import { IoBookmarkOutline, IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOut
 import AddCommentForm from './AddCommentForm';
 import EditPosts from './EditPosts';
 import Loader from '../shared/Loader';
+import { useQueryClient } from '@tanstack/react-query';
 
 const PostContents = ({ post, index }) => {
     const [showMore, setShowMore] = useState(null);
@@ -14,10 +15,14 @@ const PostContents = ({ post, index }) => {
     const [openEditPostModal, setOpenEditPostModal] = useState(false);
 
     // Fetch profile data : React Query
-    const {
-        data: profile,
-        isPending: isPendingProfile,
-    } = useGetProfile();
+    // const {
+    //     data: profile,
+    //     isPending: isPendingProfile,
+    // } = useGetProfile();
+
+    // Getting loggedin user details from react query cache
+    const queryClient = useQueryClient();
+    const profile = queryClient.getQueryData(['profile']);
 
     // Add Comments : React Query
     const {
@@ -35,10 +40,10 @@ const PostContents = ({ post, index }) => {
     }, [isAddCommentsSuccess]);
 
     // Error Handling
-    if (isPendingProfile) {
-        return (<div className="h-full w-full mt-[25%] flex-center">
-            <Loader size={"xl"} /></div>);
-    }
+    // if (isPendingProfile) {
+    //     return (<div className="h-full w-full mt-[25%] flex-center">
+    //         <Loader size={"xl"} /></div>);
+    // }
 
     if (isErrorAddComment) {
         console.log(errorAddComment);
@@ -118,7 +123,7 @@ const PostContents = ({ post, index }) => {
             {openEditPostModal && <EditPosts
                 setOpenEditPostModal={setOpenEditPostModal}
                 post={post}
-                profile ={profile}
+                profile={profile}
             />}
         </>
     )

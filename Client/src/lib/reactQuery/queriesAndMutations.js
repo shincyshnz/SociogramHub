@@ -30,7 +30,7 @@ export const useCreateUserAccount = () => {
 
 export const useSignInAccount = () => {
     return useMutation({
-        mutationFn: (data) => LoginAPI(data)
+        mutationFn: (data) => LoginAPI(data),
     })
 }
 

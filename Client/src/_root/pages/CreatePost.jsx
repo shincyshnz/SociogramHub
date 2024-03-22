@@ -9,15 +9,17 @@ import { useError } from '../../hooks/customHooks';
 import { useQueryClient } from '@tanstack/react-query';
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
+  // Getting loggedin user details from react query cache
   const queryClient = useQueryClient();
+  const profile = queryClient.getQueryData(['profile']);
 
-  //  React-Query - fetching loggedIn user data
-  const {
-    data: profile,
-    isPending: isPendingProfile,
-    isError: isErrorProfile,
-    error: profileError,
-  } = useGetProfile();
+  // React-Query - fetching loggedIn user data
+  // const {
+  //   data: profile,
+  //   isPending: isPendingProfile,
+  //   isError: isErrorProfile,
+  //   error: profileError,
+  // } = useGetProfile();
 
   // React-Query - posting data
   const {
@@ -134,7 +136,8 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
           </div>
 
           {/* Post modal */}
-          {(isPendingProfile) ? <Loader /> :
+          {
+          // (isPendingProfile) ? <Loader /> :
             (isFileSelected) &&
             <>
               {isPendingCreatePosts &&
