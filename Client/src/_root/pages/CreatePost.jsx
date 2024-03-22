@@ -3,23 +3,16 @@ import { Spinner } from 'flowbite-react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
-import { Loader, PostModal } from '../../components';
-import { useCreatePosts, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
+import { PostModal } from '../../components';
+import { useCreatePosts } from '../../lib/reactQuery/queriesAndMutations';
 import { useError } from '../../hooks/customHooks';
 import { useQueryClient } from '@tanstack/react-query';
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
+
   // Getting loggedin user details from react query cache
   const queryClient = useQueryClient();
   const profile = queryClient.getQueryData(['profile']);
-
-  // React-Query - fetching loggedIn user data
-  // const {
-  //   data: profile,
-  //   isPending: isPendingProfile,
-  //   isError: isErrorProfile,
-  //   error: profileError,
-  // } = useGetProfile();
 
   // React-Query - posting data
   const {
@@ -136,9 +129,7 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
           </div>
 
           {/* Post modal */}
-          {
-          // (isPendingProfile) ? <Loader /> :
-            (isFileSelected) &&
+          {(isFileSelected) && 
             <>
               {isPendingCreatePosts &&
                 <div className='absolute top-64 w-full text-center flex-center z-50'>

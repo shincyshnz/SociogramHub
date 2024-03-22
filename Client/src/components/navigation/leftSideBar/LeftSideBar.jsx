@@ -1,5 +1,4 @@
 import { Dropdown, Sidebar } from 'flowbite-react';
-import { useAuth } from '../../../hooks/customHooks';
 import { HiMenu } from 'react-icons/hi';
 import MoreDropdown from './MoreDropdown';
 import { SIDEBAR_LINKS } from '../../../constants';
@@ -10,10 +9,12 @@ import { CreatePost } from '../../../_root/pages';
 import { useQueryClient } from '@tanstack/react-query';
 
 const LeftSideBar = () => {
-  const { pathname } = useLocation();
+
   // Getting loggedin user details from react query cache
   const queryClient = useQueryClient();
   const profile = queryClient.getQueryData(['profile']);
+  
+  const { pathname } = useLocation();
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
   console.log(profile);
@@ -23,7 +24,6 @@ const LeftSideBar = () => {
 
         <section className='hidden md:block h-screen lg:border-r-2 text-[16px]'>
           <Sidebar className="max-w-[80px] max-h-screen lg:mx-auto lg:max-w-full">
-            {/* <div className="flex flex-col justify-between items-baseline h-full w-full"> */}
             <Sidebar.Logo className="block lg:hidden ml-1" href="/" img="/assets/logoIcon.png" imgAlt="SociogramHub logo" />
             <Sidebar.Logo className="hidden lg:block ml-10" href="/" img="/assets/logo.png" imgAlt="SociogramHub logo" />
 
@@ -63,9 +63,7 @@ const LeftSideBar = () => {
                     </Link>
                   );
                 })}
-                {/* </Sidebar.ItemGroup>
 
-              <Sidebar.ItemGroup > */}
                 <Sidebar.Item className='absolute bottom-0'>
                   <Dropdown className="w-[350px] p-5 cursor-pointer rounded-lg shadow-lg" label=""
                     dismissOnClick={false} placement="top"
@@ -79,23 +77,6 @@ const LeftSideBar = () => {
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
             </Sidebar.Items>
-
-            {/* <Sidebar.Items className='absolute bottom-2 lg:min-w-[230px]'>
-              <Sidebar.ItemGroup>
-                <Sidebar.Item>
-                  <Dropdown className="w-[350px] p-5 cursor-pointer rounded-lg shadow-lg" label=""
-                    dismissOnClick={false} placement="top"
-                    renderTrigger={() =>
-                      <div className='flex items-center justify-start '>
-                        <HiMenu className='lg:mr-7 text-xl'/>
-                        <span className="hidden lg:block">More</span>
-                      </div>}>
-                    <MoreDropdown position="leftsidebar" />
-                  </Dropdown>
-                </Sidebar.Item>
-              </Sidebar.ItemGroup>
-            </Sidebar.Items> */}
-            {/* </div> */}
           </Sidebar>
         </section >
       </aside>

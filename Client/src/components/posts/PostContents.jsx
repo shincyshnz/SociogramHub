@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query';
+import { useAddComments } from '../../lib/reactQuery/queriesAndMutations';
 import { getTimeDifference } from '../../lib/utils'
-import { useAddComments, useGetProfile } from '../../lib/reactQuery/queriesAndMutations';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { IoBookmarkOutline, IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline } from 'react-icons/io5';
 import AddCommentForm from './AddCommentForm';
 import EditPosts from './EditPosts';
-import Loader from '../shared/Loader';
-import { useQueryClient } from '@tanstack/react-query';
 
 const PostContents = ({ post, index }) => {
     const [showMore, setShowMore] = useState(null);
     const [commentsCount, setCommentsCount] = useState(post.commentsCount);
     const [comments, setComments] = useState([]);
     const [openEditPostModal, setOpenEditPostModal] = useState(false);
-
-    // Fetch profile data : React Query
-    // const {
-    //     data: profile,
-    //     isPending: isPendingProfile,
-    // } = useGetProfile();
 
     // Getting loggedin user details from react query cache
     const queryClient = useQueryClient();
@@ -39,21 +32,14 @@ const PostContents = ({ post, index }) => {
         }
     }, [isAddCommentsSuccess]);
 
-    // Error Handling
-    // if (isPendingProfile) {
-    //     return (<div className="h-full w-full mt-[25%] flex-center">
-    //         <Loader size={"xl"} /></div>);
-    // }
-
-    if (isErrorAddComment) {
-        console.log(errorAddComment);
-    }
-
     // Show more of post title
     const handleShowMore = (postId) => {
         setShowMore(postId);
     }
 
+    if (isErrorAddComment) {
+        console.log(errorAddComment);
+    }
 
     return (
         <>
