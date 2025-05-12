@@ -1,9 +1,9 @@
+import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { TopBar, LeftSideBar, BottomBar, Loader } from '../components';
 import { useGetProfile } from '../lib/reactQuery/queriesAndMutations';
-import { useEffect } from 'react';
+import { BottomBar, LeftSideBar, Loader, TopBar } from '../components';
 
-const RootLayout = () => {
+const AuthGaurd = () => {
 
   // Fetch Profile Data
   const {
@@ -31,11 +31,11 @@ const RootLayout = () => {
             </section>
           </div>
 
-          <BottomBar className="self-end" />
+          <BottomBar />
         </div>
       }
     </>
   )
 }
 
-export default RootLayout
+export default AuthGaurd

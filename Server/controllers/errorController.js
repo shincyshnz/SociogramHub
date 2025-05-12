@@ -7,9 +7,10 @@ const errorController = (err, req, res, next) => {
     } catch (error) {
         console.log(error);
         res.status(500).send(`An unknown error occurred. ${error?.message}`);
-    } finally {
-        next();
-    };
+    } 
+    // finally {
+    //     next();
+    // };
 }
 
 module.exports = errorController;

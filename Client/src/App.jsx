@@ -2,20 +2,18 @@ import { Suspense, lazy, useEffect } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { HiExclamation } from 'react-icons/hi'
 import './index.css'
-// import AuthLayout from './_auth/AuthLayout'
-// import RootLayout from './_root/RootLayout'
-// import { SignUpForm, SignInForm, ResetPassword, ForgotPassword, Otp } from './_auth/forms'
-// import { EditPost, Explore, Home, Notifications, PostCards, Reels, Saved, Search, Settings } from './_root/pages'
 import { NotificationToast } from './components'
-import { useAuth, useError } from './hooks/customHooks'
+import { useAuth, useError, useTheme } from './hooks/customHooks'
+import clsx from 'clsx';
 
-const RootLayout = lazy(() => import('./_root/RootLayout'));
-const AuthLayout = lazy(() => import('./_auth/AuthLayout'));
+const AuthGaurd =  lazy(() => import('./guard/AuthGuard'));
+const GuestGuard =  lazy(() => import('./guard/GuestGuard'));
 const SignInForm = lazy(() => import('./_auth/forms/SignInForm'));
 const SignUpForm = lazy(() => import('./_auth/forms/SignUpForm'));
 const ResetPassword = lazy(() => import('./_auth/forms/ResetPassword'));
 const ForgotPassword = lazy(() => import('./_auth/forms/ForgotPassword'));
 const Otp = lazy(() => import('./_auth/forms/Otp'));
+const CreatePost = lazy(() => import('./_root/pages/CreatePost'));
 const EditPost = lazy(() => import('./_root/pages/EditPost'));
 const Explore = lazy(() => import('./_root/pages/Explore'));
 const Home = lazy(() => import('./_root/pages/Home'));
@@ -34,6 +32,7 @@ const logoLoader = (
 );
 
 const App = () => {
+  const { themeName } = useTheme();
   const { getToken } = useAuth();
   const accessToken = getToken("accessToken");
   const navigate = useNavigate();
@@ -44,11 +43,13 @@ const App = () => {
   useEffect(() => {
     deleteError("apiError");
     (!accessToken) ? navigate("/sign-in") : navigate("/");
-
   }, [accessToken]);
 
+  console.log(themeName);
+  
+
   return (
-    <main className='flex h-auto font-inter'>
+    <main className={clsx('flex h-auto font-inter', themeName === "dark" ? "dark-theme dark" : "light-theme light")}>
 
       {errorKeysArray.length !== 0 &&
         errorKeysArray.map((err, index) => (
@@ -65,7 +66,7 @@ const App = () => {
       <Routes>
         <Route element={
           <Suspense fallback={logoLoader}>
-            <AuthLayout />
+            <GuestGuard />
           </Suspense>
         }>
           <Route path='/sign-in' element={<SignInForm />} />
@@ -78,7 +79,7 @@ const App = () => {
         {/* Private Routes */}
         <Route element={
           <Suspense fallback={logoLoader}>
-            <RootLayout />
+            <AuthGaurd />
           </Suspense>
         }>
           <Route index element={<Home />} />
@@ -87,7 +88,7 @@ const App = () => {
           <Route path='/reels' element={<Reels />} />
           <Route path='/messages' element={<Home />} />
           <Route path='/notifications' element={<Notifications />} />
-          {/* <Route path='/create-posts' element={<CreatePost />} /> */}
+          <Route path='/create-posts' element={<CreatePost />} />
           <Route path='/update-posts/:id' element={<EditPost />} />
           <Route path='/posts/:id' element={<PostCards />} />
           <Route path='/profile/:id' element={

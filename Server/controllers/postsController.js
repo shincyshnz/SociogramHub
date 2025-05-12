@@ -30,7 +30,6 @@ const createPosts = async (req, res, next) => {
 }
 
 const getAllPosts = async (req, res, next) => {
-    let posts;
     const { userId } = req.body;
 
     try {

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ErrorContext } from "../context/ErrorContext";
+import { ThemeContext } from "../context/Theme";
 
 
 export const useAuth = () => {
@@ -24,4 +25,8 @@ export const useDebounce = (inputValue, delay) => {
     }, [inputValue, delay]);
 
     return { debouncedValue };
+}
+
+export const useTheme = () => {
+    return useContext(ThemeContext);
 }

@@ -1,5 +1,4 @@
-import { Dropdown, Sidebar } from 'flowbite-react';
-import { HiMenu } from 'react-icons/hi';
+import { Sidebar } from 'flowbite-react';
 import MoreDropdown from './MoreDropdown';
 import { SIDEBAR_LINKS } from '../../../constants';
 import { useLocation } from 'react-router';
@@ -17,7 +16,6 @@ const LeftSideBar = () => {
   const { pathname } = useLocation();
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
-  console.log(profile);
   return (
     <>
       <aside id="default-sidebar" className="hidden md:block fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
@@ -27,7 +25,7 @@ const LeftSideBar = () => {
             <Sidebar.Logo className="block lg:hidden ml-1" href="/" img="/assets/logoIcon.png" imgAlt="SociogramHub logo" />
             <Sidebar.Logo className="hidden lg:block ml-10" href="/" img="/assets/logo.png" imgAlt="SociogramHub logo" />
 
-            <Sidebar.Items className='mt-14'>
+            <Sidebar.Items className='mt-14 flex flex-items-cnter'>
               <Sidebar.ItemGroup>
                 {SIDEBAR_LINKS.map((link, index) => {
                   const isActive = pathname === link.route;
@@ -64,17 +62,9 @@ const LeftSideBar = () => {
                   );
                 })}
 
-                <Sidebar.Item className='absolute bottom-0'>
-                  <Dropdown className="w-[350px] p-5 cursor-pointer rounded-lg shadow-lg" label=""
-                    dismissOnClick={false} placement="top"
-                    renderTrigger={() =>
-                      <div className='flex items-center justify-start '>
-                        <HiMenu className='lg:mr-7 text-xl' />
-                        <span className="hidden lg:block">More</span>
-                      </div>}>
+                <div className='absolute bottom-3 py-2 px-2 ml-2'>
                     <MoreDropdown position="leftsidebar" />
-                  </Dropdown>
-                </Sidebar.Item>
+                </div>
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </Sidebar>

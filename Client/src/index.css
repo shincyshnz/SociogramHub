@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.dark-theme {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .light-theme {
+    background-color: #fff;
+    color: #333;
+  }
 
 @layer base {
     * {
@@ -9,7 +18,7 @@
     }
 
     body {
-        @apply bg-white text-black min-h-screen font-inter text-xs;
+        @apply min-h-screen font-inter text-xs;
     }
 }
 

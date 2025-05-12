@@ -1,12 +1,13 @@
 import React from 'react';
-import { Spinner } from 'flowbite-react';
+import { Spinner, Toast } from 'flowbite-react';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosImages } from "react-icons/io";
-import { PostModal } from '../../components';
+import { NotificationToast, PostModal } from '../../components';
 import { useCreatePosts } from '../../lib/reactQuery/queriesAndMutations';
 import { useError } from '../../hooks/customHooks';
 import { useQueryClient } from '@tanstack/react-query';
+import { TiTick } from "react-icons/ti";
 
 const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
 
@@ -36,9 +37,9 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
   const [file, setFile] = useState(null);
   const { ref: registerRef, ...rest } = register("fileUpload");
 
-  if (isErrorProfile) {
-    handleError('profile', profileError?.message);
-  }
+  // if (isErrorProfile) {
+  //   handleError('profile', profileError?.message);
+  // }
 
   if (isErrorCreatePost) {
     setIsFileSelected(false);
@@ -71,9 +72,14 @@ const CreatePost = ({ isCreatePostOpen, setIsCreatePostOpen }) => {
     try {
       const response = await createPosts(formData);
 
-      if (response.status === 200) {
+      if (response) {
         setIsFileSelected(false);
         setIsCreatePostOpen(false);
+        <NotificationToast
+            Icon={<TiTick className='h-5 w-5' />}
+            message={response.message}
+            type={"success"}
+          />
       }
     } catch (error) {
       handleError('createPostApiError', { message: error?.response?.data?.message || error?.message });
