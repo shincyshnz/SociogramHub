@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { formatDate } from '../../lib/utils';
+import { formatDate } from '../../lib/utils/formatDate';
 import { Alert, Datepicker } from 'flowbite-react';
 import { useError } from '../../hooks/customHooks';
 import { Loader } from '..';

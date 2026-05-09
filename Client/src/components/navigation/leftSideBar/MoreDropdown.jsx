@@ -1,5 +1,4 @@
 import { Dropdown } from 'flowbite-react'
-import React from 'react'
 import { HiLogout, HiOutlineSun, HiMenu } from 'react-icons/hi'
 import { useAuth, useError, useTheme } from '../../../hooks/customHooks';
 import { useNavigate, Link } from 'react-router-dom';

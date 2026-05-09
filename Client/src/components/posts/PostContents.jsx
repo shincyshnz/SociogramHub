@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query';
 import { useAddComments } from '../../lib/reactQuery/queriesAndMutations';
-import { getTimeDifference } from '../../lib/utils'
+import { getTimeDifference } from '../../lib/utils/getTimeDifference'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { IoBookmarkOutline, IoChatbubbleOutline, IoHeartOutline, IoPaperPlaneOutline } from 'react-icons/io5';
 import AddCommentForm from './AddCommentForm';

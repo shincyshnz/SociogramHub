@@ -10,7 +10,7 @@ const AuthLayout = () => {
     <>
       {isAuthenticated ? (<Navigate to="/" />) : (
         <>
-          <section className='flex flex-col justify-start items-center mx-auto mt-3' >
+          <section className='flex flex-col justify-between items-center mx-auto mt-3' >
             <Outlet />
             <Footer />
           </section>

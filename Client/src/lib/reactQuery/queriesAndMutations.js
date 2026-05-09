@@ -5,20 +5,24 @@ import {
     useInfiniteQuery,
 } from '@tanstack/react-query';
 import {
-    LoginAPI,
-    RegisterAPI,
-    GenerateOtpAPI,
-    ResetPasswordAPI,
-    GetProfileAPI,
-    GetUsersAPI,
-    GetSuggestedUsersAPI,
     CreatePostsAPI,
     AddCommentsAPI,
     GetPostsAPI,
     GetUserPostsAPI,
+} from '../../api/posts';
+import {
+    LoginAPI,
+    RegisterAPI,
+    GenerateOtpAPI,
+    ResetPasswordAPI,
+} from '../../api/auth';
+import {
+    GetProfileAPI,
+    GetUsersAPI,
+    GetSuggestedUsersAPI,
     FollowUsersAPI,
     UnFollowUsersAPI,
-} from '../api';
+} from '../../api/users'
 
 /* ---------------------- Authentication & Authorization -------------------------------- --*/
 
